@@ -67,11 +67,16 @@ public class Util {
   }
 
   public static String getResourceName(Resources resources, int id) {
-    if (id == NO_ID) {
-      return "";
-    } else {
-      return resources.getResourceEntryName(id);
+    try {
+      if (id == NO_ID || id == 0) {
+        return "";
+      } else {
+        return resources.getResourceEntryName(id);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+    return "";
   }
 
   public static String intToHexColor(int color) {
