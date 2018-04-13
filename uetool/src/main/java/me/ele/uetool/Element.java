@@ -60,10 +60,9 @@ public class Element {
       items.add(new EditTextItem(this, EditTextItem.Type.TYPE_TEXT_SIZE, "TextSize（SP）",
           Util.px2sp(view.getContext(), textView.getTextSize()) + ""));
       items.add(new EditTextItem(this, EditTextItem.Type.TYPE_TEXT_COLOR, "TextColor",
-          "#" + Integer.toHexString(textView.getCurrentTextColor()).toUpperCase()));
+          Util.intToHexColor(textView.getCurrentTextColor())));
       items.add(
-          new TextItem("TextHint",
-              "#" + Integer.toHexString(textView.getCurrentHintTextColor()).toUpperCase()));
+          new TextItem("TextHint", Util.intToHexColor(textView.getCurrentHintTextColor())));
       items.add(new SwitchItem(this, SwitchItem.Type.TYPE_IS_BOLD, "IsBold",
           textView.getTypeface() != null ? textView.getTypeface().isBold() : false));
     } else if (view instanceof ImageView) {
@@ -76,7 +75,7 @@ public class Element {
     items.add(new TextItem("Height",
         Util.px2dip(view.getContext(), view.getHeight()) + "dp"));
     items.add(new TextItem("Alpha", view.getAlpha() + ""));
-    items.add(new TextItem("Background", ""));
+    items.add(new TextItem("Background", Util.getBackground(view)));
 
     return items;
   }

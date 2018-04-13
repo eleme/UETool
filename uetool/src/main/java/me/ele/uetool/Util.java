@@ -2,6 +2,8 @@ package me.ele.uetool;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
@@ -65,5 +67,17 @@ public class Util {
     } else {
       return resources.getResourceEntryName(id);
     }
+  }
+
+  public static String intToHexColor(int color) {
+    return "#" + Integer.toHexString(color).toUpperCase();
+  }
+
+  public static String getBackground(View view) {
+    Drawable drawable = view.getBackground();
+    if (drawable instanceof ColorDrawable) {
+      return intToHexColor(((ColorDrawable) drawable).getColor());
+    }
+    return "";
   }
 }
