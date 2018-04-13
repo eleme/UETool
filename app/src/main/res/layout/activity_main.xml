@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <FrameLayout
+        android:id="@+id/parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#30000000"
+        >
+
+      <TextView
+          android:id="@+id/hehe"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="20dp"
+          android:background="#90000000"
+          android:padding="10dp"
+          android:tag="hehehe"
+          android:text="Hello World!"
+          android:textColor="#fff"
+          android:textSize="20sp"
+          />
+
+    </FrameLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        />
+
+    <Button
+        android:id="@+id/click"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="hello"
+        />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:visibility="invisible"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="world"
+        android:translationX="100dp"
+        />
+
+  </LinearLayout>
+
+
+</ScrollView>

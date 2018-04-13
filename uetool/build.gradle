@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+apply plugin: 'eradle'
+
+android {
+  compileSdkVersion 27
+
+  defaultConfig {
+    minSdkVersion 14
+  }
+}
+
+dependencies {
+  implementation 'com.android.support:appcompat-v7:27.1.1'
+  implementation 'com.android.support:recyclerview-v7:27.1.1'
+}
+
+modifyPom {
+  project {
+    groupId 'me.ele'
+    artifactId 'uetool'
+    version '1.0.0-SNAPSHOT'
+    packaging 'aar'
+  }
+}
