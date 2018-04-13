@@ -3,12 +3,14 @@ package me.ele.uetool;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import java.lang.annotation.Retention;
@@ -26,10 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 import me.ele.uetool.items.EditTextItem;
 import me.ele.uetool.items.Item;
+import me.ele.uetool.items.SwitchItem;
 import me.ele.uetool.items.TextItem;
 import me.ele.uetool.items.TitleItem;
 
 import static me.ele.uetool.InfoDialog.Adapter.ViewType.TYPE_EDIT_TEXT;
+import static me.ele.uetool.InfoDialog.Adapter.ViewType.TYPE_SWITCH;
 import static me.ele.uetool.InfoDialog.Adapter.ViewType.TYPE_TEXT;
 import static me.ele.uetool.InfoDialog.Adapter.ViewType.TYPE_TITLE;
 
@@ -92,6 +97,8 @@ public class InfoDialog extends Dialog {
           return TextViewHolder.newInstance(parent);
         case TYPE_EDIT_TEXT:
           return EditTextViewHolder.newInstance(parent);
+        case TYPE_SWITCH:
+          return SwitchViewHolder.newInstance(parent);
       }
       return null;
     }
@@ -103,6 +110,8 @@ public class InfoDialog extends Dialog {
         ((TextViewHolder) holder).bindView((TextItem) getItem(position));
       } else if (holder instanceof EditTextViewHolder) {
         ((EditTextViewHolder) holder).bindView((EditTextItem) getItem(position));
+      } else if (holder instanceof SwitchViewHolder) {
+        ((SwitchViewHolder) holder).bindView((SwitchItem) getItem(position));
       }
     }
 
@@ -114,6 +123,8 @@ public class InfoDialog extends Dialog {
         return TYPE_TEXT;
       } else if (item instanceof EditTextItem) {
         return TYPE_EDIT_TEXT;
+      } else if (item instanceof SwitchItem) {
+        return TYPE_SWITCH;
       }
       throw new RuntimeException("Unknown item type.");
     }
@@ -134,11 +145,13 @@ public class InfoDialog extends Dialog {
         TYPE_TITLE,
         TYPE_TEXT,
         TYPE_EDIT_TEXT,
+        TYPE_SWITCH,
     })
     @Retention(RetentionPolicy.SOURCE) @interface ViewType {
       int TYPE_TITLE = 1;
       int TYPE_TEXT = 2;
       int TYPE_EDIT_TEXT = 3;
+      int TYPE_SWITCH = 4;
     }
 
     public static abstract class BaseViewHolder<T extends Item> extends RecyclerView.ViewHolder {
@@ -260,6 +273,45 @@ public class InfoDialog extends Dialog {
         } catch (Exception e) {
           vColor.setVisibility(View.GONE);
         }
+      }
+    }
+
+    public static class SwitchViewHolder extends BaseViewHolder<SwitchItem> {
+
+      private TextView vName;
+      private SwitchCompat vSwitch;
+
+      public SwitchViewHolder(View itemView) {
+        super(itemView);
+
+        vName = itemView.findViewById(R.id.name);
+        vSwitch = itemView.findViewById(R.id.switch_view);
+        vSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+          @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            try {
+              if (item.getElement().getView() instanceof TextView) {
+                TextView textView = ((TextView) (item.getElement().getView()));
+                if (item.getType() == SwitchItem.Type.TYPE_IS_BOLD) {
+                  textView.setTypeface(null, isChecked ? Typeface.BOLD : Typeface.NORMAL);
+                }
+              }
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+          }
+        });
+      }
+
+      public static SwitchViewHolder newInstance(ViewGroup parent) {
+        return new SwitchViewHolder(LayoutInflater.from(parent.getContext())
+            .inflate(R.layout.uet_cell_switch, parent, false));
+      }
+
+      @Override public void bindView(SwitchItem switchItem) {
+        super.bindView(switchItem);
+
+        vName.setText(switchItem.getName());
+        vSwitch.setChecked(switchItem.isChecked());
       }
     }
   }

@@ -25,6 +25,7 @@
           android:layout_margin="20dp"
           android:background="#90000000"
           android:padding="10dp"
+          android:textStyle="bold"
           android:tag="hehehe"
           android:text="Hello World!"
           android:textColor="#fff"
@@ -57,6 +58,11 @@
         android:layout_height="wrap_content"
         android:text="world"
         android:translationX="100dp"
+        />
+
+    <android.support.v7.widget.SwitchCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         />
 
   </LinearLayout>
