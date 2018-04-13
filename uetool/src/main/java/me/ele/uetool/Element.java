@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import me.ele.uetool.items.EditTextItem;
 import me.ele.uetool.items.Item;
+import me.ele.uetool.items.SwitchItem;
 import me.ele.uetool.items.TextItem;
 import me.ele.uetool.items.TitleItem;
 
@@ -47,7 +48,7 @@ public class Element {
     List<Item> items = new ArrayList<>();
     items.add(new TitleItem("COMMON"));
     items.add(new TextItem("Class", view.getClass().getName()));
-    items.add(new TextItem("Id", view.getId() + ""));
+    items.add(new TextItem("Id", "0x" + Integer.toHexString(view.getId())));
     items.add(new TextItem("ResName", Util.getResourceName(view.getResources(), view.getId())));
     items.add(new TextItem("Clickable", Boolean.toString(view.isClickable()).toUpperCase()));
     items.add(new TextItem("Focused", Boolean.toString(view.isFocused()).toUpperCase()));
@@ -63,6 +64,8 @@ public class Element {
       items.add(
           new TextItem("TextHint",
               "#" + Integer.toHexString(textView.getCurrentHintTextColor()).toUpperCase()));
+      items.add(new SwitchItem(this, SwitchItem.Type.TYPE_IS_BOLD, "IsBold",
+          textView.getTypeface() != null ? textView.getTypeface().isBold() : false));
     } else if (view instanceof ImageView) {
       items.add(new TitleItem("ImageView"));
     } else {
