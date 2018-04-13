@@ -2,13 +2,18 @@ package me.ele.uetool;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
+import java.lang.reflect.Field;
 
 import static android.view.View.NO_ID;
 
@@ -77,6 +82,31 @@ public class Util {
     Drawable drawable = view.getBackground();
     if (drawable instanceof ColorDrawable) {
       return intToHexColor(((ColorDrawable) drawable).getColor());
+    } else if (drawable instanceof GradientDrawable) {
+      try {
+        Field mFillPaintField = GradientDrawable.class.getDeclaredField("mFillPaint");
+        mFillPaintField.setAccessible(true);
+        Paint mFillPaint = (Paint) mFillPaintField.get(drawable);
+        Shader shader = mFillPaint.getShader();
+        if (shader instanceof LinearGradient) {
+          Field mColorsField = LinearGradient.class.getDeclaredField("mColors");
+          mColorsField.setAccessible(true);
+          int[] mColors = (int[]) mColorsField.get(shader);
+          StringBuilder sb = new StringBuilder();
+          for (int i = 0, N = mColors.length; i < N; i++) {
+            sb.append(intToHexColor(mColors[i]));
+            if (i < N - 1) {
+              sb.append(" -> ");
+            }
+          }
+          return sb.toString();
+        }
+      } catch (NoSuchFieldException e) {
+        e.printStackTrace();
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      }
+      return "";
     }
     return "";
   }
