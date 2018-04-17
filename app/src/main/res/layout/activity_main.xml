@@ -25,11 +25,11 @@
           android:layout_margin="20dp"
           android:background="#90000000"
           android:padding="10dp"
-          android:textStyle="bold"
           android:tag="hehehe"
           android:text="Hello World!"
           android:textColor="#fff"
           android:textSize="20sp"
+          android:textStyle="bold"
           />
 
     </FrameLayout>
@@ -63,6 +63,15 @@
     <android.support.v7.widget.SwitchCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher"
         />
 
   </LinearLayout>
