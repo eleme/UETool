@@ -223,21 +223,39 @@ public class InfoDialog extends Dialog {
 
         @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
           try {
-            TextView textView = ((TextView) (item.getElement().getView()));
             if (item.getType() == EditTextItem.Type.TYPE_TEXT) {
+              TextView textView = ((TextView) (item.getElement().getView()));
               if (!TextUtils.equals(textView.getText().toString(), s.toString())) {
                 textView.setText(s.toString());
               }
             } else if (item.getType() == EditTextItem.Type.TYPE_TEXT_SIZE) {
+              TextView textView = ((TextView) (item.getElement().getView()));
               float textSize = Float.valueOf(s.toString());
               if (textView.getTextSize() != textSize) {
                 textView.setTextSize(textSize);
               }
             } else if (item.getType() == EditTextItem.Type.TYPE_TEXT_COLOR) {
+              TextView textView = ((TextView) (item.getElement().getView()));
               int color = Color.parseColor(vDetail.getText().toString());
               if (color != textView.getCurrentTextColor()) {
                 vColor.setBackgroundColor(color);
                 textView.setTextColor(color);
+              }
+            } else if (item.getType() == EditTextItem.Type.TYPE_WIDTH) {
+              View view = item.getElement().getView();
+              int width = Util.dip2px(itemView.getContext(), Integer.valueOf(s.toString()));
+              ViewGroup.LayoutParams lp = view.getLayoutParams();
+              if (width != lp.width) {
+                lp.width = width;
+                view.requestLayout();
+              }
+            } else if (item.getType() == EditTextItem.Type.TYPE_HEIGHT) {
+              View view = item.getElement().getView();
+              int height = Util.dip2px(itemView.getContext(), Integer.valueOf(s.toString()));
+              ViewGroup.LayoutParams lp = view.getLayoutParams();
+              if (height != lp.height) {
+                lp.height = height;
+                view.requestLayout();
               }
             }
           } catch (Exception e) {

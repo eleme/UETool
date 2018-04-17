@@ -48,7 +48,7 @@ public class Element {
     List<Item> items = new ArrayList<>();
     items.add(new TitleItem("COMMON"));
     items.add(new TextItem("Class", view.getClass().getName()));
-    items.add(new TextItem("Id", "0x" + Integer.toHexString(view.getId())));
+    items.add(new TextItem("Id", Util.getResId(view)));
     items.add(new TextItem("ResName", Util.getResourceName(view.getResources(), view.getId())));
     items.add(new TextItem("Clickable", Boolean.toString(view.isClickable()).toUpperCase()));
     items.add(new TextItem("Focused", Boolean.toString(view.isFocused()).toUpperCase()));
@@ -70,10 +70,10 @@ public class Element {
     } else {
       items.add(new TitleItem("VIEW"));
     }
-    items.add(new TextItem("Width",
-        Util.px2dip(view.getContext(), view.getWidth()) + "dp"));
-    items.add(new TextItem("Height",
-        Util.px2dip(view.getContext(), view.getHeight()) + "dp"));
+    items.add(new EditTextItem(this, EditTextItem.Type.TYPE_WIDTH, "Width（DP）",
+        Util.px2dip(view.getContext(), view.getWidth()) + ""));
+    items.add(new EditTextItem(this, EditTextItem.Type.TYPE_HEIGHT,"Height（DP）",
+        Util.px2dip(view.getContext(), view.getHeight()) + ""));
     items.add(new TextItem("Alpha", view.getAlpha() + ""));
     items.add(new TextItem("Background", Util.getBackground(view)));
 

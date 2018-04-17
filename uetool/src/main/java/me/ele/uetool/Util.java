@@ -49,6 +49,11 @@ public class Util {
     return (int) (pxValue / scale + 0.5F);
   }
 
+  public static int dip2px(Context context, float dpValue) {
+    float scale = context.getResources().getDisplayMetrics().density;
+    return (int) (dpValue * scale + 0.5F);
+  }
+
   public static int sp2px(Context context, float sp) {
     return (int) TypedValue.applyDimension(2, sp, context.getResources().getDisplayMetrics());
   }
@@ -72,6 +77,20 @@ public class Util {
         return "";
       } else {
         return resources.getResourceEntryName(id);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return "";
+  }
+
+  public static String getResId(View view) {
+    try {
+      int id = view.getId();
+      if (id == NO_ID) {
+        return "";
+      } else {
+        return "0x" + id;
       }
     } catch (Exception e) {
       e.printStackTrace();
