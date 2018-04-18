@@ -6,10 +6,14 @@ import java.lang.annotation.RetentionPolicy;
 import me.ele.uetool.Element;
 
 import static me.ele.uetool.items.EditTextItem.Type.TYPE_HEIGHT;
-import static me.ele.uetool.items.EditTextItem.Type.TYPE_WIDTH;
+import static me.ele.uetool.items.EditTextItem.Type.TYPE_PADDING_BOTTOM;
+import static me.ele.uetool.items.EditTextItem.Type.TYPE_PADDING_LEFT;
+import static me.ele.uetool.items.EditTextItem.Type.TYPE_PADDING_RIGHT;
+import static me.ele.uetool.items.EditTextItem.Type.TYPE_PADDING_TOP;
 import static me.ele.uetool.items.EditTextItem.Type.TYPE_TEXT;
 import static me.ele.uetool.items.EditTextItem.Type.TYPE_TEXT_COLOR;
 import static me.ele.uetool.items.EditTextItem.Type.TYPE_TEXT_SIZE;
+import static me.ele.uetool.items.EditTextItem.Type.TYPE_WIDTH;
 
 public class EditTextItem extends ElementItem {
 
@@ -42,6 +46,10 @@ public class EditTextItem extends ElementItem {
       TYPE_TEXT_COLOR,
       TYPE_WIDTH,
       TYPE_HEIGHT,
+      TYPE_PADDING_LEFT,
+      TYPE_PADDING_RIGHT,
+      TYPE_PADDING_TOP,
+      TYPE_PADDING_BOTTOM,
   })
   @Retention(RetentionPolicy.SOURCE) public @interface Type {
     int TYPE_TEXT = 1;
@@ -49,5 +57,9 @@ public class EditTextItem extends ElementItem {
     int TYPE_TEXT_COLOR = 3;
     int TYPE_WIDTH = 4;
     int TYPE_HEIGHT = 5;
+    int TYPE_PADDING_LEFT = 6;
+    int TYPE_PADDING_RIGHT = 7;
+    int TYPE_PADDING_TOP = 8;
+    int TYPE_PADDING_BOTTOM = 9;
   }
 }

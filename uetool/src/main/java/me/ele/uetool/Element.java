@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.DraweeView;
 import java.util.ArrayList;
 import java.util.List;
+import me.ele.uetool.items.AddMinusEditItem;
 import me.ele.uetool.items.EditTextItem;
 import me.ele.uetool.items.Item;
 import me.ele.uetool.items.SwitchItem;
@@ -58,7 +59,7 @@ public class Element {
       TextView textView = ((TextView) view);
       items.add(new EditTextItem(this, EditTextItem.Type.TYPE_TEXT, "Text",
           textView.getText().toString()));
-      items.add(new EditTextItem(this, EditTextItem.Type.TYPE_TEXT_SIZE, "TextSize（sp）",
+      items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_TEXT_SIZE, "TextSize（sp）",
           Util.px2sp(view.getContext(), textView.getTextSize()) + ""));
       items.add(new EditTextItem(this, EditTextItem.Type.TYPE_TEXT_COLOR, "TextColor",
           Util.intToHexColor(textView.getCurrentTextColor())));
@@ -74,10 +75,18 @@ public class Element {
     } else {
       items.add(new TitleItem("VIEW"));
     }
-    items.add(new EditTextItem(this, EditTextItem.Type.TYPE_WIDTH, "Width（dp）",
+    items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_WIDTH, "Width（dp）",
         Util.px2dip(view.getContext(), view.getWidth()) + ""));
-    items.add(new EditTextItem(this, EditTextItem.Type.TYPE_HEIGHT, "Height（dp）",
+    items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_HEIGHT, "Height（dp）",
         Util.px2dip(view.getContext(), view.getHeight()) + ""));
+    items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_LEFT, "PaddingLeft（dp）",
+        Util.px2dip(view.getContext(), view.getPaddingLeft()) + ""));
+    items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_RIGHT, "PaddingRight（dp）",
+        Util.px2dip(view.getContext(), view.getPaddingRight()) + ""));
+    items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_TOP, "PaddingTop（dp）",
+        Util.px2dip(view.getContext(), view.getPaddingTop()) + ""));
+    items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_BOTTOM, "PaddingBottom（dp）",
+        Util.px2dip(view.getContext(), view.getPaddingBottom()) + ""));
     items.add(new TextItem("Alpha", view.getAlpha() + ""));
     items.add(new TextItem("Background", Util.getBackground(view)));
 
