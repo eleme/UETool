@@ -91,6 +91,7 @@ public class MaskLayout extends View {
           InfoDialog dialog = new InfoDialog(getContext());
           dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override public void onDismiss(DialogInterface dialog) {
+              element.reset();
               invalidate();
             }
           });

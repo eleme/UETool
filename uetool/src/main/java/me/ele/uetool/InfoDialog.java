@@ -70,7 +70,6 @@ public class InfoDialog extends Dialog {
   @Override public void dismiss() {
     super.dismiss();
     adapter.clear();
-    UETool.getInstance().retraverse();
   }
 
   public static class Adapter extends RecyclerView.Adapter {
@@ -251,17 +250,15 @@ public class InfoDialog extends Dialog {
             } else if (item.getType() == EditTextItem.Type.TYPE_WIDTH) {
               View view = item.getElement().getView();
               int width = Util.dip2px(itemView.getContext(), Integer.valueOf(s.toString()));
-              ViewGroup.LayoutParams lp = view.getLayoutParams();
-              if (width != lp.width) {
-                lp.width = width;
+              if (Math.abs(width - view.getWidth()) >= Util.dip2px(itemView.getContext(), 1)) {
+                view.getLayoutParams().width = width;
                 view.requestLayout();
               }
             } else if (item.getType() == EditTextItem.Type.TYPE_HEIGHT) {
               View view = item.getElement().getView();
               int height = Util.dip2px(itemView.getContext(), Integer.valueOf(s.toString()));
-              ViewGroup.LayoutParams lp = view.getLayoutParams();
-              if (height != lp.height) {
-                lp.height = height;
+              if (Math.abs(height - view.getHeight()) >= Util.dip2px(itemView.getContext(), 1)) {
+                view.getLayoutParams().height = height;
                 view.requestLayout();
               }
             }
