@@ -1,0 +1,68 @@
+package me.ele.uetool.suspend;
+
+import android.content.Context;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
+import android.view.Gravity;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import me.ele.uetool.R;
+import me.ele.uetool.Util;
+
+public class UETSubMenu extends LinearLayout {
+
+  private ImageView vImage;
+  private TextView vTitle;
+
+  public UETSubMenu(Context context) {
+    this(context, null);
+  }
+
+  public UETSubMenu(Context context,
+      @Nullable AttributeSet attrs) {
+    this(context, attrs, 0);
+  }
+
+  public UETSubMenu(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    inflate(context, R.layout.uet_sub_menu_layout, this);
+    setGravity(Gravity.CENTER);
+    setOrientation(VERTICAL);
+    int padding = Util.dip2px(getContext(), 5);
+    setPadding(padding, 0, padding, 0);
+    setTranslationY(Util.dip2px(getContext(), 2));
+    vImage = findViewById(R.id.image);
+    vTitle = findViewById(R.id.title);
+  }
+
+  public void update(SubMenu subMenu) {
+    vImage.setImageResource(subMenu.getImageRes());
+    vTitle.setText(subMenu.getTitle());
+    setOnClickListener(subMenu.getOnClickListener());
+  }
+
+  public static class SubMenu {
+    private String title;
+    private int imageRes;
+    private OnClickListener onClickListener;
+
+    public SubMenu(String title, int imageRes, OnClickListener onClickListener) {
+      this.title = title;
+      this.imageRes = imageRes;
+      this.onClickListener = onClickListener;
+    }
+
+    public String getTitle() {
+      return title;
+    }
+
+    public int getImageRes() {
+      return imageRes;
+    }
+
+    public OnClickListener getOnClickListener() {
+      return onClickListener;
+    }
+  }
+}

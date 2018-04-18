@@ -3,25 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:gravity="center_vertical"
     tools:background="#fff"
     >
 
-  <TextView
+  <ImageView
       android:id="@+id/menu"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:background="#90000000"
-      android:padding="5dp"
-      android:text="UETool"
-      android:textColor="#fff"
-      android:textSize="16sp"
+      android:layout_width="54dp"
+      android:layout_height="54dp"
+      android:src="@drawable/uet_menu"
       />
 
-  <LinearLayout
-      android:id="@+id/sub_menu_container"
+  <HorizontalScrollView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      />
+      >
+
+    <LinearLayout
+        android:id="@+id/sub_menu_container"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@drawable/uet_sub_menu_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:translationX="-10000dp"
+        />
+
+  </HorizontalScrollView>
 
 </merge>
