@@ -13,6 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.DraweeView;
 import me.ele.uetool.suspend.UETMenu;
 import me.wangyuwei.uetool.sample.R;
 
@@ -20,11 +26,13 @@ public class MainActivity extends AppCompatActivity {
 
   private WindowManager windowManager;
   private UETMenu uetMenu;
+  private DraweeView draweeView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    draweeView = findViewById(R.id.drawee_view);
 
     windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
     uetMenu = new UETMenu(this, new UETMenu.CurrentTopActivityProvider() {
@@ -33,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
       }
     });
     addMenu();
+
+    updateDraweeView();
   }
 
   @TargetApi(Build.VERSION_CODES.M) private void requestPermission(Context context) {
@@ -76,5 +86,20 @@ public class MainActivity extends AppCompatActivity {
 
   private void removeMenu() {
     windowManager.removeView(uetMenu);
+  }
+
+  private void updateDraweeView() {
+    Fresco.initialize(this);
+    DraweeController draweeController = Fresco.newDraweeControllerBuilder()
+        .setUri(
+            "https://tva4.sinaimg.cn/crop.0.0.1080.1080.180/6a6a919ejw8ew0ftebwmij20u00u0q4i.jpg")
+        .setAutoPlayAnimations(true)
+        .build();
+    GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(getResources());
+    GenericDraweeHierarchy hierarchy = builder.build();
+
+    hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FIT_XY);
+    draweeView.setHierarchy(hierarchy);
+    draweeView.setController(draweeController);
   }
 }

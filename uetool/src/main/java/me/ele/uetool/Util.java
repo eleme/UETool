@@ -1,5 +1,7 @@
 package me.ele.uetool;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.LinearGradient;
@@ -13,7 +15,12 @@ import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
+import com.facebook.drawee.view.DraweeView;
 import java.lang.reflect.Field;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.view.View.NO_ID;
 
@@ -133,5 +140,29 @@ public class Util {
       return "";
     }
     return "";
+  }
+
+  public static String getImageURI(DraweeView draweeView) {
+    try {
+      PipelineDraweeController controller = (PipelineDraweeController) draweeView.getController();
+      Field mDataSourceSupplierFiled =
+          PipelineDraweeController.class.getDeclaredField("mDataSourceSupplier");
+      mDataSourceSupplierFiled.setAccessible(true);
+      Pattern p = Pattern.compile("uri=([^,]+)");
+      Matcher matcher = p.matcher(mDataSourceSupplierFiled.get(controller).toString());
+      if (matcher.find()) {
+        return matcher.group(1);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return "";
+  }
+
+  public static void clipText(Context context, String clipText) {
+    ClipData clipData = ClipData.newPlainText("", clipText);
+    ((ClipboardManager) (context.getSystemService(Context.CLIPBOARD_SERVICE))).setPrimaryClip(
+        clipData);
+    Toast.makeText(context, "已复制到剪切板", Toast.LENGTH_SHORT).show();
   }
 }

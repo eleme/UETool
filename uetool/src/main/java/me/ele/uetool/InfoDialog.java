@@ -203,10 +203,17 @@ public class InfoDialog extends Dialog {
             .inflate(R.layout.uet_cell_text, parent, false));
       }
 
-      @Override public void bindView(TextItem textItem) {
+      @Override public void bindView(final TextItem textItem) {
         super.bindView(textItem);
         vName.setText(textItem.getName());
         vDetail.setText(textItem.getDetail());
+        vDetail.setOnClickListener(new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            if (textItem.isEnableCopy()) {
+              Util.clipText(v.getContext(), textItem.getDetail());
+            }
+          }
+        });
       }
     }
 
