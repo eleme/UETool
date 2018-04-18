@@ -6,10 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class UETool {
 
@@ -43,12 +41,6 @@ public class UETool {
     Intent intent = new Intent(activity, TransparentActivity.class);
     activity.startActivity(intent);
     activity.overridePendingTransition(0, 0);
-  }
-
-  public void retraverse() {
-    for (Element element: elements) {
-      element.reset();
-    }
   }
 
   private void traverse(View view) {
