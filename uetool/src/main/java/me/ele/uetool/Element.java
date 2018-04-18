@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.facebook.drawee.view.DraweeView;
 import java.util.ArrayList;
 import java.util.List;
 import me.ele.uetool.items.EditTextItem;
@@ -65,6 +66,9 @@ public class Element {
           new TextItem("TextHint", Util.intToHexColor(textView.getCurrentHintTextColor())));
       items.add(new SwitchItem(this, SwitchItem.Type.TYPE_IS_BOLD, "IsBold",
           textView.getTypeface() != null ? textView.getTypeface().isBold() : false));
+    } else if (view instanceof DraweeView) {
+      items.add(new TitleItem("DraweeView"));
+      items.add(new TextItem("ImageURI", Util.getImageURI((DraweeView) view), true));
     } else if (view instanceof ImageView) {
       items.add(new TitleItem("ImageView"));
     } else {
@@ -72,7 +76,7 @@ public class Element {
     }
     items.add(new EditTextItem(this, EditTextItem.Type.TYPE_WIDTH, "Width（dp）",
         Util.px2dip(view.getContext(), view.getWidth()) + ""));
-    items.add(new EditTextItem(this, EditTextItem.Type.TYPE_HEIGHT,"Height（dp）",
+    items.add(new EditTextItem(this, EditTextItem.Type.TYPE_HEIGHT, "Height（dp）",
         Util.px2dip(view.getContext(), view.getHeight()) + ""));
     items.add(new TextItem("Alpha", view.getAlpha() + ""));
     items.add(new TextItem("Background", Util.getBackground(view)));

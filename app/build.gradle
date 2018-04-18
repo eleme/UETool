@@ -26,5 +26,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(':uetool')
+    implementation 'com.facebook.fresco:fresco:1.4.0'
 //    compile 'me.ele:uetool:1.0.0-SNAPSHOT'
 }
