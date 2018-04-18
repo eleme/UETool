@@ -27,12 +27,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
+import me.ele.uetool.items.AddMinusEditItem;
 import me.ele.uetool.items.EditTextItem;
 import me.ele.uetool.items.Item;
 import me.ele.uetool.items.SwitchItem;
 import me.ele.uetool.items.TextItem;
 import me.ele.uetool.items.TitleItem;
 
+import static me.ele.uetool.InfoDialog.Adapter.ViewType.TYPE_ADD_MINUS_EDIT;
 import static me.ele.uetool.InfoDialog.Adapter.ViewType.TYPE_EDIT_TEXT;
 import static me.ele.uetool.InfoDialog.Adapter.ViewType.TYPE_SWITCH;
 import static me.ele.uetool.InfoDialog.Adapter.ViewType.TYPE_TEXT;
@@ -98,32 +100,38 @@ public class InfoDialog extends Dialog {
           return EditTextViewHolder.newInstance(parent);
         case TYPE_SWITCH:
           return SwitchViewHolder.newInstance(parent);
+        case TYPE_ADD_MINUS_EDIT:
+          return AddMinusEditViewHolder.newInstance(parent);
       }
       return null;
     }
 
     @Override public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-      if (holder instanceof TitleViewHolder) {
+      if (holder.getClass() == TitleViewHolder.class) {
         ((TitleViewHolder) holder).bindView((TitleItem) getItem(position));
-      } else if (holder instanceof TextViewHolder) {
+      } else if (holder.getClass() == TextViewHolder.class) {
         ((TextViewHolder) holder).bindView((TextItem) getItem(position));
-      } else if (holder instanceof EditTextViewHolder) {
+      } else if (holder.getClass() == EditTextViewHolder.class) {
         ((EditTextViewHolder) holder).bindView((EditTextItem) getItem(position));
-      } else if (holder instanceof SwitchViewHolder) {
+      } else if (holder.getClass() == SwitchViewHolder.class) {
         ((SwitchViewHolder) holder).bindView((SwitchItem) getItem(position));
+      } else if (holder.getClass() == AddMinusEditViewHolder.class) {
+        ((AddMinusEditViewHolder) holder).bindView((AddMinusEditItem) getItem(position));
       }
     }
 
     @Override public int getItemViewType(int position) {
       Item item = getItem(position);
-      if (item instanceof TitleItem) {
+      if (item.getClass() == TitleItem.class) {
         return TYPE_TITLE;
-      } else if (item instanceof TextItem) {
+      } else if (item.getClass() == TextItem.class) {
         return TYPE_TEXT;
-      } else if (item instanceof EditTextItem) {
+      } else if (item.getClass() == EditTextItem.class) {
         return TYPE_EDIT_TEXT;
-      } else if (item instanceof SwitchItem) {
+      } else if (item.getClass() == SwitchItem.class) {
         return TYPE_SWITCH;
+      } else if (item.getClass() == AddMinusEditItem.class) {
+        return TYPE_ADD_MINUS_EDIT;
       }
       throw new RuntimeException("Unknown item type.");
     }
@@ -145,12 +153,14 @@ public class InfoDialog extends Dialog {
         TYPE_TEXT,
         TYPE_EDIT_TEXT,
         TYPE_SWITCH,
+        TYPE_ADD_MINUS_EDIT,
     })
     @Retention(RetentionPolicy.SOURCE) @interface ViewType {
       int TYPE_TITLE = 1;
       int TYPE_TEXT = 2;
       int TYPE_EDIT_TEXT = 3;
       int TYPE_SWITCH = 4;
+      int TYPE_ADD_MINUS_EDIT = 5;
     }
 
     public static abstract class BaseViewHolder<T extends Item> extends RecyclerView.ViewHolder {
@@ -216,13 +226,14 @@ public class InfoDialog extends Dialog {
       }
     }
 
-    public static class EditTextViewHolder extends BaseViewHolder<EditTextItem> {
+    public static class EditTextViewHolder<T extends EditTextItem>
+        extends BaseViewHolder<T> {
 
-      private TextView vName;
-      private EditText vDetail;
-      private View vColor;
+      protected TextView vName;
+      protected EditText vDetail;
+      @Nullable private View vColor;
 
-      private TextWatcher textWatcher = new TextWatcher() {
+      protected TextWatcher textWatcher = new TextWatcher() {
         @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
         }
@@ -261,6 +272,38 @@ public class InfoDialog extends Dialog {
                 view.getLayoutParams().height = height;
                 view.requestLayout();
               }
+            } else if (item.getType() == EditTextItem.Type.TYPE_PADDING_LEFT) {
+              View view = item.getElement().getView();
+              int paddingLeft = Util.dip2px(itemView.getContext(), Integer.valueOf(s.toString()));
+              if (Math.abs(paddingLeft - view.getPaddingLeft()) >= Util.dip2px(
+                  itemView.getContext(), 1)) {
+                view.setPadding(paddingLeft, view.getPaddingTop(), view.getPaddingRight(),
+                    view.getPaddingBottom());
+              }
+            } else if (item.getType() == EditTextItem.Type.TYPE_PADDING_RIGHT) {
+              View view = item.getElement().getView();
+              int paddingRight = Util.dip2px(itemView.getContext(), Integer.valueOf(s.toString()));
+              if (Math.abs(paddingRight - view.getPaddingRight()) >= Util.dip2px(
+                  itemView.getContext(), 1)) {
+                view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), paddingRight,
+                    view.getPaddingBottom());
+              }
+            } else if (item.getType() == EditTextItem.Type.TYPE_PADDING_TOP) {
+              View view = item.getElement().getView();
+              int paddingTop = Util.dip2px(itemView.getContext(), Integer.valueOf(s.toString()));
+              if (Math.abs(paddingTop - view.getPaddingTop()) >= Util.dip2px(
+                  itemView.getContext(), 1)) {
+                view.setPadding(view.getPaddingLeft(), paddingTop, view.getPaddingRight(),
+                    view.getPaddingBottom());
+              }
+            } else if (item.getType() == EditTextItem.Type.TYPE_PADDING_BOTTOM) {
+              View view = item.getElement().getView();
+              int paddingBottom = Util.dip2px(itemView.getContext(), Integer.valueOf(s.toString()));
+              if (Math.abs(paddingBottom - view.getPaddingBottom()) >= Util.dip2px(
+                  itemView.getContext(), 1)) {
+                view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(),
+                    paddingBottom);
+              }
             }
           } catch (Exception e) {
             e.printStackTrace();
@@ -285,16 +328,62 @@ public class InfoDialog extends Dialog {
             .inflate(R.layout.uet_cell_edit_text, parent, false));
       }
 
-      @Override public void bindView(final EditTextItem editTextItem) {
+      @Override public void bindView(final T editTextItem) {
         super.bindView(editTextItem);
         vName.setText(editTextItem.getName());
         vDetail.setText(editTextItem.getDetail());
-        try {
-          vColor.setBackgroundColor(Color.parseColor(editTextItem.getDetail()));
-          vColor.setVisibility(View.VISIBLE);
-        } catch (Exception e) {
-          vColor.setVisibility(View.GONE);
+        if (vColor != null) {
+          try {
+            vColor.setBackgroundColor(Color.parseColor(editTextItem.getDetail()));
+            vColor.setVisibility(View.VISIBLE);
+          } catch (Exception e) {
+            vColor.setVisibility(View.GONE);
+          }
         }
+      }
+    }
+
+    public static class AddMinusEditViewHolder extends EditTextViewHolder<AddMinusEditItem> {
+
+      private View vAdd;
+      private View vMinus;
+
+      public AddMinusEditViewHolder(View itemView) {
+        super(itemView);
+        vAdd = itemView.findViewById(R.id.add);
+        vMinus = itemView.findViewById(R.id.minus);
+        vAdd.setOnClickListener(new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            try {
+              int textSize = Integer.valueOf(vDetail.getText().toString());
+              vDetail.setText(String.valueOf(++textSize));
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+          }
+        });
+        vMinus.setOnClickListener(new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            try {
+              int textSize = Integer.valueOf(vDetail.getText().toString());
+              if (textSize > 0) {
+                vDetail.setText(String.valueOf(--textSize));
+              }
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+          }
+        });
+      }
+
+      public static AddMinusEditViewHolder newInstance(ViewGroup parent) {
+        return new AddMinusEditViewHolder(
+            LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.uet_cell_add_minus_edit, parent, false));
+      }
+
+      @Override public void bindView(AddMinusEditItem editTextItem) {
+        super.bindView(editTextItem);
       }
     }
 
