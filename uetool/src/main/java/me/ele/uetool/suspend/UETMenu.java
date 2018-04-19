@@ -80,6 +80,10 @@ public class UETMenu extends LinearLayout {
     }
   }
 
+  public View getMenuView() {
+    return vMenu;
+  }
+
   public interface CurrentTopActivityProvider {
     Activity provide();
   }
