@@ -1,5 +1,7 @@
 package me.ele.uetool.suspend;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
@@ -58,13 +60,21 @@ public class UETMenu extends LinearLayout {
 
   private void startAnim() {
     ensureAnim();
-    TimeInterpolator interpolator;
-    if (vSubMenuContainer.getTranslationX() > -vSubMenuContainer.getWidth()) {
-      interpolator = new ReverseInterpolator(defaultInterpolator);
-    } else {
-      interpolator = defaultInterpolator;
-    }
-    animator.setInterpolator(interpolator);
+    final boolean isOpen = vSubMenuContainer.getTranslationX() <= -vSubMenuContainer.getWidth();
+    animator.setInterpolator(
+        isOpen ? defaultInterpolator : new ReverseInterpolator(defaultInterpolator));
+    animator.removeAllListeners();
+    animator.addListener(new AnimatorListenerAdapter() {
+      @Override public void onAnimationStart(Animator animation) {
+        vSubMenuContainer.setVisibility(VISIBLE);
+      }
+
+      @Override public void onAnimationEnd(Animator animation) {
+        if (!isOpen) {
+          vSubMenuContainer.setVisibility(GONE);
+        }
+      }
+    });
     animator.start();
   }
 
@@ -78,6 +88,10 @@ public class UETMenu extends LinearLayout {
       });
       animator.setDuration(400);
     }
+  }
+
+  public View getMenuView() {
+    return vMenu;
   }
 
   public interface CurrentTopActivityProvider {
