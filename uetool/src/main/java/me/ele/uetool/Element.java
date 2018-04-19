@@ -79,6 +79,8 @@ public class Element {
         Util.px2dip(view.getContext(), view.getWidth()) + ""));
     items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_HEIGHT, "Height（dp）",
         Util.px2dip(view.getContext(), view.getHeight()) + ""));
+    items.add(new TextItem("Alpha", view.getAlpha() + ""));
+    items.add(new TextItem("Background", Util.getBackground(view)));
     items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_LEFT, "PaddingLeft（dp）",
         Util.px2dip(view.getContext(), view.getPaddingLeft()) + ""));
     items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_RIGHT, "PaddingRight（dp）",
@@ -87,8 +89,6 @@ public class Element {
         Util.px2dip(view.getContext(), view.getPaddingTop()) + ""));
     items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_BOTTOM, "PaddingBottom（dp）",
         Util.px2dip(view.getContext(), view.getPaddingBottom()) + ""));
-    items.add(new TextItem("Alpha", view.getAlpha() + ""));
-    items.add(new TextItem("Background", Util.getBackground(view)));
 
     return items;
   }

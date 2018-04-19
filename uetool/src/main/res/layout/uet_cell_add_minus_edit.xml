@@ -40,6 +40,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@null"
+        android:gravity="center"
+        android:minWidth="30dp"
         android:textColor="#fff"
         android:textSize="@dimen/uet_info_text_size"
         tools:text="112222"
