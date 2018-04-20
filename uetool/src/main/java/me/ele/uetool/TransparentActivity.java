@@ -1,5 +1,6 @@
 package me.ele.uetool;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
@@ -9,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import me.ele.uetool.function.GriddingLayout;
 import me.ele.uetool.function.EditAttrLayout;
+import me.ele.uetool.function.GriddingLayout;
 
 import static me.ele.uetool.TransparentActivity.Type.TYPE_EDIT_ATTR;
 import static me.ele.uetool.TransparentActivity.Type.TYPE_SHOW_GRDDING;
@@ -20,6 +21,7 @@ public class TransparentActivity extends AppCompatActivity {
 
   public static final String EXTRA_TYPE = "extra_type";
 
+  private Activity bindActivity;
   private ViewGroup vContainer;
   private int type;
 
@@ -29,6 +31,8 @@ public class TransparentActivity extends AppCompatActivity {
     Util.setStatusBarColor(getWindow(), Color.TRANSPARENT);
     Util.enableFullscreen(getWindow());
     setContentView(R.layout.uet_activity_transparent);
+
+    bindActivity = UETool.getInstance().getTargetActivity();
 
     vContainer = findViewById(R.id.container);
 
@@ -51,7 +55,7 @@ public class TransparentActivity extends AppCompatActivity {
 
   @Override public boolean dispatchTouchEvent(MotionEvent ev) {
     if (type == TYPE_SHOW_GRDDING) {
-      UETool.getInstance().getTargetActivity().dispatchTouchEvent(ev);
+      bindActivity.dispatchTouchEvent(ev);
     }
     return super.dispatchTouchEvent(ev);
   }
@@ -63,6 +67,10 @@ public class TransparentActivity extends AppCompatActivity {
 
   @Override protected void onDestroy() {
     super.onDestroy();
+    if (bindActivity.equals(UETool.getInstance().getTargetActivity())) {
+      UETool.getInstance().release();
+    }
+    bindActivity = null;
     UETool.getInstance().release();
   }
 
