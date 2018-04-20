@@ -75,7 +75,7 @@
         android:src="@mipmap/ic_launcher"
         />
 
-    <com.facebook.drawee.view.DraweeView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/drawee_view"
         android:layout_width="100dp"
         android:layout_height="100dp"

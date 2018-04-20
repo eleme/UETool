@@ -17,11 +17,8 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.drawable.ScalingUtils;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.DraweeView;
+import com.facebook.drawee.view.SimpleDraweeView;
 import java.lang.reflect.Field;
 import me.ele.uetool.suspend.UETMenu;
 import me.wangyuwei.uetool.sample.R;
@@ -30,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
   private WindowManager windowManager;
   private UETMenu uetMenu;
-  private DraweeView draweeView;
+  private SimpleDraweeView draweeView;
   private WindowManager.LayoutParams params = new WindowManager.LayoutParams();
   private int touchSlop;
 
@@ -142,17 +139,11 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void updateDraweeView() {
-    Fresco.initialize(this);
     DraweeController draweeController = Fresco.newDraweeControllerBuilder()
         .setUri(
             "https://tva4.sinaimg.cn/crop.0.0.1080.1080.180/6a6a919ejw8ew0ftebwmij20u00u0q4i.jpg")
         .setAutoPlayAnimations(true)
         .build();
-    GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(getResources());
-    GenericDraweeHierarchy hierarchy = builder.build();
-
-    hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FIT_XY);
-    draweeView.setHierarchy(hierarchy);
     draweeView.setController(draweeController);
   }
 }
