@@ -3,6 +3,7 @@ package me.ele.uetool.sample;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 public class AppContext extends Application {
 
@@ -19,6 +20,7 @@ public class AppContext extends Application {
 
   @Override public void onCreate() {
     super.onCreate();
+    Fresco.initialize(this);
     registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
       @Override public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         currentTopActivity = activity;
