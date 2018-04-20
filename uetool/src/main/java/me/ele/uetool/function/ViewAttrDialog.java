@@ -1,4 +1,4 @@
-package me.ele.uetool;
+package me.ele.uetool.function;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -27,6 +27,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
+import me.ele.uetool.Element;
+import me.ele.uetool.R;
+import me.ele.uetool.Util;
 import me.ele.uetool.items.AddMinusEditItem;
 import me.ele.uetool.items.EditTextItem;
 import me.ele.uetool.items.Item;
@@ -34,18 +37,18 @@ import me.ele.uetool.items.SwitchItem;
 import me.ele.uetool.items.TextItem;
 import me.ele.uetool.items.TitleItem;
 
-import static me.ele.uetool.InfoDialog.Adapter.ViewType.TYPE_ADD_MINUS_EDIT;
-import static me.ele.uetool.InfoDialog.Adapter.ViewType.TYPE_EDIT_TEXT;
-import static me.ele.uetool.InfoDialog.Adapter.ViewType.TYPE_SWITCH;
-import static me.ele.uetool.InfoDialog.Adapter.ViewType.TYPE_TEXT;
-import static me.ele.uetool.InfoDialog.Adapter.ViewType.TYPE_TITLE;
+import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_ADD_MINUS_EDIT;
+import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_EDIT_TEXT;
+import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_SWITCH;
+import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_TEXT;
+import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_TITLE;
 
-public class InfoDialog extends Dialog {
+public class ViewAttrDialog extends Dialog {
 
   private RecyclerView vList;
   private Adapter adapter = new Adapter();
 
-  public InfoDialog(Context context) {
+  public ViewAttrDialog(Context context) {
     super(context, R.style.uet_Theme_Holo_Dialog_background_Translecent);
   }
 

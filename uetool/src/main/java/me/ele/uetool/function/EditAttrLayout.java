@@ -1,4 +1,4 @@
-package me.ele.uetool;
+package me.ele.uetool.function;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,11 +8,10 @@ import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
-import java.util.ArrayList;
-import java.util.List;
+import me.ele.uetool.Element;
+import me.ele.uetool.Util;
 
-public class MaskLayout extends View {
+public class EditAttrLayout extends CollectViewsLayout {
 
   private final int SIDE_LINE_SPACE = Util.dip2px(getContext(), 3);
   private final int SIDE_TEXT_SPACE = Util.dip2px(getContext(), 6);
@@ -35,16 +34,16 @@ public class MaskLayout extends View {
 
   private Element element;
 
-  public MaskLayout(Context context) {
+  public EditAttrLayout(Context context) {
     super(context);
   }
 
-  public MaskLayout(Context context,
+  public EditAttrLayout(Context context,
       @Nullable AttributeSet attrs) {
     super(context, attrs);
   }
 
-  public MaskLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+  public EditAttrLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
   }
 
@@ -74,28 +73,24 @@ public class MaskLayout extends View {
         break;
       case MotionEvent.ACTION_UP:
 
-        List<Element> validList = new ArrayList<>();
-
         int x = (int) event.getX();
         int y = (int) event.getY();
 
-        for (Element element : UETool.getInstance().getElements()) {
+        for (int i = elements.size() - 1; i >= 0; i--) {
+          final Element element = elements.get(i);
           if (element.getRect().contains(x, y)) {
-            validList.add(element);
+            this.element = element;
+            invalidate();
+            ViewAttrDialog dialog = new ViewAttrDialog(getContext());
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+              @Override public void onDismiss(DialogInterface dialog) {
+                element.reset();
+                invalidate();
+              }
+            });
+            dialog.show(element);
+            break;
           }
-        }
-
-        if (validList.size() > 0) {
-          element = validList.get(validList.size() - 1);
-          invalidate();
-          InfoDialog dialog = new InfoDialog(getContext());
-          dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override public void onDismiss(DialogInterface dialog) {
-              element.reset();
-              invalidate();
-            }
-          });
-          dialog.show(element);
         }
 
         break;

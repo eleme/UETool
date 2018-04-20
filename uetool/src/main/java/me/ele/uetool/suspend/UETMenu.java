@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import me.ele.uetool.R;
+import me.ele.uetool.TransparentActivity;
 import me.ele.uetool.UETool;
 
 public class UETMenu extends LinearLayout {
@@ -35,13 +35,14 @@ public class UETMenu extends LinearLayout {
 
     subMenus.add(new UETSubMenu.SubMenu("捕捉控件", R.drawable.uet_edit_attr, new OnClickListener() {
       @Override public void onClick(View v) {
-        UETool.getInstance().open(provider.provide());
+        UETool.getInstance().open(provider.provide(), TransparentActivity.Type.TYPE_EDIT_ATTR);
       }
     }));
     subMenus.add(new UETSubMenu.SubMenu("网格栅栏", R.drawable.uet_show_gridding,
         new OnClickListener() {
           @Override public void onClick(View v) {
-            Toast.makeText(getContext(), "敬请期待", Toast.LENGTH_SHORT).show();
+            UETool.getInstance()
+                .open(provider.provide(), TransparentActivity.Type.TYPE_SHOW_GRDDING);
           }
         }));
 

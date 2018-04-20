@@ -2,18 +2,16 @@ package me.ele.uetool;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.view.View;
-import android.view.ViewGroup;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+
+import static me.ele.uetool.TransparentActivity.Type.TYPE_UNKNOWN;
 
 public class UETool {
 
   private static volatile UETool instance;
   private Set<String> filterClasses = new HashSet<>();
-  private List<Element> elements = new ArrayList<>();
+  private Activity targetActivity;
 
   private UETool() {
 
@@ -35,34 +33,27 @@ public class UETool {
   }
 
   public void open(final Activity activity) {
+    open(activity, TYPE_UNKNOWN);
+  }
+
+  public void open(final Activity activity, @TransparentActivity.Type int type) {
     if (activity.getClass() == TransparentActivity.class) return;
-    elements.clear();
-    traverse(activity.findViewById(android.R.id.content));
+    targetActivity = activity;
     Intent intent = new Intent(activity, TransparentActivity.class);
+    intent.putExtra(TransparentActivity.EXTRA_TYPE, type);
     activity.startActivity(intent);
     activity.overridePendingTransition(0, 0);
   }
 
-  private void traverse(View view) {
-    if (filterClasses.contains(view.getClass().getName())) return;
-    if (view.getVisibility() != View.VISIBLE) return;
-    if (view.getAlpha() == 0) return;
-    if (!view.isEnabled()) return;
-    if ("DESABLE_UETOOL".equals(view.getTag())) return;
-    elements.add(new Element(view));
-    if (view instanceof ViewGroup) {
-      ViewGroup parent = (ViewGroup) view;
-      for (int i = 0; i < parent.getChildCount(); i++) {
-        traverse(parent.getChildAt(i));
-      }
-    }
+  public Set<String> getFilterClasses() {
+    return filterClasses;
   }
 
-  public List<Element> getElements() {
-    return elements;
+  public Activity getTargetActivity() {
+    return targetActivity;
   }
 
-  public void clear() {
-    elements.clear();
+  public void release() {
+    targetActivity = null;
   }
 }
