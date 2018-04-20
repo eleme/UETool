@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
     uetMenu = new UETMenu(this, new UETMenu.CurrentTopActivityProvider() {
       @Override public Activity provide() {
-        return MainActivity.this;
+        return AppContext.getContext().getCurrentTopActivity();
       }
     });
     uetMenu.getMenuView().setOnTouchListener(new View.OnTouchListener() {
@@ -90,6 +90,13 @@ public class MainActivity extends AppCompatActivity {
     addMenu();
 
     updateDraweeView();
+
+    findViewById(R.id.click).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+        startActivity(intent);
+      }
+    });
   }
 
   @TargetApi(Build.VERSION_CODES.M) private void requestPermission(Context context) {
