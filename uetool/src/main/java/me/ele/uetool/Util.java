@@ -16,11 +16,11 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
+import com.facebook.common.internal.Supplier;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
 import com.facebook.drawee.view.DraweeView;
 import java.lang.reflect.Field;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static android.view.View.NO_ID;
 
@@ -143,20 +143,39 @@ public class Util {
   }
 
   public static String getImageURI(DraweeView draweeView) {
+    PipelineDraweeControllerBuilder builder = getFrescoControllerBuilder(draweeView);
+    if (builder != null) {
+      return builder.getImageRequest().getSourceUri().toString();
+    }
+    return "";
+  }
+
+  public static String isSupportAnimation(DraweeView draweeView) {
+    PipelineDraweeControllerBuilder builder = getFrescoControllerBuilder(draweeView);
+    if (builder != null) {
+      return String.valueOf(builder.getAutoPlayAnimations()).toUpperCase();
+    }
+    return "";
+  }
+
+  private static PipelineDraweeControllerBuilder getFrescoControllerBuilder(DraweeView draweeView) {
     try {
       PipelineDraweeController controller = (PipelineDraweeController) draweeView.getController();
       Field mDataSourceSupplierFiled =
           PipelineDraweeController.class.getDeclaredField("mDataSourceSupplier");
       mDataSourceSupplierFiled.setAccessible(true);
-      Pattern p = Pattern.compile("uri=([^,]+)");
-      Matcher matcher = p.matcher(mDataSourceSupplierFiled.get(controller).toString());
-      if (matcher.find()) {
-        return matcher.group(1);
-      }
+      Supplier supplier = (Supplier) mDataSourceSupplierFiled.get(controller);
+      Field mAutoField =
+          Class.forName("com.facebook.drawee.controller.AbstractDraweeControllerBuilder$2")
+              .getDeclaredField("this$0");
+      mAutoField.setAccessible(true);
+      PipelineDraweeControllerBuilder builder =
+          (PipelineDraweeControllerBuilder) mAutoField.get(supplier);
+      return builder;
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return "";
+    return null;
   }
 
   public static void clipText(Context context, String clipText) {

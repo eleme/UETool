@@ -70,6 +70,7 @@ public class Element {
     } else if (view instanceof DraweeView) {
       items.add(new TitleItem("DraweeView"));
       items.add(new TextItem("ImageURI", Util.getImageURI((DraweeView) view), true));
+      items.add(new TextItem("SupportAnimation", Util.isSupportAnimation((DraweeView) view)));
     } else if (view instanceof ImageView) {
       items.add(new TitleItem("ImageView"));
     } else {
