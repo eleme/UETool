@@ -45,6 +45,12 @@ public class UETMenu extends LinearLayout {
                 .open(provider.provide(), TransparentActivity.Type.TYPE_SHOW_GRDDING);
           }
         }));
+    subMenus.add(new UETSubMenu.SubMenu("相对位置", R.drawable.uet_relative_position,
+        new OnClickListener() {
+          @Override public void onClick(View v) {
+            UETool.getInstance().open(provider.provide());
+          }
+        }));
 
     for (UETSubMenu.SubMenu subMenu : subMenus) {
       UETSubMenu uetSubMenu = new UETSubMenu(getContext());

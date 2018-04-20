@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
   private void updateDraweeView() {
     DraweeController draweeController = Fresco.newDraweeControllerBuilder()
         .setUri(
-            "https://tva4.sinaimg.cn/crop.0.0.1080.1080.180/6a6a919ejw8ew0ftebwmij20u00u0q4i.jpg")
+            "http://p0.ifengimg.com/pmop/2017/0823/3B8D6E5B199841F33C1FFB62D849C1D89F6BAA2B_size79_w240_h240.gif")
         .setAutoPlayAnimations(true)
         .build();
     draweeView.setController(draweeController);
