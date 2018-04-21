@@ -21,7 +21,7 @@ public class TransparentActivity extends AppCompatActivity {
 
   public static final String EXTRA_TYPE = "extra_type";
 
-  private Activity bindActivity;
+  private Activity bindActivity = UETool.getInstance().getTargetActivity();
   private ViewGroup vContainer;
   private int type;
 
@@ -31,8 +31,6 @@ public class TransparentActivity extends AppCompatActivity {
     Util.setStatusBarColor(getWindow(), Color.TRANSPARENT);
     Util.enableFullscreen(getWindow());
     setContentView(R.layout.uet_activity_transparent);
-
-    bindActivity = UETool.getInstance().getTargetActivity();
 
     vContainer = findViewById(R.id.container);
 
@@ -67,9 +65,6 @@ public class TransparentActivity extends AppCompatActivity {
 
   @Override protected void onDestroy() {
     super.onDestroy();
-    if (bindActivity.equals(UETool.getInstance().getTargetActivity())) {
-      UETool.getInstance().release();
-    }
     bindActivity = null;
     UETool.getInstance().release();
   }

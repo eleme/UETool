@@ -4,9 +4,11 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -19,6 +21,8 @@ import android.widget.Toast;
 import com.facebook.common.internal.Supplier;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
+import com.facebook.drawee.drawable.FadeDrawable;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.view.DraweeView;
 import java.lang.reflect.Field;
 
@@ -156,6 +160,25 @@ public class Util {
       return String.valueOf(builder.getAutoPlayAnimations()).toUpperCase();
     }
     return "";
+  }
+
+  public static Bitmap getPlaceHolderBitmap(DraweeView draweeView) {
+    GenericDraweeHierarchy hierarchy = (GenericDraweeHierarchy) draweeView.getHierarchy();
+    if (hierarchy.hasPlaceholderImage()) {
+      try {
+        Field mFadeDrawableField = hierarchy.getClass().getDeclaredField("mFadeDrawable");
+        mFadeDrawableField.setAccessible(true);
+        FadeDrawable fadeDrawable = (FadeDrawable) mFadeDrawableField.get(hierarchy);
+        Field mLayersField = fadeDrawable.getClass().getDeclaredField("mLayers");
+        mLayersField.setAccessible(true);
+        Drawable[] layers = (Drawable[]) mLayersField.get(fadeDrawable);
+        // PLACEHOLDER_IMAGE_INDEX == 1
+        return ((BitmapDrawable) layers[1]).getBitmap();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+    return null;
   }
 
   private static PipelineDraweeControllerBuilder getFrescoControllerBuilder(DraweeView draweeView) {

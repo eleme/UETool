@@ -39,51 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     touchSlop = ViewConfiguration.get(this).getScaledTouchSlop();
 
-    windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-    uetMenu = new UETMenu(this, new UETMenu.CurrentTopActivityProvider() {
-      @Override public Activity provide() {
-        return AppContext.getContext().getCurrentTopActivity();
-      }
-    });
-    uetMenu.getMenuView().setOnTouchListener(new View.OnTouchListener() {
-      private float downX, downY;
-      private float lastY;
-
-      @Override
-      public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()) {
-          case MotionEvent.ACTION_DOWN:
-            downX = event.getRawX();
-            downY = event.getRawY();
-            lastY = downY;
-            break;
-          case MotionEvent.ACTION_MOVE:
-            params.y += event.getRawY() - lastY;
-            windowManager.updateViewLayout(uetMenu, params);
-            lastY = event.getRawY();
-            break;
-          case MotionEvent.ACTION_UP:
-            if (Math.abs(event.getRawX() - downX) < touchSlop
-                && Math.abs(event.getRawY() - downY) < touchSlop) {
-              try {
-                Field field = View.class.getDeclaredField("mListenerInfo");
-                field.setAccessible(true);
-                Object object = field.get(uetMenu.getMenuView());
-                field = object.getClass().getDeclaredField("mOnClickListener");
-                field.setAccessible(true);
-                object = field.get(object);
-                if (object != null && object instanceof View.OnClickListener) {
-                  ((View.OnClickListener) object).onClick(uetMenu.getMenuView());
-                }
-              } catch (Exception e) {
-                e.printStackTrace();
-              }
-            }
-            break;
-        }
-        return true;
-      }
-    });
+    windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
     addMenu();
 
     updateDraweeView();
@@ -131,11 +87,57 @@ public class MainActivity extends AppCompatActivity {
         return;
       }
     }
+    uetMenu = new UETMenu(this, new UETMenu.CurrentTopActivityProvider() {
+      @Override public Activity provide() {
+        return AppContext.getContext().getCurrentTopActivity();
+      }
+    });
+    uetMenu.getMenuView().setOnTouchListener(new View.OnTouchListener() {
+      private float downX, downY;
+      private float lastY;
+
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+          case MotionEvent.ACTION_DOWN:
+            downX = event.getRawX();
+            downY = event.getRawY();
+            lastY = downY;
+            break;
+          case MotionEvent.ACTION_MOVE:
+            params.y += event.getRawY() - lastY;
+            windowManager.updateViewLayout(uetMenu, params);
+            lastY = event.getRawY();
+            break;
+          case MotionEvent.ACTION_UP:
+            if (Math.abs(event.getRawX() - downX) < touchSlop
+                && Math.abs(event.getRawY() - downY) < touchSlop) {
+              try {
+                Field field = View.class.getDeclaredField("mListenerInfo");
+                field.setAccessible(true);
+                Object object = field.get(uetMenu.getMenuView());
+                field = object.getClass().getDeclaredField("mOnClickListener");
+                field.setAccessible(true);
+                object = field.get(object);
+                if (object != null && object instanceof View.OnClickListener) {
+                  ((View.OnClickListener) object).onClick(uetMenu.getMenuView());
+                }
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
+            }
+            break;
+        }
+        return true;
+      }
+    });
     windowManager.addView(uetMenu, getLayoutParams());
   }
 
   private void removeMenu() {
-    windowManager.removeView(uetMenu);
+    if (uetMenu != null) {
+      windowManager.removeView(uetMenu);
+    }
   }
 
   private void updateDraweeView() {
@@ -144,6 +146,9 @@ public class MainActivity extends AppCompatActivity {
             "http://p0.ifengimg.com/pmop/2017/0823/3B8D6E5B199841F33C1FFB62D849C1D89F6BAA2B_size79_w240_h240.gif")
         .setAutoPlayAnimations(true)
         .build();
+    draweeView.getHierarchy().setFailureImage(R.mipmap.ic_launcher);
+    draweeView.getHierarchy().setPlaceholderImage(R.mipmap.ic_placeholder);
+
     draweeView.setController(draweeController);
   }
 }

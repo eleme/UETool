@@ -2,7 +2,7 @@ package me.ele.uetool.items;
 
 import me.ele.uetool.Element;
 
-public class ElementItem implements Item {
+public class ElementItem extends Item {
 
   private Element element;
 

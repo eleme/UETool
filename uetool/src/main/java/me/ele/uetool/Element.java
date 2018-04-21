@@ -5,9 +5,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.facebook.drawee.view.DraweeView;
-import java.util.ArrayList;
 import java.util.List;
 import me.ele.uetool.items.AddMinusEditItem;
+import me.ele.uetool.items.BitmapItem;
 import me.ele.uetool.items.EditTextItem;
 import me.ele.uetool.items.Item;
 import me.ele.uetool.items.SwitchItem;
@@ -47,7 +47,7 @@ public class Element {
   }
 
   public List<Item> getAttrs() {
-    List<Item> items = new ArrayList<>();
+    List<Item> items = new ItemArrayList<>();
     items.add(new TitleItem("COMMON"));
     items.add(new TextItem("Class", view.getClass().getName()));
     items.add(new TextItem("Id", Util.getResId(view)));
@@ -71,6 +71,7 @@ public class Element {
       items.add(new TitleItem("DraweeView"));
       items.add(new TextItem("ImageURI", Util.getImageURI((DraweeView) view), true));
       items.add(new TextItem("SupportAnimation", Util.isSupportAnimation((DraweeView) view)));
+      items.add(new BitmapItem("PlaceHolderImage", Util.getPlaceHolderBitmap((DraweeView) view)));
     } else if (view instanceof ImageView) {
       items.add(new TitleItem("ImageView"));
     } else {
