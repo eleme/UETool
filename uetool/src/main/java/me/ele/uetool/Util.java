@@ -22,6 +22,7 @@ import com.facebook.common.internal.Supplier;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
 import com.facebook.drawee.drawable.FadeDrawable;
+import com.facebook.drawee.drawable.ScaleTypeDrawable;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.view.DraweeView;
 import java.lang.reflect.Field;
@@ -173,7 +174,12 @@ public class Util {
         mLayersField.setAccessible(true);
         Drawable[] layers = (Drawable[]) mLayersField.get(fadeDrawable);
         // PLACEHOLDER_IMAGE_INDEX == 1
-        return ((BitmapDrawable) layers[1]).getBitmap();
+        Drawable drawable = layers[1];
+        if (drawable instanceof BitmapDrawable) {
+          return ((BitmapDrawable) drawable).getBitmap();
+        } else if (drawable instanceof ScaleTypeDrawable) {
+          return ((BitmapDrawable) drawable.getCurrent()).getBitmap();
+        }
       } catch (Exception e) {
         e.printStackTrace();
       }
