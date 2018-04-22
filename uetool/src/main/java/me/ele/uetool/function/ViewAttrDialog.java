@@ -2,6 +2,7 @@ package me.ele.uetool.function;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -31,6 +33,7 @@ import me.ele.uetool.Element;
 import me.ele.uetool.R;
 import me.ele.uetool.Util;
 import me.ele.uetool.items.AddMinusEditItem;
+import me.ele.uetool.items.BitmapItem;
 import me.ele.uetool.items.EditTextItem;
 import me.ele.uetool.items.Item;
 import me.ele.uetool.items.SwitchItem;
@@ -38,6 +41,7 @@ import me.ele.uetool.items.TextItem;
 import me.ele.uetool.items.TitleItem;
 
 import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_ADD_MINUS_EDIT;
+import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_BITMAP;
 import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_EDIT_TEXT;
 import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_SWITCH;
 import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_TEXT;
@@ -105,6 +109,8 @@ public class ViewAttrDialog extends Dialog {
           return SwitchViewHolder.newInstance(parent);
         case TYPE_ADD_MINUS_EDIT:
           return AddMinusEditViewHolder.newInstance(parent);
+        case TYPE_BITMAP:
+          return BitmapInfoViewHolder.newInstance(parent);
       }
       return null;
     }
@@ -120,6 +126,8 @@ public class ViewAttrDialog extends Dialog {
         ((SwitchViewHolder) holder).bindView((SwitchItem) getItem(position));
       } else if (holder.getClass() == AddMinusEditViewHolder.class) {
         ((AddMinusEditViewHolder) holder).bindView((AddMinusEditItem) getItem(position));
+      } else if (holder.getClass() == BitmapInfoViewHolder.class) {
+        ((BitmapInfoViewHolder) holder).bindView((BitmapItem) getItem(position));
       }
     }
 
@@ -135,6 +143,8 @@ public class ViewAttrDialog extends Dialog {
         return TYPE_SWITCH;
       } else if (item.getClass() == AddMinusEditItem.class) {
         return TYPE_ADD_MINUS_EDIT;
+      } else if (item.getClass() == BitmapItem.class) {
+        return TYPE_BITMAP;
       }
       throw new RuntimeException("Unknown item type.");
     }
@@ -157,6 +167,7 @@ public class ViewAttrDialog extends Dialog {
         TYPE_EDIT_TEXT,
         TYPE_SWITCH,
         TYPE_ADD_MINUS_EDIT,
+        TYPE_BITMAP,
     })
     @Retention(RetentionPolicy.SOURCE) @interface ViewType {
       int TYPE_TITLE = 1;
@@ -164,6 +175,7 @@ public class ViewAttrDialog extends Dialog {
       int TYPE_EDIT_TEXT = 3;
       int TYPE_SWITCH = 4;
       int TYPE_ADD_MINUS_EDIT = 5;
+      int TYPE_BITMAP = 6;
     }
 
     public static abstract class BaseViewHolder<T extends Item> extends RecyclerView.ViewHolder {
@@ -426,6 +438,35 @@ public class ViewAttrDialog extends Dialog {
 
         vName.setText(switchItem.getName());
         vSwitch.setChecked(switchItem.isChecked());
+      }
+    }
+
+    public static class BitmapInfoViewHolder extends BaseViewHolder<BitmapItem> {
+
+      private TextView vName;
+      private ImageView vImage;
+      private TextView vInfo;
+
+      public BitmapInfoViewHolder(View itemView) {
+        super(itemView);
+
+        vName = itemView.findViewById(R.id.name);
+        vImage = itemView.findViewById(R.id.image);
+        vInfo = itemView.findViewById(R.id.info);
+      }
+
+      public static BitmapInfoViewHolder newInstance(ViewGroup parent) {
+        return new BitmapInfoViewHolder(LayoutInflater.from(parent.getContext())
+            .inflate(R.layout.uet_cell_bitmap_info, parent, false));
+      }
+
+      @Override public void bindView(BitmapItem bitmapItem) {
+        super.bindView(bitmapItem);
+
+        vName.setText(bitmapItem.getName());
+        Bitmap bitmap = bitmapItem.getBitmap();
+        vImage.setImageBitmap(bitmap);
+        vInfo.setText(bitmap.getWidth() + "*" + bitmap.getHeight());
       }
     }
   }

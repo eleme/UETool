@@ -1,4 +1,8 @@
 package me.ele.uetool.items;
 
-public interface Item {
+public class Item {
+
+  public boolean isValid() {
+    return true;
+  }
 }

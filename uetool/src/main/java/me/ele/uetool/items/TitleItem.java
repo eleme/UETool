@@ -1,6 +1,6 @@
 package me.ele.uetool.items;
 
-public class TitleItem implements Item {
+public class TitleItem extends Item {
 
   private String title;
 

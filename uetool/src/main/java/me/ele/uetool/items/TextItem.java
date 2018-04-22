@@ -1,6 +1,8 @@
 package me.ele.uetool.items;
 
-public class TextItem implements Item {
+import android.text.TextUtils;
+
+public class TextItem extends Item {
 
   private String name;
   private String detail;
@@ -27,5 +29,12 @@ public class TextItem implements Item {
 
   public boolean isEnableCopy() {
     return enableCopy;
+  }
+
+  @Override public boolean isValid() {
+    if (TextUtils.isEmpty(detail)) {
+      return false;
+    }
+    return true;
   }
 }
