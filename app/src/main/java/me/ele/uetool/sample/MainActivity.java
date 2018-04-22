@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         .setAutoPlayAnimations(true)
         .build();
     draweeView.getHierarchy().setFailureImage(R.mipmap.ic_launcher);
-    draweeView.getHierarchy().setPlaceholderImage(R.mipmap.ic_placeholder);
+    //draweeView.getHierarchy().setPlaceholderImage(R.mipmap.ic_placeholder);
 
     draweeView.setController(draweeController);
   }

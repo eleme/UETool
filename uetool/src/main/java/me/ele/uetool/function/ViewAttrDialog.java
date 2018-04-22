@@ -466,7 +466,7 @@ public class ViewAttrDialog extends Dialog {
         vName.setText(bitmapItem.getName());
         Bitmap bitmap = bitmapItem.getBitmap();
         vImage.setImageBitmap(bitmap);
-        vInfo.setText(bitmap.getWidth() + "*" + bitmap.getHeight());
+        vInfo.setText(bitmap.getWidth() + "px*" + bitmap.getHeight() + "px");
       }
     }
   }
