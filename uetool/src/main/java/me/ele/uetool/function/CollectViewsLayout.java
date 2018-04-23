@@ -1,6 +1,8 @@
 package me.ele.uetool.function;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -37,7 +39,7 @@ public class CollectViewsLayout extends View {
     elements.clear();
   }
 
-  public void traverse(View view) {
+  private void traverse(View view) {
     if (UETool.getInstance().getFilterClasses().contains(view.getClass().getName())) return;
     if (view.getVisibility() != View.VISIBLE) return;
     if (view.getAlpha() == 0) return;
@@ -50,5 +52,25 @@ public class CollectViewsLayout extends View {
         traverse(parent.getChildAt(i));
       }
     }
+  }
+
+  protected Element getTargetElement(float x, float y) {
+    for (int i = elements.size() - 1; i >= 0; i--) {
+      final Element element = elements.get(i);
+      if (element.getRect().contains((int) x, (int) y)) {
+        return element;
+      }
+    }
+    return null;
+  }
+
+  protected float getTextHeight(String text, Paint paint) {
+    Rect rect = new Rect();
+    paint.getTextBounds(text, 0, text.length(), rect);
+    return rect.height();
+  }
+
+  protected float getTextWidth(String text, Paint paint) {
+    return paint.measureText(text);
   }
 }
