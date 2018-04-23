@@ -12,8 +12,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import me.ele.uetool.function.EditAttrLayout;
 import me.ele.uetool.function.GriddingLayout;
+import me.ele.uetool.function.RelativePositionLayout;
 
 import static me.ele.uetool.TransparentActivity.Type.TYPE_EDIT_ATTR;
+import static me.ele.uetool.TransparentActivity.Type.TYPE_RELATIVE_POSITION;
 import static me.ele.uetool.TransparentActivity.Type.TYPE_SHOW_GRDDING;
 import static me.ele.uetool.TransparentActivity.Type.TYPE_UNKNOWN;
 
@@ -43,6 +45,9 @@ public class TransparentActivity extends AppCompatActivity {
         break;
       case TYPE_SHOW_GRDDING:
         vContainer.addView(new GriddingLayout(this));
+        break;
+      case TYPE_RELATIVE_POSITION:
+        vContainer.addView(new RelativePositionLayout(this));
         break;
       default:
         Toast.makeText(this, "敬请期待", Toast.LENGTH_SHORT).show();
@@ -78,10 +83,12 @@ public class TransparentActivity extends AppCompatActivity {
       TYPE_UNKNOWN,
       TYPE_EDIT_ATTR,
       TYPE_SHOW_GRDDING,
+      TYPE_RELATIVE_POSITION,
   })
   @Retention(RetentionPolicy.SOURCE) public @interface Type {
     int TYPE_UNKNOWN = -1;
     int TYPE_EDIT_ATTR = 1;
     int TYPE_SHOW_GRDDING = 2;
+    int TYPE_RELATIVE_POSITION = 3;
   }
 }

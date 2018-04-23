@@ -73,38 +73,22 @@ public class EditAttrLayout extends CollectViewsLayout {
         break;
       case MotionEvent.ACTION_UP:
 
-        int x = (int) event.getX();
-        int y = (int) event.getY();
-
-        for (int i = elements.size() - 1; i >= 0; i--) {
-          final Element element = elements.get(i);
-          if (element.getRect().contains(x, y)) {
-            this.element = element;
-            invalidate();
-            ViewAttrDialog dialog = new ViewAttrDialog(getContext());
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-              @Override public void onDismiss(DialogInterface dialog) {
-                element.reset();
-                invalidate();
-              }
-            });
-            dialog.show(element);
-            break;
-          }
+        final Element element = getTargetElement(event.getX(), event.getY());
+        if (element != null) {
+          this.element = element;
+          invalidate();
+          ViewAttrDialog dialog = new ViewAttrDialog(getContext());
+          dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override public void onDismiss(DialogInterface dialog) {
+              element.reset();
+              invalidate();
+            }
+          });
+          dialog.show(element);
         }
 
         break;
     }
     return true;
-  }
-
-  private float getTextHeight(String text, Paint paint) {
-    Rect rect = new Rect();
-    paint.getTextBounds(text, 0, text.length(), rect);
-    return rect.height();
-  }
-
-  private float getTextWidth(String text, Paint paint) {
-    return paint.measureText(text);
   }
 }
