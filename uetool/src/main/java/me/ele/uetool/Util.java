@@ -17,6 +17,7 @@ import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.Toast;
 import com.facebook.common.internal.Supplier;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
@@ -201,6 +202,16 @@ public class Util {
       PipelineDraweeControllerBuilder builder =
           (PipelineDraweeControllerBuilder) mAutoField.get(supplier);
       return builder;
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  public static Bitmap getImageViewBitmap(ImageView imageView) {
+    try {
+      BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+      return drawable.getBitmap();
     } catch (Exception e) {
       e.printStackTrace();
     }

@@ -74,6 +74,7 @@ public class Element {
       items.add(new BitmapItem("PlaceHolderImage", Util.getPlaceHolderBitmap((DraweeView) view)));
     } else if (view instanceof ImageView) {
       items.add(new TitleItem("ImageView"));
+      items.add(new BitmapItem("Bitmap", Util.getImageViewBitmap((ImageView) view)));
     } else {
       items.add(new TitleItem("VIEW"));
     }
