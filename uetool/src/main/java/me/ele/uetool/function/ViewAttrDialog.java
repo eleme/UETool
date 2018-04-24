@@ -443,6 +443,8 @@ public class ViewAttrDialog extends Dialog {
 
     public static class BitmapInfoViewHolder extends BaseViewHolder<BitmapItem> {
 
+      private final int IMAGE_HEIGHT = Util.dip2px(itemView.getContext(), 58);
+
       private TextView vName;
       private ImageView vImage;
       private TextView vInfo;
@@ -465,6 +467,13 @@ public class ViewAttrDialog extends Dialog {
 
         vName.setText(bitmapItem.getName());
         Bitmap bitmap = bitmapItem.getBitmap();
+
+        int height = Math.min(bitmap.getHeight(), IMAGE_HEIGHT);
+        int width = (int) ((float) height / bitmap.getHeight() * bitmap.getWidth());
+
+        ViewGroup.LayoutParams layoutParams = vImage.getLayoutParams();
+        layoutParams.width = width;
+        layoutParams.height = height;
         vImage.setImageBitmap(bitmap);
         vInfo.setText(bitmap.getWidth() + "px*" + bitmap.getHeight() + "px");
       }

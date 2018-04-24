@@ -15,12 +15,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.NinePatchDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.facebook.common.internal.Supplier;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
@@ -212,6 +214,28 @@ public class Util {
     return null;
   }
 
+  public static Bitmap[] getTextViewDrawableBitmap(TextView textView) {
+    Bitmap[] bitmaps = new Bitmap[2];
+    try {
+      Field mDrawablesField = TextView.class.getDeclaredField("mDrawables");
+      mDrawablesField.setAccessible(true);
+      Field mDrawableLeftInitialFiled = Class.forName("android.widget.TextView$Drawables")
+          .getDeclaredField("mDrawableLeftInitial");
+      mDrawableLeftInitialFiled.setAccessible(true);
+      bitmaps[0] = ((BitmapDrawable) mDrawableLeftInitialFiled.get(
+          mDrawablesField.get(textView))).getBitmap();
+
+      Field mDrawableRightInitialFiled = Class.forName("android.widget.TextView$Drawables")
+          .getDeclaredField("mDrawableRightInitial");
+      mDrawableRightInitialFiled.setAccessible(true);
+      bitmaps[1] = ((BitmapDrawable) mDrawableRightInitialFiled.get(
+          mDrawablesField.get(textView))).getBitmap();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return bitmaps;
+  }
+
   public static Bitmap getImageViewBitmap(ImageView imageView) {
     return getDrawableBitmap(imageView.getDrawable());
   }
@@ -235,6 +259,12 @@ public class Util {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
           return ((BitmapDrawable) ((ClipDrawable) drawable).getDrawable()).getBitmap();
         }
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    } else if (drawable instanceof StateListDrawable) {
+      try {
+        return ((BitmapDrawable) drawable.getCurrent()).getBitmap();
       } catch (Exception e) {
         e.printStackTrace();
       }

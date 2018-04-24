@@ -97,6 +97,16 @@
         android:background="@mipmap/ic_tip"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:drawableLeft="@mipmap/ic_up_vote"
+        android:drawablePadding="5dp"
+        android:drawableRight="@mipmap/ic_down_vote"
+        android:text="hello world"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="500dp"
