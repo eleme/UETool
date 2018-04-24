@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.LinearGradient;
+import android.graphics.NinePatch;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
@@ -143,8 +146,8 @@ public class Util {
       } catch (IllegalAccessException e) {
         e.printStackTrace();
       }
-    } else if (drawable instanceof BitmapDrawable) {
-      return ((BitmapDrawable) drawable).getBitmap();
+    } else {
+      return getDrawableBitmap(drawable);
     }
     return null;
   }
@@ -210,11 +213,31 @@ public class Util {
   }
 
   public static Bitmap getImageViewBitmap(ImageView imageView) {
-    try {
-      BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-      return drawable.getBitmap();
-    } catch (Exception e) {
-      e.printStackTrace();
+    return getDrawableBitmap(imageView.getDrawable());
+  }
+
+  private static Bitmap getDrawableBitmap(Drawable drawable) {
+    if (drawable instanceof BitmapDrawable) {
+      return ((BitmapDrawable) drawable).getBitmap();
+    } else if (drawable instanceof NinePatchDrawable) {
+      try {
+        Field mNinePatchFiled = NinePatchDrawable.class.getDeclaredField("mNinePatch");
+        mNinePatchFiled.setAccessible(true);
+        NinePatch ninePatch = (NinePatch) mNinePatchFiled.get(drawable);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+          return ninePatch.getBitmap();
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    } else if (drawable instanceof ClipDrawable) {
+      try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+          return ((BitmapDrawable) ((ClipDrawable) drawable).getDrawable()).getBitmap();
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
     return null;
   }

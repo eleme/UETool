@@ -123,58 +123,22 @@ public class RelativePositionLayout extends CollectViewsLayout {
 
       if (secondRect.top > firstRect.bottom) {
         int x = secondRect.left + secondRect.width() / 2;
-        canvas.drawLine(x, firstRect.bottom + LINE_SPACE, x, secondRect.top - LINE_SPACE,
-            relativeLinePaint);
-        canvas.drawLine(x - ENDPOINT_LINE_HALF_WIDTH, secondRect.top - LINE_SPACE,
-            x + ENDPOINT_LINE_HALF_WIDTH, secondRect.top - LINE_SPACE,
-            relativeLinePaint);
-        canvas.drawLine(x - ENDPOINT_LINE_HALF_WIDTH, firstRect.bottom + LINE_SPACE,
-            x + ENDPOINT_LINE_HALF_WIDTH, firstRect.bottom + LINE_SPACE,
-            relativeLinePaint);
-        String text = Util.px2dip(getContext(), secondRect.top - firstRect.bottom) + "dp";
-        canvas.drawText(text, x + LINE_SPACE,
-            firstRect.bottom + (secondRect.top - firstRect.bottom) / 2, textPaint);
+        drawRelativeInfo(canvas, x, firstRect.bottom, x, secondRect.top);
       }
 
       if (firstRect.top > secondRect.bottom) {
         int x = secondRect.left + secondRect.width() / 2;
-        canvas.drawLine(x, secondRect.bottom + LINE_SPACE, x, firstRect.top - LINE_SPACE,
-            relativeLinePaint);
-        canvas.drawLine(x - ENDPOINT_LINE_HALF_WIDTH, secondRect.bottom + LINE_SPACE,
-            x + ENDPOINT_LINE_HALF_WIDTH, secondRect.bottom + LINE_SPACE, relativeLinePaint);
-        canvas.drawLine(x - ENDPOINT_LINE_HALF_WIDTH, firstRect.top - LINE_SPACE,
-            x + ENDPOINT_LINE_HALF_WIDTH, firstRect.top - LINE_SPACE, relativeLinePaint);
-        String text = Util.px2dip(getContext(), firstRect.top - secondRect.bottom) + "dp";
-        canvas.drawText(text, x + LINE_SPACE,
-            firstRect.top + (secondRect.bottom - firstRect.top) / 2, textPaint);
+        drawRelativeInfo(canvas, x, secondRect.bottom, x, firstRect.top);
       }
 
       if (secondRect.left > firstRect.right) {
         int y = secondRect.top + secondRect.height() / 2;
-        canvas.drawLine(secondRect.left - LINE_SPACE, y, firstRect.right + LINE_SPACE, y,
-            relativeLinePaint);
-        canvas.drawLine(secondRect.left - LINE_SPACE, y - ENDPOINT_LINE_HALF_WIDTH,
-            secondRect.left - LINE_SPACE, y + ENDPOINT_LINE_HALF_WIDTH, relativeLinePaint);
-        canvas.drawLine(firstRect.right + LINE_SPACE, y - ENDPOINT_LINE_HALF_WIDTH,
-            firstRect.right + LINE_SPACE, y + ENDPOINT_LINE_HALF_WIDTH, relativeLinePaint);
-        String text = Util.px2dip(getContext(), secondRect.left - firstRect.right) + "dp";
-        canvas.drawText(text, firstRect.right + (secondRect.left - firstRect.right) / 2
-            - getTextWidth(text, textPaint) / 2, y - 2 * LINE_SPACE, textPaint);
+        drawRelativeInfo(canvas, secondRect.left, y, firstRect.right, y);
       }
 
       if (firstRect.left > secondRect.right) {
         int y = secondRect.top + secondRect.height() / 2;
-        canvas.drawLine(secondRect.right + LINE_SPACE, y, firstRect.left - LINE_SPACE, y,
-            relativeLinePaint);
-        canvas.drawLine(secondRect.right + LINE_SPACE, y - ENDPOINT_LINE_HALF_WIDTH,
-            secondRect.right + LINE_SPACE, y + ENDPOINT_LINE_HALF_WIDTH,
-            relativeLinePaint);
-        canvas.drawLine(firstRect.left - LINE_SPACE, y - ENDPOINT_LINE_HALF_WIDTH,
-            firstRect.left - LINE_SPACE, y + ENDPOINT_LINE_HALF_WIDTH,
-            relativeLinePaint);
-        String text = Util.px2dip(getContext(), firstRect.left - secondRect.right) + "dp";
-        canvas.drawText(text, secondRect.right + (firstRect.left - secondRect.right) / 2
-            - getTextWidth(text, textPaint) / 2, y - 2 * LINE_SPACE, textPaint);
+        drawRelativeInfo(canvas, secondRect.right, y, firstRect.left, y);
       }
 
       drawNestedAreaLine(canvas, firstRect, secondRect);
@@ -188,37 +152,63 @@ public class RelativePositionLayout extends CollectViewsLayout {
         && secondRect.top >= firstRect.top
         && secondRect.bottom <= firstRect.bottom) {
 
-      canvas.drawLine(secondRect.left - LINE_SPACE, secondRect.top + secondRect.height() / 2,
-          firstRect.left + LINE_SPACE, secondRect.top + secondRect.height() / 2,
-          relativeLinePaint);
-      String textLeft = Util.px2dip(getContext(), secondRect.left - firstRect.left) + "dp";
-      canvas.drawText(textLeft, firstRect.left + (secondRect.left - firstRect.left) / 2
-              - getTextWidth(textLeft, textPaint) / 2,
-          secondRect.top + secondRect.height() / 2 - 2 * LINE_SPACE, textPaint);
+      drawRelativeInfo(canvas, secondRect.left,
+          secondRect.top + secondRect.height() / 2,
+          firstRect.left, secondRect.top + secondRect.height() / 2);
 
-      canvas.drawLine(secondRect.right + LINE_SPACE, secondRect.top + secondRect.height() / 2,
-          firstRect.right - LINE_SPACE, secondRect.top + secondRect.height() / 2,
-          relativeLinePaint);
-      String textRight = Util.px2dip(getContext(), firstRect.right - secondRect.right) + "dp";
-      canvas.drawText(textRight, secondRect.right + (firstRect.right - secondRect.right) / 2
-              - getTextWidth(textRight, textPaint) / 2,
-          secondRect.top + secondRect.height() / 2 - 2 * LINE_SPACE, textPaint);
+      drawRelativeInfo(canvas, secondRect.right,
+          secondRect.top + secondRect.height() / 2,
+          firstRect.right, secondRect.top + secondRect.height() / 2);
 
-      canvas.drawLine(secondRect.left + secondRect.width() / 2, secondRect.top - LINE_SPACE,
-          secondRect.left + secondRect.width() / 2, firstRect.top + LINE_SPACE,
-          relativeLinePaint);
-      String textTop = Util.px2dip(getContext(), secondRect.top - firstRect.top) + "dp";
-      canvas.drawText(textTop, secondRect.left + secondRect.width() / 2 + LINE_SPACE,
-          firstRect.top + (secondRect.top - firstRect.top) / 2
-              + getTextHeight(textTop, textPaint) / 2, textPaint);
+      drawRelativeInfo(canvas, secondRect.left + secondRect.width() / 2,
+          secondRect.top,
+          secondRect.left + secondRect.width() / 2, firstRect.top);
 
-      canvas.drawLine(secondRect.left + secondRect.width() / 2, secondRect.bottom + LINE_SPACE,
-          secondRect.left + secondRect.width() / 2, firstRect.bottom - LINE_SPACE,
-          relativeLinePaint);
-      String textBottom = Util.px2dip(getContext(), firstRect.bottom - secondRect.bottom) + "dp";
-      canvas.drawText(textBottom, secondRect.left + secondRect.width() / 2 + LINE_SPACE,
-          secondRect.bottom + (firstRect.bottom - secondRect.bottom) / 2
-              + getTextHeight(textBottom, textPaint) / 2, textPaint);
+      drawRelativeInfo(canvas, secondRect.left + secondRect.width() / 2,
+          secondRect.bottom,
+          secondRect.left + secondRect.width() / 2, firstRect.bottom);
+    }
+  }
+
+  private void drawRelativeLine(Canvas canvas, int startX, int startY, int endX,
+      int endY) {
+    canvas.drawLine(startX, startY, endX, endY, relativeLinePaint);
+    if (startX == endX) {
+      canvas.drawLine(startX - ENDPOINT_LINE_HALF_WIDTH, startY, endX + ENDPOINT_LINE_HALF_WIDTH,
+          startY, relativeLinePaint);
+      canvas.drawLine(startX - ENDPOINT_LINE_HALF_WIDTH, endY, endX + ENDPOINT_LINE_HALF_WIDTH,
+          endY, relativeLinePaint);
+    } else if (startY == endY) {
+      canvas.drawLine(startX, startY - ENDPOINT_LINE_HALF_WIDTH, startX,
+          endY + ENDPOINT_LINE_HALF_WIDTH, relativeLinePaint);
+      canvas.drawLine(endX, startY - ENDPOINT_LINE_HALF_WIDTH, endX,
+          endY + ENDPOINT_LINE_HALF_WIDTH, relativeLinePaint);
+    }
+  }
+
+  private void drawRelativeInfo(Canvas canvas, int startX, int startY, int endX, int endY) {
+
+    if (startX > endX) {
+      int tempX = startX;
+      startX = endX;
+      endX = tempX;
+    }
+    if (startY > endY) {
+      int tempY = startY;
+      startY = endY;
+      endY = tempY;
+    }
+
+    if (startX == endX) {
+      drawRelativeLine(canvas, startX, startY + LINE_SPACE, endX, endY - LINE_SPACE);
+      String text = Util.px2dip(getContext(), endY - startY) + "dp";
+      canvas.drawText(text, startX + LINE_SPACE,
+          startY + (endY - startY) / 2 + getTextHeight(text, textPaint) / 2, textPaint);
+    } else if (startY == endY) {
+      drawRelativeLine(canvas, startX + LINE_SPACE, startY, endX - LINE_SPACE, endY);
+      String text = Util.px2dip(getContext(), endX - startX) + "dp";
+      canvas.drawText(text, startX + (endX - startX) / 2 - getTextWidth(text, textPaint) / 2,
+          startY - 2 * LINE_SPACE, textPaint);
     }
   }
 
