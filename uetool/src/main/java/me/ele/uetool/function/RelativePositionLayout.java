@@ -15,11 +15,6 @@ import me.ele.uetool.Util;
 
 public class RelativePositionLayout extends CollectViewsLayout {
 
-  private final int LINE_SPACE = Util.dip2px(getContext(), 2);
-  private final int ENDPOINT_LINE_HALF_WIDTH = Util.dip2px(getContext(), 2.5f);
-  private final int SCREEN_WIDTH = Util.getScreenWidth(getContext());
-  private final int SCREEN_HEIGHT = Util.getScreenHeight(getContext());
-
   private Paint areaPaint = new Paint() {
     {
       setAntiAlias(true);
@@ -36,24 +31,6 @@ public class RelativePositionLayout extends CollectViewsLayout {
       setStyle(Style.STROKE);
       setPathEffect(new DashPathEffect(
           new float[] { Util.dip2px(getContext(), 4), Util.dip2px(getContext(), 8) }, 0));
-    }
-  };
-
-  private Paint relativeLinePaint = new Paint() {
-    {
-      setAntiAlias(true);
-      setColor(0x90000000);
-      setStrokeWidth(Util.dip2px(getContext(), 1));
-      setStyle(Style.STROKE);
-    }
-  };
-
-  private Paint textPaint = new Paint() {
-    {
-      setAntiAlias(true);
-      setTextSize(Util.sp2px(getContext(), 10));
-      setColor(Color.RED);
-      setStrokeWidth(Util.dip2px(getContext(), 1));
     }
   };
 
@@ -123,22 +100,22 @@ public class RelativePositionLayout extends CollectViewsLayout {
 
       if (secondRect.top > firstRect.bottom) {
         int x = secondRect.left + secondRect.width() / 2;
-        drawRelativeInfo(canvas, x, firstRect.bottom, x, secondRect.top);
+        drawLineWithText(canvas, x, firstRect.bottom, x, secondRect.top);
       }
 
       if (firstRect.top > secondRect.bottom) {
         int x = secondRect.left + secondRect.width() / 2;
-        drawRelativeInfo(canvas, x, secondRect.bottom, x, firstRect.top);
+        drawLineWithText(canvas, x, secondRect.bottom, x, firstRect.top);
       }
 
       if (secondRect.left > firstRect.right) {
         int y = secondRect.top + secondRect.height() / 2;
-        drawRelativeInfo(canvas, secondRect.left, y, firstRect.right, y);
+        drawLineWithText(canvas, secondRect.left, y, firstRect.right, y);
       }
 
       if (firstRect.left > secondRect.right) {
         int y = secondRect.top + secondRect.height() / 2;
-        drawRelativeInfo(canvas, secondRect.right, y, firstRect.left, y);
+        drawLineWithText(canvas, secondRect.right, y, firstRect.left, y);
       }
 
       drawNestedAreaLine(canvas, firstRect, secondRect);
@@ -152,68 +129,30 @@ public class RelativePositionLayout extends CollectViewsLayout {
         && secondRect.top >= firstRect.top
         && secondRect.bottom <= firstRect.bottom) {
 
-      drawRelativeInfo(canvas, secondRect.left,
+      drawLineWithText(canvas, secondRect.left,
           secondRect.top + secondRect.height() / 2,
           firstRect.left, secondRect.top + secondRect.height() / 2);
 
-      drawRelativeInfo(canvas, secondRect.right,
+      drawLineWithText(canvas, secondRect.right,
           secondRect.top + secondRect.height() / 2,
           firstRect.right, secondRect.top + secondRect.height() / 2);
 
-      drawRelativeInfo(canvas, secondRect.left + secondRect.width() / 2,
+      drawLineWithText(canvas, secondRect.left + secondRect.width() / 2,
           secondRect.top,
           secondRect.left + secondRect.width() / 2, firstRect.top);
 
-      drawRelativeInfo(canvas, secondRect.left + secondRect.width() / 2,
+      drawLineWithText(canvas, secondRect.left + secondRect.width() / 2,
           secondRect.bottom,
           secondRect.left + secondRect.width() / 2, firstRect.bottom);
-    }
-  }
-
-  private void drawRelativeLine(Canvas canvas, int startX, int startY, int endX,
-      int endY) {
-    canvas.drawLine(startX, startY, endX, endY, relativeLinePaint);
-    if (startX == endX) {
-      canvas.drawLine(startX - ENDPOINT_LINE_HALF_WIDTH, startY, endX + ENDPOINT_LINE_HALF_WIDTH,
-          startY, relativeLinePaint);
-      canvas.drawLine(startX - ENDPOINT_LINE_HALF_WIDTH, endY, endX + ENDPOINT_LINE_HALF_WIDTH,
-          endY, relativeLinePaint);
-    } else if (startY == endY) {
-      canvas.drawLine(startX, startY - ENDPOINT_LINE_HALF_WIDTH, startX,
-          endY + ENDPOINT_LINE_HALF_WIDTH, relativeLinePaint);
-      canvas.drawLine(endX, startY - ENDPOINT_LINE_HALF_WIDTH, endX,
-          endY + ENDPOINT_LINE_HALF_WIDTH, relativeLinePaint);
-    }
-  }
-
-  private void drawRelativeInfo(Canvas canvas, int startX, int startY, int endX, int endY) {
-
-    if (startX > endX) {
-      int tempX = startX;
-      startX = endX;
-      endX = tempX;
-    }
-    if (startY > endY) {
-      int tempY = startY;
-      startY = endY;
-      endY = tempY;
-    }
-
-    if (startX == endX) {
-      drawRelativeLine(canvas, startX, startY + LINE_SPACE, endX, endY - LINE_SPACE);
-      String text = Util.px2dip(getContext(), endY - startY) + "dp";
-      canvas.drawText(text, startX + LINE_SPACE,
-          startY + (endY - startY) / 2 + getTextHeight(text, textPaint) / 2, textPaint);
-    } else if (startY == endY) {
-      drawRelativeLine(canvas, startX + LINE_SPACE, startY, endX - LINE_SPACE, endY);
-      String text = Util.px2dip(getContext(), endX - startX) + "dp";
-      canvas.drawText(text, startX + (endX - startX) / 2 - getTextWidth(text, textPaint) / 2,
-          startY - 2 * LINE_SPACE, textPaint);
     }
   }
 
   @Override protected void onDetachedFromWindow() {
     super.onDetachedFromWindow();
     relativeElements = null;
+  }
+
+  @Override protected int getLineEndPointSpace() {
+    return Util.dip2px(getContext(), 2);
   }
 }
