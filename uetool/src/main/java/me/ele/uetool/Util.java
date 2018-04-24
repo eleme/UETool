@@ -115,7 +115,7 @@ public class Util {
     return "#" + Integer.toHexString(color).toUpperCase();
   }
 
-  public static String getBackground(View view) {
+  public static Object getBackground(View view) {
     Drawable drawable = view.getBackground();
     if (drawable instanceof ColorDrawable) {
       return intToHexColor(((ColorDrawable) drawable).getColor());
@@ -143,9 +143,10 @@ public class Util {
       } catch (IllegalAccessException e) {
         e.printStackTrace();
       }
-      return "";
+    } else if (drawable instanceof BitmapDrawable) {
+      return ((BitmapDrawable) drawable).getBitmap();
     }
-    return "";
+    return null;
   }
 
   public static String getImageURI(DraweeView draweeView) {
