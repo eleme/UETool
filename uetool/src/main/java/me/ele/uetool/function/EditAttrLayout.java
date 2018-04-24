@@ -13,22 +13,12 @@ import me.ele.uetool.Util;
 
 public class EditAttrLayout extends CollectViewsLayout {
 
-  private final int SIDE_LINE_SPACE = Util.dip2px(getContext(), 3);
-  private final int SIDE_TEXT_SPACE = Util.dip2px(getContext(), 6);
+  private final int LINE_BORDER_DISTANCE = Util.dip2px(getContext(), 5);
 
   private Paint areaPaint = new Paint() {
     {
       setAntiAlias(true);
       setColor(0x30000000);
-    }
-  };
-
-  private Paint sidesPaint = new Paint() {
-    {
-      setAntiAlias(true);
-      setColor(0x90000000);
-      setTextSize(Util.sp2px(getContext(), 10));
-      setStrokeWidth(Util.dip2px(getContext(), 1));
     }
   };
 
@@ -51,18 +41,10 @@ public class EditAttrLayout extends CollectViewsLayout {
     super.onDraw(canvas);
     if (element != null) {
       Rect rect = element.getRect();
-      canvas.drawLine(rect.left, rect.top - SIDE_LINE_SPACE, rect.right, rect.top - SIDE_LINE_SPACE,
-          sidesPaint);
-      int width = element.getView().getWidth();
-      String widthText = Util.px2dip(getContext(), width) + "dp";
-      canvas.drawText(widthText, rect.left + width / 2 - getTextWidth(widthText, sidesPaint) / 2,
-          rect.top - SIDE_TEXT_SPACE, sidesPaint);
-      canvas.drawLine(rect.right + SIDE_LINE_SPACE, rect.top, rect.right + SIDE_LINE_SPACE,
-          rect.bottom, sidesPaint);
-      int height = element.getView().getHeight();
-      String heightText = Util.px2dip(getContext(), height) + "dp";
-      canvas.drawText(heightText, rect.right + SIDE_TEXT_SPACE,
-          rect.top + height / 2 + getTextHeight(heightText, sidesPaint) / 2, sidesPaint);
+      drawLineWithText(canvas, rect.left, rect.top - LINE_BORDER_DISTANCE, rect.right,
+          rect.top - LINE_BORDER_DISTANCE);
+      drawLineWithText(canvas, rect.right + LINE_BORDER_DISTANCE, rect.top,
+          rect.right + LINE_BORDER_DISTANCE, rect.bottom);
       canvas.drawRect(rect, areaPaint);
     }
   }
