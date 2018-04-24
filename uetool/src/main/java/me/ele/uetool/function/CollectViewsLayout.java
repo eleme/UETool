@@ -15,6 +15,7 @@ import me.ele.uetool.UETool;
 public class CollectViewsLayout extends View {
 
   protected List<Element> elements = new ArrayList<>();
+  protected Element childElement, parentElement;
 
   public CollectViewsLayout(Context context) {
     super(context);
@@ -37,6 +38,8 @@ public class CollectViewsLayout extends View {
   @Override protected void onDetachedFromWindow() {
     super.onDetachedFromWindow();
     elements.clear();
+    childElement = null;
+    parentElement = null;
   }
 
   private void traverse(View view) {
@@ -58,7 +61,13 @@ public class CollectViewsLayout extends View {
     for (int i = elements.size() - 1; i >= 0; i--) {
       final Element element = elements.get(i);
       if (element.getRect().contains((int) x, (int) y)) {
-        return element;
+        if (element != childElement) {
+          childElement = element;
+          parentElement = element;
+        } else {
+          parentElement = new Element((View) (parentElement.getView().getParent()));
+        }
+        return parentElement;
       }
     }
     return null;

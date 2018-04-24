@@ -38,18 +38,18 @@ public class UETMenu extends LinearLayout {
         UETool.getInstance().open(provider.provide(), TransparentActivity.Type.TYPE_EDIT_ATTR);
       }
     }));
-    subMenus.add(new UETSubMenu.SubMenu("网格栅栏", R.drawable.uet_show_gridding,
-        new OnClickListener() {
-          @Override public void onClick(View v) {
-            UETool.getInstance()
-                .open(provider.provide(), TransparentActivity.Type.TYPE_SHOW_GRDDING);
-          }
-        }));
     subMenus.add(new UETSubMenu.SubMenu("相对位置", R.drawable.uet_relative_position,
         new OnClickListener() {
           @Override public void onClick(View v) {
             UETool.getInstance()
                 .open(provider.provide(), TransparentActivity.Type.TYPE_RELATIVE_POSITION);
+          }
+        }));
+    subMenus.add(new UETSubMenu.SubMenu("网格栅栏", R.drawable.uet_show_gridding,
+        new OnClickListener() {
+          @Override public void onClick(View v) {
+            UETool.getInstance()
+                .open(provider.provide(), TransparentActivity.Type.TYPE_SHOW_GRDDING);
           }
         }));
 

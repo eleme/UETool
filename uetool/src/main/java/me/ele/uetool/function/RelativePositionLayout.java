@@ -221,4 +221,9 @@ public class RelativePositionLayout extends CollectViewsLayout {
               + getTextHeight(textBottom, textPaint) / 2, textPaint);
     }
   }
+
+  @Override protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    relativeElements = null;
+  }
 }
