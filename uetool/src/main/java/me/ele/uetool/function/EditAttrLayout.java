@@ -91,4 +91,9 @@ public class EditAttrLayout extends CollectViewsLayout {
     }
     return true;
   }
+
+  @Override protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    element = null;
+  }
 }
