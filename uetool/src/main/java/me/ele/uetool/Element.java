@@ -64,8 +64,9 @@ public class Element {
           Util.px2sp(view.getContext(), textView.getTextSize()) + ""));
       items.add(new EditTextItem(this, EditTextItem.Type.TYPE_TEXT_COLOR, "TextColor",
           Util.intToHexColor(textView.getCurrentTextColor())));
-      items.add(
-          new TextItem("TextHint", Util.intToHexColor(textView.getCurrentHintTextColor())));
+      Bitmap[] bitmaps = Util.getTextViewDrawableBitmap((TextView) view);
+      items.add(new BitmapItem("DrawableLeft", bitmaps[0]));
+      items.add(new BitmapItem("DrawableRight", bitmaps[1]));
       items.add(new SwitchItem(this, SwitchItem.Type.TYPE_IS_BOLD, "IsBold",
           textView.getTypeface() != null ? textView.getTypeface().isBold() : false));
     } else if (view instanceof DraweeView) {

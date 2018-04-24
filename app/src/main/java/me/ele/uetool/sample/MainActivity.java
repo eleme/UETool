@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -39,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     touchSlop = ViewConfiguration.get(this).getScaledTouchSlop();
 
-    windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+    windowManager =
+        (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
     addMenu();
 
     updateDraweeView();
@@ -50,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
       }
     });
+
+    ((TextView) findViewById(R.id.hehe)).setCompoundDrawables(
+        ContextCompat.getDrawable(this, R.mipmap.ic_up_vote), null, null, null);
   }
 
   @TargetApi(Build.VERSION_CODES.M) private void requestPermission(Context context) {
