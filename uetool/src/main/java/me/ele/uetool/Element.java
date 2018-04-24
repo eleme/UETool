@@ -1,5 +1,6 @@
 package me.ele.uetool;
 
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.view.View;
 import android.widget.ImageView;
@@ -83,7 +84,12 @@ public class Element {
     items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_HEIGHT, "Height（dp）",
         Util.px2dip(view.getContext(), view.getHeight()) + ""));
     items.add(new TextItem("Alpha", view.getAlpha() + ""));
-    items.add(new TextItem("Background", Util.getBackground(view)));
+    Object background = Util.getBackground(view);
+    if (background instanceof String) {
+      items.add(new TextItem("Background", (String) background));
+    } else if (background instanceof Bitmap) {
+      items.add(new BitmapItem("Background", (Bitmap) background));
+    }
     items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_LEFT, "PaddingLeft（dp）",
         Util.px2dip(view.getContext(), view.getPaddingLeft()) + ""));
     items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_RIGHT, "PaddingRight（dp）",
