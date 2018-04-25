@@ -71,7 +71,6 @@ public class CollectViewsLayout extends View {
     if (UETool.getInstance().getFilterClasses().contains(view.getClass().getName())) return;
     if (view.getVisibility() != View.VISIBLE) return;
     if (view.getAlpha() == 0) return;
-    if (!view.isEnabled()) return;
     if ("DESABLE_UETOOL".equals(view.getTag())) return;
     elements.add(new Element(view));
     if (view instanceof ViewGroup) {
