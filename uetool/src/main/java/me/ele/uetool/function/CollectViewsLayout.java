@@ -90,7 +90,10 @@ public class CollectViewsLayout extends View {
           childElement = element;
           parentElement = element;
         } else {
-          parentElement = new Element((View) (parentElement.getView().getParent()));
+          Object parentView = parentElement.getView().getParent();
+          if (parentView instanceof View) {
+            parentElement = new Element((View) parentView);
+          }
         }
         return parentElement;
       }
@@ -122,6 +125,10 @@ public class CollectViewsLayout extends View {
   }
 
   protected void drawLineWithText(Canvas canvas, int startX, int startY, int endX, int endY) {
+
+    if (startX == endX && startY == endY) {
+      return;
+    }
 
     if (startX > endX) {
       int tempX = startX;

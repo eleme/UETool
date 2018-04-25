@@ -37,7 +37,10 @@ public class UETool {
   }
 
   public void open(final Activity activity, @TransparentActivity.Type int type) {
-    if (activity.getClass() == TransparentActivity.class) return;
+    if (activity.getClass() == TransparentActivity.class) {
+      activity.finish();
+      return;
+    }
     targetActivity = activity;
     Intent intent = new Intent(activity, TransparentActivity.class);
     intent.putExtra(TransparentActivity.EXTRA_TYPE, type);
