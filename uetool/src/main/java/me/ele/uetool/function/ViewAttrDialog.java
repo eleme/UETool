@@ -65,7 +65,7 @@ public class ViewAttrDialog extends Dialog {
   }
 
   public void show(Element element) {
-    adapter.notifyNoShopsDataSetChanged(element);
+    adapter.notifyDataSetChanged(element);
     show();
     Window dialogWindow = getWindow();
     WindowManager.LayoutParams lp = dialogWindow.getAttributes();
@@ -85,7 +85,7 @@ public class ViewAttrDialog extends Dialog {
 
     private List<Item> items = new ArrayList<>();
 
-    public void notifyNoShopsDataSetChanged(Element element) {
+    public void notifyDataSetChanged(Element element) {
       items.clear();
       items.addAll(element.getAttrs());
       notifyDataSetChanged();
