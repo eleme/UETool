@@ -65,13 +65,9 @@ public class Element {
           Util.px2sp(view.getContext(), textView.getTextSize()) + ""));
       items.add(new EditTextItem(this, EditTextItem.Type.TYPE_TEXT_COLOR, "TextColor",
           Util.intToHexColor(textView.getCurrentTextColor())));
-      List<Pair<String, Bitmap>> drawableBitmaps = Util.getTextViewDrawableBitmap((TextView) view);
-      for (Pair<String, Bitmap> pair : drawableBitmaps) {
+      List<Pair<String, Bitmap>> pairs = Util.getTextViewBitmap((TextView) view);
+      for (Pair<String, Bitmap> pair : pairs) {
         items.add(new BitmapItem(pair.first, pair.second));
-      }
-      List<Bitmap> spanBitmaps = Util.getTextViewImageSpanBitmap((TextView) view);
-      for (Bitmap bitmap : spanBitmaps) {
-        items.add(new BitmapItem("SpanBitmap", bitmap));
       }
       items.add(new SwitchItem(this, SwitchItem.Type.TYPE_IS_BOLD, "IsBold",
           textView.getTypeface() != null ? textView.getTypeface().isBold() : false));
