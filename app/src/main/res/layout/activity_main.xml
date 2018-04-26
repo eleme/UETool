@@ -107,6 +107,12 @@
         android:text="hello world"
         />
 
+    <TextView
+        android:id="@+id/span"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="500dp"
