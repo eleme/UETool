@@ -18,6 +18,7 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.text.SpannedString;
 import android.text.style.ImageSpan;
 import android.util.Pair;
@@ -187,11 +188,7 @@ public class Util {
         Drawable[] layers = (Drawable[]) mLayersField.get(fadeDrawable);
         // PLACEHOLDER_IMAGE_INDEX == 1
         Drawable drawable = layers[1];
-        if (drawable instanceof BitmapDrawable) {
-          return ((BitmapDrawable) drawable).getBitmap();
-        } else if (drawable instanceof ScaleTypeDrawable) {
-          return ((BitmapDrawable) drawable.getCurrent()).getBitmap();
-        }
+        return getDrawableBitmap(drawable);
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -219,7 +216,14 @@ public class Util {
     return null;
   }
 
-  public static List<Pair<String, Bitmap>> getTextViewDrawableBitmap(TextView textView) {
+  public static List<Pair<String, Bitmap>> getTextViewBitmap(TextView textView) {
+    List<Pair<String, Bitmap>> bitmaps = new ArrayList<>();
+    bitmaps.addAll(getTextViewDrawableBitmap(textView));
+    bitmaps.addAll(getTextViewImageSpanBitmap(textView));
+    return bitmaps;
+  }
+
+  private static List<Pair<String, Bitmap>> getTextViewDrawableBitmap(TextView textView) {
     List<Pair<String, Bitmap>> bitmaps = new ArrayList<>();
     try {
       Field mDrawablesField = TextView.class.getDeclaredField("mDrawables");
@@ -227,23 +231,23 @@ public class Util {
       Field mDrawableLeftInitialFiled = Class.forName("android.widget.TextView$Drawables")
           .getDeclaredField("mDrawableLeftInitial");
       mDrawableLeftInitialFiled.setAccessible(true);
-      bitmaps.add(new Pair<String, Bitmap>("DrawableLeft",
-          ((BitmapDrawable) mDrawableLeftInitialFiled.get(
-              mDrawablesField.get(textView))).getBitmap()));
+      bitmaps.add(
+          new Pair<>("DrawableLeft", getDrawableBitmap((Drawable) mDrawableLeftInitialFiled.get(
+              mDrawablesField.get(textView)))));
       Field mDrawableRightInitialFiled = Class.forName("android.widget.TextView$Drawables")
           .getDeclaredField("mDrawableRightInitial");
       mDrawableRightInitialFiled.setAccessible(true);
-      bitmaps.add(new Pair<String, Bitmap>("DrawableRight",
-          ((BitmapDrawable) mDrawableRightInitialFiled.get(
-              mDrawablesField.get(textView))).getBitmap()));
+      bitmaps.add(
+          new Pair<>("DrawableRight", getDrawableBitmap((Drawable) mDrawableRightInitialFiled.get(
+              mDrawablesField.get(textView)))));
     } catch (Exception e) {
       e.printStackTrace();
     }
     return bitmaps;
   }
 
-  public static List<Bitmap> getTextViewImageSpanBitmap(TextView textView) {
-    List<Bitmap> bitmaps = new ArrayList<>();
+  private static List<Pair<String, Bitmap>> getTextViewImageSpanBitmap(TextView textView) {
+    List<Pair<String, Bitmap>> bitmaps = new ArrayList<>();
     try {
       CharSequence text = textView.getText();
       if (text instanceof SpannedString) {
@@ -253,7 +257,8 @@ public class Util {
         Object[] spans = (Object[]) mSpansField.get(text);
         for (Object span : spans) {
           if (span instanceof ImageSpan) {
-            bitmaps.add(((BitmapDrawable) ((ImageSpan) span).getDrawable()).getBitmap());
+            bitmaps.add(
+                new Pair<>("SpanBitmap", getDrawableBitmap(((ImageSpan) span).getDrawable())));
           }
         }
       }
@@ -268,33 +273,35 @@ public class Util {
   }
 
   private static Bitmap getDrawableBitmap(Drawable drawable) {
-    if (drawable instanceof BitmapDrawable) {
-      return ((BitmapDrawable) drawable).getBitmap();
-    } else if (drawable instanceof NinePatchDrawable) {
-      try {
-        Field mNinePatchFiled = NinePatchDrawable.class.getDeclaredField("mNinePatch");
-        mNinePatchFiled.setAccessible(true);
-        NinePatch ninePatch = (NinePatch) mNinePatchFiled.get(drawable);
+    try {
+      if (drawable instanceof BitmapDrawable) {
+        return ((BitmapDrawable) drawable).getBitmap();
+      } else if (drawable instanceof NinePatchDrawable) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+          Field mNinePatchFiled = NinePatchDrawable.class.getDeclaredField("mNinePatch");
+          mNinePatchFiled.setAccessible(true);
+          NinePatch ninePatch = (NinePatch) mNinePatchFiled.get(drawable);
           return ninePatch.getBitmap();
         }
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    } else if (drawable instanceof ClipDrawable) {
-      try {
+      } else if (drawable instanceof ClipDrawable) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
           return ((BitmapDrawable) ((ClipDrawable) drawable).getDrawable()).getBitmap();
         }
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    } else if (drawable instanceof StateListDrawable) {
-      try {
+      } else if (drawable instanceof StateListDrawable) {
         return ((BitmapDrawable) drawable.getCurrent()).getBitmap();
-      } catch (Exception e) {
-        e.printStackTrace();
+      } else if (drawable instanceof ScaleTypeDrawable) {
+        return ((BitmapDrawable) drawable.getCurrent()).getBitmap();
+      } else if (drawable instanceof VectorDrawableCompat) {
+        Field mVectorStateField = VectorDrawableCompat.class.getDeclaredField("mVectorState");
+        mVectorStateField.setAccessible(true);
+        Field mCachedBitmapField = Class.forName(
+            "android.support.graphics.drawable.VectorDrawableCompat$VectorDrawableCompatState")
+            .getDeclaredField("mCachedBitmap");
+        mCachedBitmapField.setAccessible(true);
+        return (Bitmap) mCachedBitmapField.get(mVectorStateField.get(drawable));
       }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
     return null;
   }
