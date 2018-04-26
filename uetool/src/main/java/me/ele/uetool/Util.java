@@ -18,6 +18,9 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.text.SpannedString;
+import android.text.style.ImageSpan;
+import android.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
@@ -32,6 +35,8 @@ import com.facebook.drawee.drawable.ScaleTypeDrawable;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.view.DraweeView;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.view.View.NO_ID;
 
@@ -214,22 +219,44 @@ public class Util {
     return null;
   }
 
-  public static Bitmap[] getTextViewDrawableBitmap(TextView textView) {
-    Bitmap[] bitmaps = new Bitmap[2];
+  public static List<Pair<String, Bitmap>> getTextViewDrawableBitmap(TextView textView) {
+    List<Pair<String, Bitmap>> bitmaps = new ArrayList<>();
     try {
       Field mDrawablesField = TextView.class.getDeclaredField("mDrawables");
       mDrawablesField.setAccessible(true);
       Field mDrawableLeftInitialFiled = Class.forName("android.widget.TextView$Drawables")
           .getDeclaredField("mDrawableLeftInitial");
       mDrawableLeftInitialFiled.setAccessible(true);
-      bitmaps[0] = ((BitmapDrawable) mDrawableLeftInitialFiled.get(
-          mDrawablesField.get(textView))).getBitmap();
-
+      bitmaps.add(new Pair<String, Bitmap>("DrawableLeft",
+          ((BitmapDrawable) mDrawableLeftInitialFiled.get(
+              mDrawablesField.get(textView))).getBitmap()));
       Field mDrawableRightInitialFiled = Class.forName("android.widget.TextView$Drawables")
           .getDeclaredField("mDrawableRightInitial");
       mDrawableRightInitialFiled.setAccessible(true);
-      bitmaps[1] = ((BitmapDrawable) mDrawableRightInitialFiled.get(
-          mDrawablesField.get(textView))).getBitmap();
+      bitmaps.add(new Pair<String, Bitmap>("DrawableRight",
+          ((BitmapDrawable) mDrawableRightInitialFiled.get(
+              mDrawablesField.get(textView))).getBitmap()));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return bitmaps;
+  }
+
+  public static List<Bitmap> getTextViewImageSpanBitmap(TextView textView) {
+    List<Bitmap> bitmaps = new ArrayList<>();
+    try {
+      CharSequence text = textView.getText();
+      if (text instanceof SpannedString) {
+        Field mSpansField =
+            Class.forName("android.text.SpannableStringInternal").getDeclaredField("mSpans");
+        mSpansField.setAccessible(true);
+        Object[] spans = (Object[]) mSpansField.get(text);
+        for (Object span : spans) {
+          if (span instanceof ImageSpan) {
+            bitmaps.add(((BitmapDrawable) ((ImageSpan) span).getDrawable()).getBitmap());
+          }
+        }
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }

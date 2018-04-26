@@ -5,12 +5,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
   private WindowManager windowManager;
   private UETMenu uetMenu;
-  private SimpleDraweeView draweeView;
   private WindowManager.LayoutParams params = new WindowManager.LayoutParams();
   private int touchSlop;
 
@@ -37,15 +39,12 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    draweeView = findViewById(R.id.drawee_view);
 
     touchSlop = ViewConfiguration.get(this).getScaledTouchSlop();
 
     windowManager =
         (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
     addMenu();
-
-    updateDraweeView();
 
     findViewById(R.id.click).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -56,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
     ((TextView) findViewById(R.id.hehe)).setCompoundDrawables(
         ContextCompat.getDrawable(this, R.mipmap.ic_up_vote), null, null, null);
+
+    updateDraweeView();
+    updateSpanTextView();
   }
 
   @TargetApi(Build.VERSION_CODES.M) private void requestPermission(Context context) {
@@ -147,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void updateDraweeView() {
+    SimpleDraweeView draweeView = findViewById(R.id.drawee_view);
     DraweeController draweeController = Fresco.newDraweeControllerBuilder()
         .setUri(
             "http://p0.ifengimg.com/pmop/2017/0823/3B8D6E5B199841F33C1FFB62D849C1D89F6BAA2B_size79_w240_h240.gif")
@@ -156,5 +159,15 @@ public class MainActivity extends AppCompatActivity {
     //draweeView.getHierarchy().setPlaceholderImage(R.mipmap.ic_placeholder);
 
     draweeView.setController(draweeController);
+  }
+
+  private void updateSpanTextView() {
+    TextView spanTextView = findViewById(R.id.span);
+    SpannableString spannableString = new SpannableString("  海底捞火锅");
+    Drawable drawable = ContextCompat.getDrawable(this, R.mipmap.ic_food_new);
+    drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+    VerticalImageSpan imageSpan = new VerticalImageSpan(drawable);
+    spannableString.setSpan(imageSpan, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+    spanTextView.setText(spannableString);
   }
 }

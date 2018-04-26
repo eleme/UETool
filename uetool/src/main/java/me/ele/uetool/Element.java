@@ -2,6 +2,7 @@ package me.ele.uetool;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -64,9 +65,14 @@ public class Element {
           Util.px2sp(view.getContext(), textView.getTextSize()) + ""));
       items.add(new EditTextItem(this, EditTextItem.Type.TYPE_TEXT_COLOR, "TextColor",
           Util.intToHexColor(textView.getCurrentTextColor())));
-      Bitmap[] bitmaps = Util.getTextViewDrawableBitmap((TextView) view);
-      items.add(new BitmapItem("DrawableLeft", bitmaps[0]));
-      items.add(new BitmapItem("DrawableRight", bitmaps[1]));
+      List<Pair<String, Bitmap>> drawableBitmaps = Util.getTextViewDrawableBitmap((TextView) view);
+      for (Pair<String, Bitmap> pair : drawableBitmaps) {
+        items.add(new BitmapItem(pair.first, pair.second));
+      }
+      List<Bitmap> spanBitmaps = Util.getTextViewImageSpanBitmap((TextView) view);
+      for (Bitmap bitmap : spanBitmaps) {
+        items.add(new BitmapItem("SpanBitmap", bitmap));
+      }
       items.add(new SwitchItem(this, SwitchItem.Type.TYPE_IS_BOLD, "IsBold",
           textView.getTypeface() != null ? textView.getTypeface().isBold() : false));
     } else if (view instanceof DraweeView) {
