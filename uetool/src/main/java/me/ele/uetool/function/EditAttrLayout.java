@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.widget.Toast;
 import me.ele.uetool.Element;
 import me.ele.uetool.Util;
 
@@ -72,6 +73,11 @@ public class EditAttrLayout extends CollectViewsLayout {
         break;
     }
     return true;
+  }
+
+  @Override protected void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    Toast.makeText(getContext(), "捕捉控件已打开，请点击您感兴趣的控件", Toast.LENGTH_SHORT).show();
   }
 
   @Override protected void onDetachedFromWindow() {

@@ -41,11 +41,9 @@ public class TransparentActivity extends AppCompatActivity {
     switch (type) {
       case TYPE_EDIT_ATTR:
         vContainer.addView(new EditAttrLayout(this));
-        Toast.makeText(this, "捕捉控件已打开，请点击您感兴趣的控件", Toast.LENGTH_SHORT).show();
         break;
       case TYPE_RELATIVE_POSITION:
         vContainer.addView(new RelativePositionLayout(this));
-        Toast.makeText(this, "相对位置已打开，请点击您感兴趣的控件", Toast.LENGTH_SHORT).show();
         break;
       case TYPE_SHOW_GRDDING:
         vContainer.addView(new GriddingLayout(this));

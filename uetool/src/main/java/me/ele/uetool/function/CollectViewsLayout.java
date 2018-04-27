@@ -1,5 +1,6 @@
 package me.ele.uetool.function;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -7,8 +8,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import me.ele.uetool.Element;
@@ -57,7 +61,40 @@ public class CollectViewsLayout extends View {
 
   @Override protected void onAttachedToWindow() {
     super.onAttachedToWindow();
-    traverse(UETool.getInstance().getTargetActivity().findViewById(android.R.id.content));
+    try {
+      Activity targetActivity = UETool.getInstance().getTargetActivity();
+      WindowManager windowManager = targetActivity.getWindowManager();
+      Field mGlobalField =
+          Class.forName("android.view.WindowManagerImpl").getDeclaredField("mGlobal");
+      mGlobalField.setAccessible(true);
+      Field mViewsField =
+          Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mViews");
+      mViewsField.setAccessible(true);
+      List<View> views = (List<View>) mViewsField.get(mGlobalField.get(windowManager));
+      for (int i = views.size() - 1; i >= 0; i--) {
+        View targetView = null;
+        View view = views.get(i);
+        Context context = view.getContext();
+        if (context == targetActivity) {
+          targetView = view;
+        } else {
+          while (context instanceof ContextThemeWrapper) {
+            Context baseContext = ((ContextThemeWrapper) context).getBaseContext();
+            if (baseContext == targetActivity) {
+              targetView = view;
+              break;
+            }
+            context = baseContext;
+          }
+        }
+        if (targetView != null) {
+          traverse(targetView);
+          break;
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @Override protected void onDetachedFromWindow() {
