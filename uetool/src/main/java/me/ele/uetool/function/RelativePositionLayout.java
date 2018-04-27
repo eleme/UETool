@@ -147,6 +147,11 @@ public class RelativePositionLayout extends CollectViewsLayout {
     }
   }
 
+  @Override protected void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    Toast.makeText(getContext(), "相对位置已打开，请点击您感兴趣的控件", Toast.LENGTH_SHORT).show();
+  }
+
   @Override protected void onDetachedFromWindow() {
     super.onDetachedFromWindow();
     relativeElements = null;
