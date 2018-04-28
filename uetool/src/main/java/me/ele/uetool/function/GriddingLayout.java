@@ -10,9 +10,9 @@ import me.ele.uetool.Util;
 
 public class GriddingLayout extends View {
 
-  private final int LINE_SPACE = Util.dip2px(getContext(), 5);
-  private final int SCREEN_WIDTH = Util.getScreenWidth(getContext());
-  private final int SCREEN_HEIGHT = Util.getScreenHeight(getContext());
+  private final int LINE_SPACE = Util.dip2px(5);
+  private final int SCREEN_WIDTH = Util.getScreenWidth();
+  private final int SCREEN_HEIGHT = Util.getScreenHeight();
 
   private Paint paint = new Paint() {
     {

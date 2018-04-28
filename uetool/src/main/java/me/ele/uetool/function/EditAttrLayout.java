@@ -14,7 +14,7 @@ import me.ele.uetool.Util;
 
 public class EditAttrLayout extends CollectViewsLayout {
 
-  private final int LINE_BORDER_DISTANCE = Util.dip2px(getContext(), 5);
+  private final int LINE_BORDER_DISTANCE = Util.dip2px(5);
 
   private Paint areaPaint = new Paint() {
     {

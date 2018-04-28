@@ -20,7 +20,7 @@ public class RelativePositionLayout extends CollectViewsLayout {
       setAntiAlias(true);
       setColor(Color.RED);
       setStyle(Style.STROKE);
-      setStrokeWidth(Util.dip2px(getContext(), 1));
+      setStrokeWidth(Util.dip2px(1));
     }
   };
 
@@ -30,7 +30,7 @@ public class RelativePositionLayout extends CollectViewsLayout {
       setColor(0x90FF0000);
       setStyle(Style.STROKE);
       setPathEffect(new DashPathEffect(
-          new float[] { Util.dip2px(getContext(), 4), Util.dip2px(getContext(), 8) }, 0));
+          new float[] { Util.dip2px(4), Util.dip2px(8) }, 0));
     }
   };
 
@@ -158,6 +158,6 @@ public class RelativePositionLayout extends CollectViewsLayout {
   }
 
   @Override protected int getLineEndPointSpace() {
-    return Util.dip2px(getContext(), 2);
+    return Util.dip2px(2);
   }
 }

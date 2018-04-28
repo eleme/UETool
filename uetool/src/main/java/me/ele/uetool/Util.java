@@ -45,8 +45,8 @@ import static android.view.View.NO_ID;
 
 public class Util {
 
-  public static int getStatusBarHeight(Context context) {
-    Resources resources = context.getResources();
+  public static int getStatusBarHeight() {
+    Resources resources = UETool.getApplication().getResources();
     int resId = resources.getIdentifier("status_bar_height", "dimen", "android");
     return resId > 0 ? resources.getDimensionPixelSize(resId) : 0;
   }
@@ -70,31 +70,33 @@ public class Util {
     }
   }
 
-  public static int px2dip(Context context, float pxValue) {
-    float scale = context.getResources().getDisplayMetrics().density;
+  public static int px2dip(float pxValue) {
+    float scale = UETool.getApplication().getResources().getDisplayMetrics().density;
     return (int) (pxValue / scale + 0.5F);
   }
 
-  public static int dip2px(Context context, float dpValue) {
-    float scale = context.getResources().getDisplayMetrics().density;
+  public static int dip2px(float dpValue) {
+    float scale = UETool.getApplication().getResources().getDisplayMetrics().density;
     return (int) (dpValue * scale + 0.5F);
   }
 
-  public static int sp2px(Context context, float sp) {
-    return (int) TypedValue.applyDimension(2, sp, context.getResources().getDisplayMetrics());
+  public static int sp2px(float sp) {
+    return (int) TypedValue.applyDimension(2, sp,
+        UETool.getApplication().getResources().getDisplayMetrics());
   }
 
-  public static int px2sp(Context context, float pxValue) {
-    final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+  public static int px2sp(float pxValue) {
+    final float fontScale =
+        UETool.getApplication().getResources().getDisplayMetrics().scaledDensity;
     return (int) (pxValue / fontScale + 0.5f);
   }
 
-  public static int getScreenWidth(Context context) {
-    return context.getResources().getDisplayMetrics().widthPixels;
+  public static int getScreenWidth() {
+    return UETool.getApplication().getResources().getDisplayMetrics().widthPixels;
   }
 
-  public static int getScreenHeight(Context context) {
-    return context.getResources().getDisplayMetrics().heightPixels;
+  public static int getScreenHeight() {
+    return UETool.getApplication().getResources().getDisplayMetrics().heightPixels;
   }
 
   public static String getResourceName(Resources resources, int id) {
@@ -209,7 +211,7 @@ public class Util {
             return null;
           }
         }
-        return px2dip(draweeView.getContext(), firstRadii) + "dp";
+        return px2dip(firstRadii) + "dp";
       }
     }
     return null;
@@ -325,7 +327,8 @@ public class Util {
     return null;
   }
 
-  public static void clipText(Context context, String clipText) {
+  public static void clipText(String clipText) {
+    Context context = UETool.getApplication();
     ClipData clipData = ClipData.newPlainText("", clipText);
     ((ClipboardManager) (context.getSystemService(Context.CLIPBOARD_SERVICE))).setPrimaryClip(
         clipData);
