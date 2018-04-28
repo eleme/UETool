@@ -73,6 +73,7 @@ public class Element {
           textView.getTypeface() != null ? textView.getTypeface().isBold() : false));
     } else if (view instanceof DraweeView) {
       items.add(new TitleItem("DraweeView"));
+      items.add(new TextItem("CornerRadius", Util.getDraweeViewCornerRadius((DraweeView) view)));
       items.add(new TextItem("ImageURI", Util.getImageURI((DraweeView) view), true));
       items.add(new TextItem("SupportAnimation", Util.isSupportAnimation((DraweeView) view)));
       items.add(new BitmapItem("PlaceHolderImage", Util.getPlaceHolderBitmap((DraweeView) view)));

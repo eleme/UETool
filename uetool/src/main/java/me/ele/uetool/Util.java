@@ -34,7 +34,9 @@ import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
 import com.facebook.drawee.drawable.FadeDrawable;
 import com.facebook.drawee.drawable.ScaleTypeDrawable;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.DraweeView;
+import com.facebook.drawee.view.SimpleDraweeView;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -191,6 +193,23 @@ public class Util {
         return getDrawableBitmap(drawable);
       } catch (Exception e) {
         e.printStackTrace();
+      }
+    }
+    return null;
+  }
+
+  public static String getDraweeViewCornerRadius(DraweeView draweeView) {
+    if (draweeView instanceof SimpleDraweeView) {
+      RoundingParams params = ((SimpleDraweeView) draweeView).getHierarchy().getRoundingParams();
+      if (params != null) {
+        float[] cornersRadii = params.getCornersRadii();
+        float firstRadii = cornersRadii[0];
+        for (int i = 1; i < 8; i++) {
+          if (firstRadii != cornersRadii[i]) {
+            return null;
+          }
+        }
+        return px2dip(draweeView.getContext(), firstRadii) + "dp";
       }
     }
     return null;
