@@ -82,6 +82,7 @@
         android:layout_height="120dp"
         android:layout_gravity="right"
         app:placeholderImage="@mipmap/ic_placeholder"
+        app:roundedCornerRadius="3dp"
         />
 
     <ImageView
