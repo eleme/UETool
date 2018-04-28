@@ -62,7 +62,7 @@ public class Element {
       items.add(new EditTextItem(this, EditTextItem.Type.TYPE_TEXT, "Text",
           textView.getText().toString()));
       items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_TEXT_SIZE, "TextSize（sp）",
-          Util.px2sp(view.getContext(), textView.getTextSize()) + ""));
+          Util.px2sp(textView.getTextSize()) + ""));
       items.add(new EditTextItem(this, EditTextItem.Type.TYPE_TEXT_COLOR, "TextColor",
           Util.intToHexColor(textView.getCurrentTextColor())));
       List<Pair<String, Bitmap>> pairs = Util.getTextViewBitmap((TextView) view);
@@ -84,9 +84,9 @@ public class Element {
       items.add(new TitleItem("VIEW"));
     }
     items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_WIDTH, "Width（dp）",
-        Util.px2dip(view.getContext(), view.getWidth()) + ""));
+        Util.px2dip(view.getWidth()) + ""));
     items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_HEIGHT, "Height（dp）",
-        Util.px2dip(view.getContext(), view.getHeight()) + ""));
+        Util.px2dip(view.getHeight()) + ""));
     items.add(new TextItem("Alpha", view.getAlpha() + ""));
     Object background = Util.getBackground(view);
     if (background instanceof String) {
@@ -95,13 +95,13 @@ public class Element {
       items.add(new BitmapItem("Background", (Bitmap) background));
     }
     items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_LEFT, "PaddingLeft（dp）",
-        Util.px2dip(view.getContext(), view.getPaddingLeft()) + ""));
+        Util.px2dip(view.getPaddingLeft()) + ""));
     items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_RIGHT, "PaddingRight（dp）",
-        Util.px2dip(view.getContext(), view.getPaddingRight()) + ""));
+        Util.px2dip(view.getPaddingRight()) + ""));
     items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_TOP, "PaddingTop（dp）",
-        Util.px2dip(view.getContext(), view.getPaddingTop()) + ""));
+        Util.px2dip(view.getPaddingTop()) + ""));
     items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_BOTTOM, "PaddingBottom（dp）",
-        Util.px2dip(view.getContext(), view.getPaddingBottom()) + ""));
+        Util.px2dip(view.getPaddingBottom()) + ""));
 
     return items;
   }

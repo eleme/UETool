@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
@@ -26,7 +25,7 @@ public class UETMenu extends LinearLayout {
   private Interpolator defaultInterpolator = new AccelerateDecelerateInterpolator();
   private List<UETSubMenu.SubMenu> subMenus = new ArrayList<>();
 
-  public UETMenu(final Context context, final CurrentTopActivityProvider provider) {
+  public UETMenu(final Context context) {
     super(context);
     inflate(context, R.layout.uet_menu_layout, this);
     setGravity(Gravity.CENTER_VERTICAL);
@@ -35,21 +34,19 @@ public class UETMenu extends LinearLayout {
 
     subMenus.add(new UETSubMenu.SubMenu("捕捉控件", R.drawable.uet_edit_attr, new OnClickListener() {
       @Override public void onClick(View v) {
-        UETool.getInstance().open(provider.provide(), TransparentActivity.Type.TYPE_EDIT_ATTR);
+        UETool.getInstance().open(TransparentActivity.Type.TYPE_EDIT_ATTR);
       }
     }));
     subMenus.add(new UETSubMenu.SubMenu("相对位置", R.drawable.uet_relative_position,
         new OnClickListener() {
           @Override public void onClick(View v) {
-            UETool.getInstance()
-                .open(provider.provide(), TransparentActivity.Type.TYPE_RELATIVE_POSITION);
+            UETool.getInstance().open(TransparentActivity.Type.TYPE_RELATIVE_POSITION);
           }
         }));
     subMenus.add(new UETSubMenu.SubMenu("网格栅栏", R.drawable.uet_show_gridding,
         new OnClickListener() {
           @Override public void onClick(View v) {
-            UETool.getInstance()
-                .open(provider.provide(), TransparentActivity.Type.TYPE_SHOW_GRDDING);
+            UETool.getInstance().open(TransparentActivity.Type.TYPE_SHOW_GRDDING);
           }
         }));
 
@@ -100,10 +97,6 @@ public class UETMenu extends LinearLayout {
 
   public View getMenuView() {
     return vMenu;
-  }
-
-  public interface CurrentTopActivityProvider {
-    Activity provide();
   }
 
   private static class ReverseInterpolator implements TimeInterpolator {

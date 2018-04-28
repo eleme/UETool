@@ -29,9 +29,9 @@ public class UETSubMenu extends LinearLayout {
     inflate(context, R.layout.uet_sub_menu_layout, this);
     setGravity(Gravity.CENTER);
     setOrientation(VERTICAL);
-    int padding = Util.dip2px(getContext(), 5);
+    int padding = Util.dip2px(5);
     setPadding(padding, 0, padding, 0);
-    setTranslationY(Util.dip2px(getContext(), 2));
+    setTranslationY(Util.dip2px(2));
     vImage = findViewById(R.id.image);
     vTitle = findViewById(R.id.title);
   }

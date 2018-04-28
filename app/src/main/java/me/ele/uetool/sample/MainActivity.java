@@ -1,7 +1,6 @@
 package me.ele.uetool.sample;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -95,11 +94,7 @@ public class MainActivity extends AppCompatActivity {
         return;
       }
     }
-    uetMenu = new UETMenu(this, new UETMenu.CurrentTopActivityProvider() {
-      @Override public Activity provide() {
-        return AppContext.getContext().getCurrentTopActivity();
-      }
-    });
+    uetMenu = new UETMenu(this);
     uetMenu.getMenuView().setOnTouchListener(new View.OnTouchListener() {
       private float downX, downY;
       private float lastY;
