@@ -13,28 +13,36 @@
       android:orientation="vertical"
       >
 
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/control"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="on-off control   "
+        />
+
     <FrameLayout
         android:id="@+id/parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@drawable/gradient_background"
         >
 
       <TextView
-          android:id="@+id/hehe"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_margin="20dp"
           android:background="#90000000"
           android:padding="10dp"
-          android:tag="hehehe"
-          android:text="Hello World!"
+          android:text="Hello World"
           android:textColor="#fff"
           android:textSize="20sp"
           android:textStyle="bold"
           />
 
     </FrameLayout>
+
 
     <Space
         android:layout_width="wrap_content"
@@ -46,6 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:onClick="onClick"
         android:text="hello"
         />
 
