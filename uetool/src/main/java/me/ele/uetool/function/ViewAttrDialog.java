@@ -32,13 +32,13 @@ import java.util.List;
 import me.ele.uetool.Element;
 import me.ele.uetool.R;
 import me.ele.uetool.Util;
-import me.ele.uetool.items.AddMinusEditItem;
 import me.ele.uetool.base.BitmapItem;
-import me.ele.uetool.items.EditTextItem;
 import me.ele.uetool.base.Item;
-import me.ele.uetool.items.SwitchItem;
 import me.ele.uetool.base.TextItem;
 import me.ele.uetool.base.TitleItem;
+import me.ele.uetool.items.AddMinusEditItem;
+import me.ele.uetool.items.EditTextItem;
+import me.ele.uetool.items.SwitchItem;
 
 import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_ADD_MINUS_EDIT;
 import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_BITMAP;
@@ -76,11 +76,6 @@ public class ViewAttrDialog extends Dialog {
     dialogWindow.setAttributes(lp);
   }
 
-  @Override public void dismiss() {
-    super.dismiss();
-    adapter.clear();
-  }
-
   public static class Adapter extends RecyclerView.Adapter {
 
     private List<Item> items = new ArrayList<>();
@@ -88,11 +83,6 @@ public class ViewAttrDialog extends Dialog {
     public void notifyDataSetChanged(Element element) {
       items.clear();
       items.addAll(element.getAttrs());
-      notifyDataSetChanged();
-    }
-
-    public void clear() {
-      items.clear();
       notifyDataSetChanged();
     }
 

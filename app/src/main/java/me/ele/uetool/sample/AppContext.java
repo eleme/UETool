@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.squareup.leakcanary.LeakCanary;
+
 import me.ele.uetool.UETool;
 
 public class AppContext extends Application {
 
   @Override public void onCreate() {
     super.onCreate();
+    LeakCanary.install(this);
     Fresco.initialize(this);
 
     registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
