@@ -33,12 +33,12 @@ import me.ele.uetool.Element;
 import me.ele.uetool.R;
 import me.ele.uetool.Util;
 import me.ele.uetool.items.AddMinusEditItem;
-import me.ele.uetool.items.BitmapItem;
+import me.ele.uetool.base.BitmapItem;
 import me.ele.uetool.items.EditTextItem;
-import me.ele.uetool.items.Item;
+import me.ele.uetool.base.Item;
 import me.ele.uetool.items.SwitchItem;
-import me.ele.uetool.items.TextItem;
-import me.ele.uetool.items.TitleItem;
+import me.ele.uetool.base.TextItem;
+import me.ele.uetool.base.TitleItem;
 
 import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_ADD_MINUS_EDIT;
 import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_BITMAP;
@@ -207,7 +207,7 @@ public class ViewAttrDialog extends Dialog {
 
       @Override public void bindView(TitleItem titleItem) {
         super.bindView(titleItem);
-        vTitle.setText(titleItem.getTitle());
+        vTitle.setText(titleItem.getName());
       }
     }
 

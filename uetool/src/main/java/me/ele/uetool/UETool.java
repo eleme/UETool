@@ -10,8 +10,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Toast;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import me.ele.uetool.base.IAttrs;
 import me.ele.uetool.suspend.UETMenu;
 
 public class UETool {
@@ -22,10 +27,11 @@ public class UETool {
   private Activity targetActivity;
   private Activity currentTopActivity;
   private UETMenu uetMenu;
+  private List<IAttrs> attrsList = new ArrayList<>();
 
-  private UETool(Application application) {
-    this.application = application;
-    this.application.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacksAdapter() {
+  private UETool() {
+    application = getApplicationContext();
+    application.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacksAdapter() {
       @Override public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         currentTopActivity = activity;
       }
@@ -40,38 +46,55 @@ public class UETool {
         }
       }
     });
-  }
-
-  public static void init(Application application) {
-    if (instance == null) {
-      synchronized (UETool.class) {
-        if (instance == null) {
-          instance = new UETool(application);
-        }
+    for (String attrsClassName : Arrays.asList("me.ele.uetool.fresco.UETFresco")) {
+      try {
+        attrsList.add((IAttrs) Class.forName(attrsClassName).newInstance());
+      } catch (Exception e) {
+        e.printStackTrace();
       }
     }
   }
 
   public static UETool getInstance() {
     if (instance == null) {
-      throw new RuntimeException("Please init UETool!");
+      synchronized (UETool.class) {
+        if (instance == null) {
+          instance = new UETool();
+        }
+      }
     }
     return instance;
   }
 
-  public static Application getApplication() {
+  public static void putFilterClassName(String className) {
+    getInstance().put(className);
+  }
+
+  public static boolean showUETMenu() {
+    return getInstance().showMenu();
+  }
+
+  public static boolean showUETMenu(int y) {
+    return getInstance().showMenu(y);
+  }
+
+  public static int dismissUETMenu() {
+    return getInstance().dismissMenu();
+  }
+
+  static Application getApplication() {
     return getInstance().application;
   }
 
-  public void put(String className) {
+  private void put(String className) {
     filterClasses.add(className);
   }
 
-  public boolean showMenu() {
+  private boolean showMenu() {
     return showMenu(10);
   }
 
-  public boolean showMenu(int y) {
+  private boolean showMenu(int y) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       if (!Settings.canDrawOverlays(getApplication())) {
         requestPermission(getApplication());
@@ -87,7 +110,7 @@ public class UETool {
     return true;
   }
 
-  public int dismissMenu() {
+  private int dismissMenu() {
     if (uetMenu != null) {
       int y = uetMenu.dismiss();
       uetMenu = null;
@@ -112,6 +135,10 @@ public class UETool {
     return currentTopActivity;
   }
 
+  public List<IAttrs> getAttrsList() {
+    return attrsList;
+  }
+
   public void release() {
     targetActivity = null;
   }
@@ -121,5 +148,43 @@ public class UETool {
         Uri.parse("package:" + context.getPackageName()));
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     context.startActivity(intent);
+  }
+
+  private Application getApplicationContext() {
+    try {
+      final Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
+      final Method method = activityThreadClass.getMethod("currentApplication");
+      return (Application) method.invoke(null, (Object[]) null);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  public static class ActivityLifecycleCallbacksAdapter
+      implements Application.ActivityLifecycleCallbacks {
+    public ActivityLifecycleCallbacksAdapter() {
+    }
+
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+    }
+
+    public void onActivityStarted(Activity activity) {
+    }
+
+    public void onActivityResumed(Activity activity) {
+    }
+
+    public void onActivityPaused(Activity activity) {
+    }
+
+    public void onActivityStopped(Activity activity) {
+    }
+
+    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+    }
+
+    public void onActivityDestroyed(Activity activity) {
+    }
   }
 }

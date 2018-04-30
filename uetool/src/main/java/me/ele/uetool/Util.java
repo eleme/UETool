@@ -28,15 +28,6 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.facebook.common.internal.Supplier;
-import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
-import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
-import com.facebook.drawee.drawable.FadeDrawable;
-import com.facebook.drawee.drawable.ScaleTypeDrawable;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.RoundingParams;
-import com.facebook.drawee.view.DraweeView;
-import com.facebook.drawee.view.SimpleDraweeView;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -164,79 +155,6 @@ public class Util {
     return null;
   }
 
-  public static String getImageURI(DraweeView draweeView) {
-    PipelineDraweeControllerBuilder builder = getFrescoControllerBuilder(draweeView);
-    if (builder != null) {
-      return builder.getImageRequest().getSourceUri().toString();
-    }
-    return "";
-  }
-
-  public static String isSupportAnimation(DraweeView draweeView) {
-    PipelineDraweeControllerBuilder builder = getFrescoControllerBuilder(draweeView);
-    if (builder != null) {
-      return String.valueOf(builder.getAutoPlayAnimations()).toUpperCase();
-    }
-    return "";
-  }
-
-  public static Bitmap getPlaceHolderBitmap(DraweeView draweeView) {
-    GenericDraweeHierarchy hierarchy = (GenericDraweeHierarchy) draweeView.getHierarchy();
-    if (hierarchy.hasPlaceholderImage()) {
-      try {
-        Field mFadeDrawableField = hierarchy.getClass().getDeclaredField("mFadeDrawable");
-        mFadeDrawableField.setAccessible(true);
-        FadeDrawable fadeDrawable = (FadeDrawable) mFadeDrawableField.get(hierarchy);
-        Field mLayersField = fadeDrawable.getClass().getDeclaredField("mLayers");
-        mLayersField.setAccessible(true);
-        Drawable[] layers = (Drawable[]) mLayersField.get(fadeDrawable);
-        // PLACEHOLDER_IMAGE_INDEX == 1
-        Drawable drawable = layers[1];
-        return getDrawableBitmap(drawable);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    }
-    return null;
-  }
-
-  public static String getDraweeViewCornerRadius(DraweeView draweeView) {
-    if (draweeView instanceof SimpleDraweeView) {
-      RoundingParams params = ((SimpleDraweeView) draweeView).getHierarchy().getRoundingParams();
-      if (params != null) {
-        float[] cornersRadii = params.getCornersRadii();
-        float firstRadii = cornersRadii[0];
-        for (int i = 1; i < 8; i++) {
-          if (firstRadii != cornersRadii[i]) {
-            return null;
-          }
-        }
-        return px2dip(firstRadii) + "dp";
-      }
-    }
-    return null;
-  }
-
-  private static PipelineDraweeControllerBuilder getFrescoControllerBuilder(DraweeView draweeView) {
-    try {
-      PipelineDraweeController controller = (PipelineDraweeController) draweeView.getController();
-      Field mDataSourceSupplierFiled =
-          PipelineDraweeController.class.getDeclaredField("mDataSourceSupplier");
-      mDataSourceSupplierFiled.setAccessible(true);
-      Supplier supplier = (Supplier) mDataSourceSupplierFiled.get(controller);
-      Field mAutoField =
-          Class.forName("com.facebook.drawee.controller.AbstractDraweeControllerBuilder$2")
-              .getDeclaredField("this$0");
-      mAutoField.setAccessible(true);
-      PipelineDraweeControllerBuilder builder =
-          (PipelineDraweeControllerBuilder) mAutoField.get(supplier);
-      return builder;
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
-
   public static List<Pair<String, Bitmap>> getTextViewBitmap(TextView textView) {
     List<Pair<String, Bitmap>> bitmaps = new ArrayList<>();
     bitmaps.addAll(getTextViewDrawableBitmap(textView));
@@ -293,6 +211,10 @@ public class Util {
     return getDrawableBitmap(imageView.getDrawable());
   }
 
+  public static String getImageViewScaleType(ImageView imageView) {
+    return imageView.getScaleType().name();
+  }
+
   private static Bitmap getDrawableBitmap(Drawable drawable) {
     try {
       if (drawable instanceof BitmapDrawable) {
@@ -309,8 +231,6 @@ public class Util {
           return ((BitmapDrawable) ((ClipDrawable) drawable).getDrawable()).getBitmap();
         }
       } else if (drawable instanceof StateListDrawable) {
-        return ((BitmapDrawable) drawable.getCurrent()).getBitmap();
-      } else if (drawable instanceof ScaleTypeDrawable) {
         return ((BitmapDrawable) drawable.getCurrent()).getBitmap();
       } else if (drawable instanceof VectorDrawableCompat) {
         Field mVectorStateField = VectorDrawableCompat.class.getDeclaredField("mVectorState");

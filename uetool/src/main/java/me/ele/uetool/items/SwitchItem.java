@@ -10,18 +10,12 @@ import static me.ele.uetool.items.SwitchItem.Type.TYPE_IS_BOLD;
 public class SwitchItem extends ElementItem {
 
   @Type private int type;
-  private String name;
   private boolean isChecked;
 
-  public SwitchItem(Element element, @Type int type, String name, boolean isChecked) {
-    super(element);
+  public SwitchItem(String name, Element element, @Type int type, boolean isChecked) {
+    super(name, element);
     this.type = type;
-    this.name = name;
     this.isChecked = isChecked;
-  }
-
-  public String getName() {
-    return name;
   }
 
   public boolean isChecked() {

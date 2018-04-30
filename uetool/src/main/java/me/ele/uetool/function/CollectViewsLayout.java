@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -67,28 +66,23 @@ public class CollectViewsLayout extends View {
       Field mGlobalField =
           Class.forName("android.view.WindowManagerImpl").getDeclaredField("mGlobal");
       mGlobalField.setAccessible(true);
-      Field mViewsField =
-          Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mViews");
-      mViewsField.setAccessible(true);
-      List<View> views = (List<View>) mViewsField.get(mGlobalField.get(windowManager));
-      for (int i = views.size() - 1; i >= 0; i--) {
-        View targetView = null;
-        View view = views.get(i);
-        Context context = view.getContext();
-        if (context == targetActivity) {
-          targetView = view;
-        } else {
-          while (context instanceof ContextThemeWrapper) {
-            Context baseContext = ((ContextThemeWrapper) context).getBaseContext();
-            if (baseContext == targetActivity) {
-              targetView = view;
-              break;
-            }
-            context = baseContext;
-          }
-        }
-        if (targetView != null) {
-          traverse(targetView);
+      Field mRootsField =
+          Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mRoots");
+      mRootsField.setAccessible(true);
+      List viewRootImpls = (List) mRootsField.get(mGlobalField.get(windowManager));
+      for (int i = viewRootImpls.size() - 1; i >= 0; i--) {
+        Class clazz = Class.forName("android.view.ViewRootImpl");
+        Object object = viewRootImpls.get(i);
+        Field mWindowAttributesField = clazz.getDeclaredField("mWindowAttributes");
+        mWindowAttributesField.setAccessible(true);
+        Field mViewField = clazz.getDeclaredField("mView");
+        mViewField.setAccessible(true);
+        View decorView = (View) mViewField.get(object);
+        WindowManager.LayoutParams layoutParams =
+            (WindowManager.LayoutParams) mWindowAttributesField.get(object);
+        if (layoutParams.getTitle().toString().contains(targetActivity.getClass().getName())
+            || decorView.getContext() == targetActivity) {
+          traverse(decorView);
           break;
         }
       }

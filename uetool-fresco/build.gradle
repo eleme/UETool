@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'eradle'
 
+
 android {
   compileSdkVersion versions.compileSdk
   buildToolsVersion versions.buildTool
@@ -13,13 +14,13 @@ android {
 dependencies {
   //  compile project(':uetool-base')
   compile "me.ele:uetool-base:${versions.release}"
-  compile "com.android.support:recyclerview-v7:${versions.supportLibrary}"
+  provided "com.facebook.fresco:fresco:${versions.fresco}"
 }
 
 modifyPom {
   project {
     groupId 'me.ele'
-    artifactId 'uetool'
+    artifactId 'uetool-fresco'
     version versions.release
     packaging 'aar'
   }

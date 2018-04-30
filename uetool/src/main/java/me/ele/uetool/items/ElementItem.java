@@ -1,12 +1,15 @@
 package me.ele.uetool.items;
 
 import me.ele.uetool.Element;
+import me.ele.uetool.base.Item;
+import me.ele.uetool.base.TitleItem;
 
-public class ElementItem extends Item {
+public class ElementItem extends TitleItem {
 
   private Element element;
 
-  public ElementItem(Element element) {
+  public ElementItem(String name, Element element) {
+    super(name);
     this.element = element;
   }
 

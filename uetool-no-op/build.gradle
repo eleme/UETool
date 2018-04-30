@@ -10,16 +10,10 @@ android {
   }
 }
 
-dependencies {
-  //  compile project(':uetool-base')
-  compile "me.ele:uetool-base:${versions.release}"
-  compile "com.android.support:recyclerview-v7:${versions.supportLibrary}"
-}
-
 modifyPom {
   project {
     groupId 'me.ele'
-    artifactId 'uetool'
+    artifactId 'uetool-no-op'
     version versions.release
     packaging 'aar'
   }

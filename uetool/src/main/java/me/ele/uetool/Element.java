@@ -6,15 +6,16 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.facebook.drawee.view.DraweeView;
 import java.util.List;
+import me.ele.uetool.base.BitmapItem;
+import me.ele.uetool.base.IAttrs;
+import me.ele.uetool.base.Item;
+import me.ele.uetool.base.ItemArrayList;
+import me.ele.uetool.base.TextItem;
+import me.ele.uetool.base.TitleItem;
 import me.ele.uetool.items.AddMinusEditItem;
-import me.ele.uetool.items.BitmapItem;
 import me.ele.uetool.items.EditTextItem;
-import me.ele.uetool.items.Item;
 import me.ele.uetool.items.SwitchItem;
-import me.ele.uetool.items.TextItem;
-import me.ele.uetool.items.TitleItem;
 
 public class Element {
 
@@ -59,33 +60,29 @@ public class Element {
     if (view instanceof TextView) {
       items.add(new TitleItem("TextView"));
       TextView textView = ((TextView) view);
-      items.add(new EditTextItem(this, EditTextItem.Type.TYPE_TEXT, "Text",
+      items.add(new EditTextItem("Text", this, EditTextItem.Type.TYPE_TEXT,
           textView.getText().toString()));
-      items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_TEXT_SIZE, "TextSize（sp）",
+      items.add(new AddMinusEditItem("TextSize（sp）", this, EditTextItem.Type.TYPE_TEXT_SIZE,
           Util.px2sp(textView.getTextSize()) + ""));
-      items.add(new EditTextItem(this, EditTextItem.Type.TYPE_TEXT_COLOR, "TextColor",
+      items.add(new EditTextItem("TextColor", this, EditTextItem.Type.TYPE_TEXT_COLOR,
           Util.intToHexColor(textView.getCurrentTextColor())));
       List<Pair<String, Bitmap>> pairs = Util.getTextViewBitmap((TextView) view);
       for (Pair<String, Bitmap> pair : pairs) {
         items.add(new BitmapItem(pair.first, pair.second));
       }
-      items.add(new SwitchItem(this, SwitchItem.Type.TYPE_IS_BOLD, "IsBold",
+      items.add(new SwitchItem("IsBold", this, SwitchItem.Type.TYPE_IS_BOLD,
           textView.getTypeface() != null ? textView.getTypeface().isBold() : false));
-    } else if (view instanceof DraweeView) {
-      items.add(new TitleItem("DraweeView"));
-      items.add(new TextItem("CornerRadius", Util.getDraweeViewCornerRadius((DraweeView) view)));
-      items.add(new TextItem("ImageURI", Util.getImageURI((DraweeView) view), true));
-      items.add(new TextItem("SupportAnimation", Util.isSupportAnimation((DraweeView) view)));
-      items.add(new BitmapItem("PlaceHolderImage", Util.getPlaceHolderBitmap((DraweeView) view)));
     } else if (view instanceof ImageView) {
       items.add(new TitleItem("ImageView"));
       items.add(new BitmapItem("Bitmap", Util.getImageViewBitmap((ImageView) view)));
-    } else {
-      items.add(new TitleItem("VIEW"));
+      items.add(new TextItem("ScaleType", Util.getImageViewScaleType((ImageView) view)));
     }
-    items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_WIDTH, "Width（dp）",
+    for (IAttrs attrs : UETool.getInstance().getAttrsList()) {
+      items.addAll(attrs.getAttrs(view));
+    }
+    items.add(new AddMinusEditItem("Width（dp）", this, EditTextItem.Type.TYPE_WIDTH,
         Util.px2dip(view.getWidth()) + ""));
-    items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_HEIGHT, "Height（dp）",
+    items.add(new AddMinusEditItem("Height（dp）", this, EditTextItem.Type.TYPE_HEIGHT,
         Util.px2dip(view.getHeight()) + ""));
     items.add(new TextItem("Alpha", view.getAlpha() + ""));
     Object background = Util.getBackground(view);
@@ -94,13 +91,13 @@ public class Element {
     } else if (background instanceof Bitmap) {
       items.add(new BitmapItem("Background", (Bitmap) background));
     }
-    items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_LEFT, "PaddingLeft（dp）",
+    items.add(new AddMinusEditItem("PaddingLeft（dp）", this, EditTextItem.Type.TYPE_PADDING_LEFT,
         Util.px2dip(view.getPaddingLeft()) + ""));
-    items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_RIGHT, "PaddingRight（dp）",
+    items.add(new AddMinusEditItem("PaddingRight（dp）", this, EditTextItem.Type.TYPE_PADDING_RIGHT,
         Util.px2dip(view.getPaddingRight()) + ""));
-    items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_TOP, "PaddingTop（dp）",
+    items.add(new AddMinusEditItem("PaddingTop（dp）", this, EditTextItem.Type.TYPE_PADDING_TOP,
         Util.px2dip(view.getPaddingTop()) + ""));
-    items.add(new AddMinusEditItem(this, EditTextItem.Type.TYPE_PADDING_BOTTOM, "PaddingBottom（dp）",
+    items.add(new AddMinusEditItem("PaddingBottom（dp）", this, EditTextItem.Type.TYPE_PADDING_BOTTOM,
         Util.px2dip(view.getPaddingBottom()) + ""));
 
     return items;
