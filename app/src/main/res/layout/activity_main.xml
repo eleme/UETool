@@ -101,7 +101,6 @@
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:onClick="showDialog"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_launcher"
         />
