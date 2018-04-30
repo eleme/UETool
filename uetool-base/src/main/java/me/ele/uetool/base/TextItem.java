@@ -1,26 +1,21 @@
-package me.ele.uetool.items;
+package me.ele.uetool.base;
 
 import android.text.TextUtils;
 
-public class TextItem extends Item {
+public class TextItem extends TitleItem {
 
-  private String name;
   private String detail;
   private boolean enableCopy;
 
   public TextItem(String name, String detail) {
-    this.name = name;
+    super(name);
     this.detail = detail;
   }
 
   public TextItem(String name, String detail, boolean enableCopy) {
-    this.name = name;
+    super(name);
     this.detail = detail;
     this.enableCopy = enableCopy;
-  }
-
-  public String getName() {
-    return name;
   }
 
   public String getDetail() {

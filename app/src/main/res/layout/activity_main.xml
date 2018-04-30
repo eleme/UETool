@@ -49,14 +49,34 @@
         android:layout_height="10dp"
         />
 
-    <Button
-        android:id="@+id/click"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:onClick="onClick"
-        android:text="hello"
-        />
+        >
+
+      <Button
+          android:id="@+id/btn1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:onClick="onClick"
+          android:text="next activity"
+          />
+
+      <Space
+          android:layout_width="10dp"
+          android:layout_height="match_parent"
+          />
+
+      <Button
+          android:id="@+id/btn2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:onClick="onClick"
+          android:text="show dialog"
+          />
+
+    </LinearLayout>
 
     <Space
         android:layout_width="wrap_content"
@@ -81,6 +101,7 @@
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
+        android:onClick="showDialog"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_launcher"
         />
@@ -90,30 +111,30 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_gravity="right"
-        app:placeholderImage="@mipmap/ic_placeholder"
+        app:placeholderImage="@drawable/ic_placeholder"
         app:roundedCornerRadius="3dp"
         />
 
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@mipmap/ic_placeholder"
+        android:background="@drawable/ic_placeholder"
         />
 
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
-        android:background="@mipmap/ic_tip"
+        android:background="@drawable/ic_tip"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:drawableLeft="@mipmap/ic_up_vote"
+        android:drawableLeft="@drawable/ic_up_vote"
         android:drawablePadding="5dp"
-        android:drawableRight="@mipmap/ic_down_vote"
+        android:drawableRight="@drawable/ic_down_vote"
         android:text="hello world"
         />
 

@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-  compileSdkVersion 27
+  compileSdkVersion versions.compileSdk
+  buildToolsVersion versions.buildTool
+
   defaultConfig {
     applicationId "me.ele.uetool.sample"
-    minSdkVersion 14
-    targetSdkVersion 27
+    minSdkVersion versions.minSdk
+    targetSdkVersion versions.targetSdk
     versionCode 1
     versionName "1.0"
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
     release {
@@ -19,15 +20,20 @@ android {
 }
 
 dependencies {
-  implementation fileTree(include: ['*.jar'], dir: 'libs')
-  implementation 'com.android.support:appcompat-v7:27.1.1'
-  implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-  implementation 'com.android.support:design:27.1.1'
-  testImplementation 'junit:junit:4.12'
-  androidTestImplementation 'com.android.support.test:runner:1.0.1'
-  androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-  implementation project(':uetool')
-  implementation 'com.facebook.fresco:fresco:1.4.0'
-  implementation 'com.facebook.fresco:animated-gif:1.4.0'
-  //    compile 'me.ele:uetool:1.0.0-SNAPSHOT'
+  compile "com.android.support:appcompat-v7:${versions.supportLibrary}"
+  compile "com.android.support:design:${versions.supportLibrary}"
+  compile 'com.android.support.constraint:constraint-layout:1.0.2'
+  compile "com.facebook.fresco:fresco:${versions.fresco}"
+  compile "com.facebook.fresco:animated-gif:${versions.fresco}"
+
+//  debugCompile project(':uetool')
+//  debugCompile project(':uetool-fresco')
+//  releaseCompile project(':uetool-no-op')
+  debugCompile "me.ele:uetool:${versions.release}"
+  debugCompile "me.ele:uetool-fresco:${versions.release}"
+  releaseCompile "me.ele:uetool-no-op:${versions.release}"
+
+  configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+  }
 }

@@ -18,18 +18,12 @@ import static me.ele.uetool.items.EditTextItem.Type.TYPE_WIDTH;
 public class EditTextItem extends ElementItem {
 
   private @Type int type;
-  private String name;
   private String detail;
 
-  public EditTextItem(Element element, @Type int type, String name, String detail) {
-    super(element);
+  public EditTextItem(String name, Element element, @Type int type, String detail) {
+    super(name, element);
     this.type = type;
-    this.name = name;
     this.detail = detail;
-  }
-
-  public String getName() {
-    return name;
   }
 
   public String getDetail() {
