@@ -1,6 +1,8 @@
 UETool
 ======
 
+[![License](https://img.shields.io/badge/license-MIT-000000.svg)](https://github.com/BigKeeper/big-keeper/blob/master/LICENSE)
+
 ### EFFECT
 
 <div>
@@ -25,7 +27,7 @@ dependencies {
 }
 ```
 
-#### USAGE
+#### Usage
 
 ```java
 // open 
@@ -35,4 +37,9 @@ UETool.showUETMenu();
 UETool.dismissUETMenu();
 ```
 
+### License
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/License_icon-mit-88x31-2.svg/128px-License_icon-mit-88x31-2.svg.png)
+
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
