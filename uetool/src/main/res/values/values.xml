@@ -9,7 +9,7 @@
     <item name="android:windowIsTranslucent">true</item>
   </style>
 
-  <style name="uet_Theme.Holo.Dialog.background.Translecent" parent="@android:style/Theme.Holo.Dialog">
+  <style name="uet_Theme.Holo.Dialog.background.Translucent" parent="@android:style/Theme.Holo.Dialog">
     <item name="android:windowFrame">@null</item>
     <item name="android:windowNoTitle">true</item>
     <item name="android:windowBackground">@android:color/transparent</item>

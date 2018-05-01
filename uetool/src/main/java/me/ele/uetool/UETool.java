@@ -50,7 +50,11 @@ public class UETool {
     return instance;
   }
 
-  public static void putFilterClassName(String className) {
+  public static void putFilterClass(Class clazz) {
+    getInstance().put(clazz.getName());
+  }
+
+  public static void putFilterClass(String className) {
     getInstance().put(className);
   }
 
@@ -115,11 +119,11 @@ public class UETool {
     this.targetActivity = targetActivity;
   }
 
-  public List<IAttrs> getAttrsList() {
+  List<IAttrs> getAttrsList() {
     return attrsList;
   }
 
-  public void release() {
+  void release() {
     targetActivity = null;
   }
 

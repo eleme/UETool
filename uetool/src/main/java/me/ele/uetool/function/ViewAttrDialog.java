@@ -53,7 +53,7 @@ public class ViewAttrDialog extends Dialog {
   private Adapter adapter = new Adapter();
 
   public ViewAttrDialog(Context context) {
-    super(context, R.style.uet_Theme_Holo_Dialog_background_Translecent);
+    super(context, R.style.uet_Theme_Holo_Dialog_background_Translucent);
   }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
