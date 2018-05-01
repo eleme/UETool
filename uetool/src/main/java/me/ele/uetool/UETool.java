@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Toast;
 import java.lang.reflect.Field;
@@ -24,14 +23,13 @@ import me.ele.uetool.suspend.UETMenu;
 public class UETool {
 
   private static volatile UETool instance;
-  private Application application;
+  private Application application = getApplicationContext();
   private Set<String> filterClasses = new HashSet<>();
   private Activity targetActivity;
   private UETMenu uetMenu;
   private List<IAttrs> attrsList = new ArrayList<>();
 
   private UETool() {
-    application = getApplicationContext();
     for (String attrsClassName : Arrays.asList("me.ele.uetool.fresco.UETFresco")) {
       try {
         attrsList.add((IAttrs) Class.forName(attrsClassName).newInstance());
@@ -165,32 +163,5 @@ public class UETool {
       e.printStackTrace();
     }
     return null;
-  }
-
-  public static class ActivityLifecycleCallbacksAdapter
-      implements Application.ActivityLifecycleCallbacks {
-    public ActivityLifecycleCallbacksAdapter() {
-    }
-
-    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-    }
-
-    public void onActivityStarted(Activity activity) {
-    }
-
-    public void onActivityResumed(Activity activity) {
-    }
-
-    public void onActivityPaused(Activity activity) {
-    }
-
-    public void onActivityStopped(Activity activity) {
-    }
-
-    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-    }
-
-    public void onActivityDestroyed(Activity activity) {
-    }
   }
 }
