@@ -1,8 +1,11 @@
 package me.ele.uetool;
 
 public class UETool {
-  public static void putFilterClassName(String className) {
 
+  public static void putFilterClass(Class clazz) {
+  }
+
+  public static void putFilterClass(String className) {
   }
 
   public static boolean showUETMenu() {
