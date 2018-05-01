@@ -24,6 +24,7 @@ public class EditAttrLayout extends CollectViewsLayout {
   };
 
   private Element element;
+  private ViewAttrDialog dialog;
 
   public EditAttrLayout(Context context) {
     super(context);
@@ -60,13 +61,15 @@ public class EditAttrLayout extends CollectViewsLayout {
         if (element != null) {
           this.element = element;
           invalidate();
-          ViewAttrDialog dialog = new ViewAttrDialog(getContext());
-          dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override public void onDismiss(DialogInterface dialog) {
-              element.reset();
-              invalidate();
-            }
-          });
+          if (dialog == null) {
+            dialog = new ViewAttrDialog(getContext());
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+              @Override public void onDismiss(DialogInterface dialog) {
+                element.reset();
+                invalidate();
+              }
+            });
+          }
           dialog.show(element);
         }
 
@@ -83,5 +86,8 @@ public class EditAttrLayout extends CollectViewsLayout {
   @Override protected void onDetachedFromWindow() {
     super.onDetachedFromWindow();
     element = null;
+    if (dialog != null) {
+      dialog.dismiss();
+    }
   }
 }
