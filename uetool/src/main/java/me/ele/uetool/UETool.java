@@ -10,11 +10,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Toast;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import me.ele.uetool.base.IAttrs;
 import me.ele.uetool.suspend.UETMenu;
@@ -25,27 +27,11 @@ public class UETool {
   private Application application;
   private Set<String> filterClasses = new HashSet<>();
   private Activity targetActivity;
-  private Activity currentTopActivity;
   private UETMenu uetMenu;
   private List<IAttrs> attrsList = new ArrayList<>();
 
   private UETool() {
     application = getApplicationContext();
-    application.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacksAdapter() {
-      @Override public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        currentTopActivity = activity;
-      }
-
-      @Override public void onActivityResumed(Activity activity) {
-        currentTopActivity = activity;
-      }
-
-      @Override public void onActivityDestroyed(Activity activity) {
-        if (currentTopActivity != null && currentTopActivity.equals(activity)) {
-          currentTopActivity = null;
-        }
-      }
-    });
     for (String attrsClassName : Arrays.asList("me.ele.uetool.fresco.UETFresco")) {
       try {
         attrsList.add((IAttrs) Class.forName(attrsClassName).newInstance());
@@ -131,10 +117,6 @@ public class UETool {
     this.targetActivity = targetActivity;
   }
 
-  public Activity getCurrentTopActivity() {
-    return currentTopActivity;
-  }
-
   public List<IAttrs> getAttrsList() {
     return attrsList;
   }
@@ -152,9 +134,33 @@ public class UETool {
 
   private Application getApplicationContext() {
     try {
-      final Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
-      final Method method = activityThreadClass.getMethod("currentApplication");
-      return (Application) method.invoke(null, (Object[]) null);
+      Class activityThreadClass = Class.forName("android.app.ActivityThread");
+      Method method = activityThreadClass.getMethod("currentApplication");
+      return (Application) method.invoke(null);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  public Activity getCurrentActivity() {
+    try {
+      Class activityThreadClass = Class.forName("android.app.ActivityThread");
+      Method currentActivityThreadMethod = activityThreadClass.getMethod("currentActivityThread");
+      Object currentActivityThread = currentActivityThreadMethod.invoke(null);
+      Field mActivitiesField = activityThreadClass.getDeclaredField("mActivities");
+      mActivitiesField.setAccessible(true);
+      Map activities = (Map) mActivitiesField.get(currentActivityThread);
+      for (Object record : activities.values()) {
+        Class recordClass = record.getClass();
+        Field pausedField = recordClass.getDeclaredField("paused");
+        pausedField.setAccessible(true);
+        if (!(boolean) pausedField.get(record)) {
+          Field activityField = recordClass.getDeclaredField("activity");
+          activityField.setAccessible(true);
+          return (Activity) activityField.get(record);
+        }
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }

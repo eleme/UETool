@@ -2,6 +2,7 @@ package me.ele.uetool;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
@@ -42,9 +43,12 @@ public class Element {
     int height = view.getHeight();
 
     int left = location[0];
-    int right = location[0] + width;
+    int right = left + width;
     int top = location[1];
-    int bottom = location[1] + height;
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+      top -= Util.getStatusBarHeight();
+    }
+    int bottom = top + height;
 
     rect.set(left, top, right, bottom);
   }

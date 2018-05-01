@@ -161,8 +161,8 @@ public class UETMenu extends LinearLayout {
   }
 
   private void open(@TransparentActivity.Type int type) {
-    Activity currentTopActivity = UETool.getInstance().getCurrentTopActivity();
-    if (currentTopActivity.getClass() == TransparentActivity.class) {
+    Activity currentTopActivity = UETool.getInstance().getCurrentActivity();
+    if (currentTopActivity == null || currentTopActivity.getClass() == TransparentActivity.class) {
       currentTopActivity.finish();
       return;
     }
