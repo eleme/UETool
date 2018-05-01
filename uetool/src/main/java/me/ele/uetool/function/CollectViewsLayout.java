@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import me.ele.uetool.Element;
 import me.ele.uetool.UETool;
@@ -69,7 +71,12 @@ public class CollectViewsLayout extends View {
       Field mRootsField =
           Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mRoots");
       mRootsField.setAccessible(true);
-      List viewRootImpls = (List) mRootsField.get(mGlobalField.get(windowManager));
+      List viewRootImpls;
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        viewRootImpls = (List) mRootsField.get(mGlobalField.get(windowManager));
+      } else {
+        viewRootImpls = Arrays.asList((Object[]) mRootsField.get(mGlobalField.get(windowManager)));
+      }
       for (int i = viewRootImpls.size() - 1; i >= 0; i--) {
         Class clazz = Class.forName("android.view.ViewRootImpl");
         Object object = viewRootImpls.get(i);
