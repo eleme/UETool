@@ -28,12 +28,12 @@ dependencies {
   debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
   releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
-  debugCompile project(':uetool')
-  debugCompile project(':uetool-fresco')
+//  debugCompile project(':uetool')
+//  debugCompile project(':uetool-fresco')
 //  releaseCompile project(':uetool-no-op')
-//  debugCompile "me.ele:uetool:${versions.release}"
-//  debugCompile "me.ele:uetool-fresco:${versions.release}"
-//  releaseCompile "me.ele:uetool-no-op:${versions.release}"
+  debugCompile "me.ele:uetool:${versions.release}"
+  debugCompile "me.ele:uetool-fresco:${versions.release}"
+  releaseCompile "me.ele:uetool-no-op:${versions.release}"
 
   configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
