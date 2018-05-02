@@ -1,7 +1,9 @@
-<img width="60" height="60" src="https://github.elenet.me/waimai/UETool/blob/master/art/uet_menu.png"/>  UETool [![License](https://img.shields.io/badge/license-MIT-000000.svg)](https://github.com/BigKeeper/big-keeper/blob/master/LICENSE)
+UETool [![License](https://img.shields.io/badge/license-MIT-000000.svg)](https://github.com/BigKeeper/big-keeper/blob/master/LICENSE)
 ======
 
-### INTRODUCTION
+![](https://github.elenet.me/waimai/UETool/blob/master/art/uet_banner.jpeg)
+
+## INTRODUCTION
 
 UETool is a debug tool for anyone who needs show/edit one or more view's attributions. It works on Activity/Fragment/Dialog/PopupWindow or any else view which shows on the screen.
 
@@ -13,18 +15,18 @@ At present UETool provides functionality as bellows:
 - show two view's relative position
 - show gridding for checking some view alignment 
 
-### EFFECT
+## EFFECT
 
 <div>
- <img width="216" height="384" src="https://github.elenet.me/waimai/UETool/blob/master/art/edit_attr.png"/>
+<img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/show_image_uri.gif"/>
 
-<img width="216" height="384" src="https://github.elenet.me/waimai/UETool/blob/master/art/relative_position.png"/>
+<img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/relative_position.gif"/>
 
-<img width="216" height="384" src="https://github.elenet.me/waimai/UETool/blob/master/art/show_gridding.png"/>
+<img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/show_gridding.png"/>
 </div>
 
 
-### ATTRIBUTE LIST
+## ATTRIBUTE LIST
 
 | Attribute | Value Sample | Editable |
 | --- | --- | --- |
@@ -61,9 +63,9 @@ At present UETool provides functionality as bellows:
 |  |  |  |
 
 
-### HOW TO USE 
+## HOW TO USE 
 
-#### Installation
+### Installation
 
 ```gradle
 dependencies {
@@ -75,9 +77,9 @@ dependencies {
 }
 ```
 
-#### Usage
+### Usage
 
-##### show floating window
+#### show floating window
 
 ```java
 UETool.showUETMenu();
@@ -85,13 +87,13 @@ UETool.showUETMenu();
 UETool.showUETMenu(int y);
 ```
 
-##### dismiss floating window
+#### dismiss floating window
 
 ```java
 UETool.dismissUETMenu();
 ```
 
-##### filter out view whitch you don't want to select
+#### filter out view whitch you don't want to select
 
 ```java
 UETool.putFilterClass(Class viewClazz);
@@ -99,7 +101,7 @@ UETool.putFilterClass(Class viewClazz);
 UETool.putFilterClass(String viewClassName);
 ```
 
-##### customize with your view
+#### customize with your view
 
 ```java
 
@@ -119,7 +121,7 @@ UETool.putAttrsProviderClass(String customizeClassName);
 
 ```
 
-### License
+## License
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/License_icon-mit-88x31-2.svg/128px-License_icon-mit-88x31-2.svg.png)
 
