@@ -1,4 +1,4 @@
-package me.ele.uetool.suspend;
+package me.ele.uetool;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

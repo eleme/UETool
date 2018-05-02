@@ -1,4 +1,4 @@
-package me.ele.uetool.function;
+package me.ele.uetool;
 
 import android.app.Activity;
 import android.content.Context;
