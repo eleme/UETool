@@ -3,21 +3,19 @@ UETool [![License](https://img.shields.io/badge/license-MIT-000000.svg)](https:/
 
 ![](https://github.elenet.me/waimai/UETool/blob/master/art/uet_banner.jpeg)
 
-## INTRODUCTION
+## 介绍
 
-[中文版](https://github.elenet.me/waimai/UETool/blob/master/README_zh.md)
+UETool 是一个各方人员（设计师、程序员、测试）都可以使用的调试工具。它可以作用于任何显示在屏幕上的 view，比如 Activity/Fragment/Dialog/PopupWindow 等等。
 
-UETool is a debug tool for anyone who needs show/edit one or more view's attributions. It works on Activity/Fragment/Dialog/PopupWindow or any else view shows on the screen.
+目前 UETool 提供以下功能：
 
-At present UETool provides functionality as bellows:
+- 查看/修改常用控件的属性，比如修改 TextView 的文本内容、文本大小、文本颜色等等
+- 如果你的项目里正在使用 Fresco 的 DraweeView 来呈现图片，那么 UETool 将会提供更多的属性比如图片 URI、默认占位图、圆角大小等等
+- 你可以很轻松的定制任何 view 的属性
+- 显示两个 view 的相对位置关系
+- 显示网格栅栏，方便查看控件是否对齐
 
-- show / edit normal view's attributions such as edit TextView's text、textSize、textColor etc.
-- if you are using Fresco's DraweeView, UETool provides show more attributions like ImageURI、PlaceHolderImage、CornerRadius etc.
-- you can customize any view's attributions you want with simple way
-- show two view's relative position
-- show gridding for checking some view alignment 
-
-## EFFECT
+## 效果
 
 <div>
 <img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/show_image_uri.gif"/>
@@ -28,7 +26,7 @@ At present UETool provides functionality as bellows:
 </div>
 
 
-## ATTRIBUTE LIST
+## 属性列表
 
 | Attribute | Value Sample | Editable |
 | --- | --- | --- |
@@ -65,9 +63,9 @@ At present UETool provides functionality as bellows:
 |  |  |  |
 
 
-## HOW TO USE 
+## 如何使用
 
-### Installation
+### 安装依赖
 
 ```gradle
 dependencies {
@@ -79,9 +77,9 @@ dependencies {
 }
 ```
 
-### Usage
+### 使用
 
-#### show floating window
+#### 打开悬浮窗
 
 ```java
 UETool.showUETMenu();
@@ -89,13 +87,13 @@ UETool.showUETMenu();
 UETool.showUETMenu(int y);
 ```
 
-#### dismiss floating window
+#### 关掉悬浮窗
 
 ```java
 UETool.dismissUETMenu();
 ```
 
-#### filter out view whitch you don't want to select
+#### 过滤掉你不需要选中的 View
 
 ```java
 UETool.putFilterClass(Class viewClazz);
@@ -103,7 +101,7 @@ UETool.putFilterClass(Class viewClazz);
 UETool.putFilterClass(String viewClassName);
 ```
 
-#### customize with your view
+#### 自定义实现你的 View 的属性
 
 ```java
 
@@ -111,8 +109,8 @@ UETool.putFilterClass(String viewClassName);
 
 public class UETFresco implements IAttrs {
   @Override public List<Item> getAttrs(Element element) {
-  
-  }  
+
+  }
 }
 
 // step 2, put in UETool
