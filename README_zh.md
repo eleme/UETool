@@ -1,4 +1,4 @@
-UETool [![License](https://img.shields.io/badge/license-MIT-000000.svg)](https://github.com/BigKeeper/big-keeper/blob/master/LICENSE)
+UETool ![](https://img.shields.io/badge/platform-android-lightgrey.svg) [![License](https://img.shields.io/badge/license-MIT-000000.svg)](https://github.elenet.me/waimai/UETool/blob/master/LICENSE) 
 ======
 
 ![](https://github.elenet.me/waimai/UETool/blob/master/art/uet_banner.jpeg)

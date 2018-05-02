@@ -32,9 +32,6 @@ allprojects {
     maven {
       url "http://maven.dev.elenet.me/nexus/content/groups/public"
     }
-    maven {
-      url "https://dl.bintray.com/jackcho/maven"
-    }
   }
 }
 
