@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'eradle'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
   compileSdkVersion versions.compileSdk
@@ -18,7 +19,16 @@ modifyPom {
   project {
     groupId 'me.ele'
     artifactId 'uetool-base'
-    version versions.release
+    version versions.debug
     packaging 'aar'
   }
+}
+
+publish {
+  userOrg = 'jackcho'
+  groupId = 'me.ele'
+  artifactId = 'uetool-base'
+  publishVersion = versions.release
+  desc = 'show/edit any view\'s attributions on the screen.'
+  website = 'www.ele.me'
 }

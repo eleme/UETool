@@ -5,7 +5,7 @@ UETool [![License](https://img.shields.io/badge/license-MIT-000000.svg)](https:/
 
 ## INTRODUCTION
 
-UETool is a debug tool for anyone who needs show/edit one or more view's attributions. It works on Activity/Fragment/Dialog/PopupWindow or any else view which shows on the screen.
+UETool is a debug tool for anyone who needs to show/edit one or more view's attributions. It works on Activity/Fragment/Dialog/PopupWindow or any else view which shows on the screen.
 
 At present UETool provides functionality as bellows:
 
@@ -69,11 +69,11 @@ At present UETool provides functionality as bellows:
 
 ```gradle
 dependencies {
-  debugCompile 'me.ele:uetool:1.0.4-SNAPSHOT'
-  releaseCompile 'me.ele:uetool-no-op:1.0.4-SNAPSHOT'
+  debugCompile 'me.ele:uetool:1.0.5'
+  releaseCompile 'me.ele:uetool-no-op:1.0.5'
   
   // if you want to show attrs about Fresco's DraweeView
-  debugCompile 'me.ele:uetool-fresco:1.0.4-SNAPSHOT'
+  debugCompile 'me.ele:uetool-fresco:1.0.5'
 }
 ```
 
