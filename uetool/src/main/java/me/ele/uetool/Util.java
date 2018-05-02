@@ -1,46 +1,30 @@
 package me.ele.uetool;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.LinearGradient;
-import android.graphics.NinePatch;
 import android.graphics.Paint;
 import android.graphics.Shader;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.NinePatchDrawable;
-import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.graphics.drawable.VectorDrawableCompat;
 import android.text.SpannedString;
 import android.text.style.ImageSpan;
 import android.util.Pair;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.View.NO_ID;
+import static me.ele.uetool.base.Util.getDrawableBitmap;
 
 public class Util {
-
-  public static int getStatusBarHeight() {
-    Resources resources = UETool.getApplication().getResources();
-    int resId = resources.getIdentifier("status_bar_height", "dimen", "android");
-    return resId > 0 ? resources.getDimensionPixelSize(resId) : 0;
-  }
 
   public static void enableFullscreen(@NonNull Window window) {
     if (Build.VERSION.SDK_INT >= 21) {
@@ -62,32 +46,27 @@ public class Util {
   }
 
   public static int px2dip(float pxValue) {
-    float scale = UETool.getApplication().getResources().getDisplayMetrics().density;
-    return (int) (pxValue / scale + 0.5F);
+    return me.ele.uetool.base.Util.px2dip(UETool.getApplication(), pxValue);
   }
 
   public static int dip2px(float dpValue) {
-    float scale = UETool.getApplication().getResources().getDisplayMetrics().density;
-    return (int) (dpValue * scale + 0.5F);
+    return me.ele.uetool.base.Util.dip2px(UETool.getApplication(), dpValue);
   }
 
   public static int sp2px(float sp) {
-    return (int) TypedValue.applyDimension(2, sp,
-        UETool.getApplication().getResources().getDisplayMetrics());
+    return me.ele.uetool.base.Util.sp2px(UETool.getApplication(), sp);
   }
 
   public static int px2sp(float pxValue) {
-    final float fontScale =
-        UETool.getApplication().getResources().getDisplayMetrics().scaledDensity;
-    return (int) (pxValue / fontScale + 0.5f);
+    return me.ele.uetool.base.Util.px2sp(UETool.getApplication(), pxValue);
   }
 
   public static int getScreenWidth() {
-    return UETool.getApplication().getResources().getDisplayMetrics().widthPixels;
+    return me.ele.uetool.base.Util.getScreenWidth(UETool.getApplication());
   }
 
   public static int getScreenHeight() {
-    return UETool.getApplication().getResources().getDisplayMetrics().heightPixels;
+    return me.ele.uetool.base.Util.getScreenHeight(UETool.getApplication());
   }
 
   public static String getResourceName(Resources resources, int id) {
@@ -109,7 +88,7 @@ public class Util {
       if (id == NO_ID) {
         return "";
       } else {
-        return "0x" + id;
+        return "0x" + Integer.toHexString(id);
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -215,43 +194,7 @@ public class Util {
     return imageView.getScaleType().name();
   }
 
-  private static Bitmap getDrawableBitmap(Drawable drawable) {
-    try {
-      if (drawable instanceof BitmapDrawable) {
-        return ((BitmapDrawable) drawable).getBitmap();
-      } else if (drawable instanceof NinePatchDrawable) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-          Field mNinePatchFiled = NinePatchDrawable.class.getDeclaredField("mNinePatch");
-          mNinePatchFiled.setAccessible(true);
-          NinePatch ninePatch = (NinePatch) mNinePatchFiled.get(drawable);
-          return ninePatch.getBitmap();
-        }
-      } else if (drawable instanceof ClipDrawable) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-          return ((BitmapDrawable) ((ClipDrawable) drawable).getDrawable()).getBitmap();
-        }
-      } else if (drawable instanceof StateListDrawable) {
-        return ((BitmapDrawable) drawable.getCurrent()).getBitmap();
-      } else if (drawable instanceof VectorDrawableCompat) {
-        Field mVectorStateField = VectorDrawableCompat.class.getDeclaredField("mVectorState");
-        mVectorStateField.setAccessible(true);
-        Field mCachedBitmapField = Class.forName(
-            "android.support.graphics.drawable.VectorDrawableCompat$VectorDrawableCompatState")
-            .getDeclaredField("mCachedBitmap");
-        mCachedBitmapField.setAccessible(true);
-        return (Bitmap) mCachedBitmapField.get(mVectorStateField.get(drawable));
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
-
   public static void clipText(String clipText) {
-    Context context = UETool.getApplication();
-    ClipData clipData = ClipData.newPlainText("", clipText);
-    ((ClipboardManager) (context.getSystemService(Context.CLIPBOARD_SERVICE))).setPrimaryClip(
-        clipData);
-    Toast.makeText(context, "已复制到剪切板", Toast.LENGTH_SHORT).show();
+    me.ele.uetool.base.Util.clipText(UETool.getApplication(), clipText);
   }
 }

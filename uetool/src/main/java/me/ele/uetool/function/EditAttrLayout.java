@@ -9,8 +9,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Toast;
-import me.ele.uetool.Element;
 import me.ele.uetool.Util;
+import me.ele.uetool.base.Element;
 
 public class EditAttrLayout extends CollectViewsLayout {
 

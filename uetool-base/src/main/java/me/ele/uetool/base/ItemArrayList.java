@@ -3,6 +3,7 @@ package me.ele.uetool.base;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import me.ele.uetool.base.item.Item;
 
 public class ItemArrayList<T extends Item> extends ArrayList<T> {
 

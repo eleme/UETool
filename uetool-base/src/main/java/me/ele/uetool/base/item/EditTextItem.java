@@ -1,19 +1,19 @@
-package me.ele.uetool.items;
+package me.ele.uetool.base.item;
 
 import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import me.ele.uetool.Element;
+import me.ele.uetool.base.Element;
 
-import static me.ele.uetool.items.EditTextItem.Type.TYPE_HEIGHT;
-import static me.ele.uetool.items.EditTextItem.Type.TYPE_PADDING_BOTTOM;
-import static me.ele.uetool.items.EditTextItem.Type.TYPE_PADDING_LEFT;
-import static me.ele.uetool.items.EditTextItem.Type.TYPE_PADDING_RIGHT;
-import static me.ele.uetool.items.EditTextItem.Type.TYPE_PADDING_TOP;
-import static me.ele.uetool.items.EditTextItem.Type.TYPE_TEXT;
-import static me.ele.uetool.items.EditTextItem.Type.TYPE_TEXT_COLOR;
-import static me.ele.uetool.items.EditTextItem.Type.TYPE_TEXT_SIZE;
-import static me.ele.uetool.items.EditTextItem.Type.TYPE_WIDTH;
+import static me.ele.uetool.base.item.EditTextItem.Type.TYPE_HEIGHT;
+import static me.ele.uetool.base.item.EditTextItem.Type.TYPE_PADDING_BOTTOM;
+import static me.ele.uetool.base.item.EditTextItem.Type.TYPE_PADDING_LEFT;
+import static me.ele.uetool.base.item.EditTextItem.Type.TYPE_PADDING_RIGHT;
+import static me.ele.uetool.base.item.EditTextItem.Type.TYPE_PADDING_TOP;
+import static me.ele.uetool.base.item.EditTextItem.Type.TYPE_TEXT;
+import static me.ele.uetool.base.item.EditTextItem.Type.TYPE_TEXT_COLOR;
+import static me.ele.uetool.base.item.EditTextItem.Type.TYPE_TEXT_SIZE;
+import static me.ele.uetool.base.item.EditTextItem.Type.TYPE_WIDTH;
 
 public class EditTextItem extends ElementItem {
 

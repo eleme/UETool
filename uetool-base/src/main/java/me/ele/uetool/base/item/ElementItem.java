@@ -1,8 +1,7 @@
-package me.ele.uetool.items;
+package me.ele.uetool.base.item;
 
-import me.ele.uetool.Element;
-import me.ele.uetool.base.Item;
-import me.ele.uetool.base.TitleItem;
+import me.ele.uetool.base.Element;
+import me.ele.uetool.base.item.TitleItem;
 
 public class ElementItem extends TitleItem {
 
@@ -16,5 +15,4 @@ public class ElementItem extends TitleItem {
   public Element getElement() {
     return element;
   }
-
 }

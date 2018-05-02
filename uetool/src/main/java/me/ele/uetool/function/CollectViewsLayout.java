@@ -16,9 +16,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import me.ele.uetool.Element;
 import me.ele.uetool.UETool;
 import me.ele.uetool.Util;
+import me.ele.uetool.base.Element;
 
 public class CollectViewsLayout extends View {
 

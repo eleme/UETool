@@ -1,11 +1,11 @@
-package me.ele.uetool.items;
+package me.ele.uetool.base.item;
 
 import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import me.ele.uetool.Element;
+import me.ele.uetool.base.Element;
 
-import static me.ele.uetool.items.SwitchItem.Type.TYPE_IS_BOLD;
+import static me.ele.uetool.base.item.SwitchItem.Type.TYPE_IS_BOLD;
 
 public class SwitchItem extends ElementItem {
 
