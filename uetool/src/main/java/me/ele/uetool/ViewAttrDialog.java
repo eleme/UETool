@@ -1,4 +1,4 @@
-package me.ele.uetool.function;
+package me.ele.uetool;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -28,26 +28,23 @@ import android.widget.TextView;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
-import me.ele.uetool.R;
-import me.ele.uetool.UETool;
-import me.ele.uetool.Util;
-import me.ele.uetool.base.item.BitmapItem;
 import me.ele.uetool.base.Element;
 import me.ele.uetool.base.IAttrs;
-import me.ele.uetool.base.item.Item;
 import me.ele.uetool.base.ItemArrayList;
+import me.ele.uetool.base.item.AddMinusEditItem;
+import me.ele.uetool.base.item.BitmapItem;
+import me.ele.uetool.base.item.EditTextItem;
+import me.ele.uetool.base.item.Item;
+import me.ele.uetool.base.item.SwitchItem;
 import me.ele.uetool.base.item.TextItem;
 import me.ele.uetool.base.item.TitleItem;
-import me.ele.uetool.base.item.AddMinusEditItem;
-import me.ele.uetool.base.item.EditTextItem;
-import me.ele.uetool.base.item.SwitchItem;
 
-import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_ADD_MINUS_EDIT;
-import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_BITMAP;
-import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_EDIT_TEXT;
-import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_SWITCH;
-import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_TEXT;
-import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_TITLE;
+import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_ADD_MINUS_EDIT;
+import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_BITMAP;
+import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_EDIT_TEXT;
+import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_SWITCH;
+import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_TEXT;
+import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_TITLE;
 
 public class ViewAttrDialog extends Dialog {
 
@@ -84,8 +81,13 @@ public class ViewAttrDialog extends Dialog {
 
     public void notifyDataSetChanged(Element element) {
       items.clear();
-      for (IAttrs attrs : UETool.getInstance().getAttrsList()) {
-        items.addAll(attrs.getAttrs(element));
+      for (String attrsProvider : UETool.getInstance().getAttrsProvider()) {
+        try {
+          IAttrs attrs = (IAttrs) Class.forName(attrsProvider).newInstance();
+          items.addAll(attrs.getAttrs(element));
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
       }
       notifyDataSetChanged();
     }

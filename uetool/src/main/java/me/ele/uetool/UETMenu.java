@@ -1,4 +1,4 @@
-package me.ele.uetool.suspend;
+package me.ele.uetool;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -23,9 +23,6 @@ import android.widget.LinearLayout;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import me.ele.uetool.R;
-import me.ele.uetool.TransparentActivity;
-import me.ele.uetool.UETool;
 
 import static me.ele.uetool.TransparentActivity.Type.TYPE_UNKNOWN;
 

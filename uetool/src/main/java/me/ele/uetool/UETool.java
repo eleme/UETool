@@ -11,36 +11,29 @@ import android.provider.Settings;
 import android.widget.Toast;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import me.ele.uetool.base.IAttrs;
-import me.ele.uetool.suspend.UETMenu;
 
 public class UETool {
 
   private static volatile UETool instance;
   private Application application = getApplicationContext();
-  private Set<String> filterClasses = new HashSet<>();
+  private Set<String> filterClassesSet = new HashSet<>();
+  private Set<String> attrsProviderSet = new LinkedHashSet<>();
   private Activity targetActivity;
   private UETMenu uetMenu;
-  private List<IAttrs> attrsList = new ArrayList<>();
 
   private UETool() {
     for (String attrsClassName : Arrays.asList(UETCore.class.getName(),
         "me.ele.uetool.fresco.UETFresco")) {
-      try {
-        attrsList.add((IAttrs) Class.forName(attrsClassName).newInstance());
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+      attrsProviderSet.add(attrsClassName);
     }
   }
 
-  public static UETool getInstance() {
+  static UETool getInstance() {
     if (instance == null) {
       synchronized (UETool.class) {
         if (instance == null) {
@@ -52,11 +45,19 @@ public class UETool {
   }
 
   public static void putFilterClass(Class clazz) {
-    getInstance().put(clazz.getName());
+    putFilterClass(clazz.getName());
   }
 
   public static void putFilterClass(String className) {
-    getInstance().put(className);
+    getInstance().putFilterClassName(className);
+  }
+
+  public static void putAttrsProviderClass(Class clazz) {
+    putAttrsProviderClass(clazz.getName());
+  }
+
+  public static void putAttrsProviderClass(String className) {
+    getInstance().putAttrsProviderClassName(className);
   }
 
   public static boolean showUETMenu() {
@@ -75,8 +76,12 @@ public class UETool {
     return getInstance().application;
   }
 
-  private void put(String className) {
-    filterClasses.add(className);
+  private void putFilterClassName(String className) {
+    filterClassesSet.add(className);
+  }
+
+  private void putAttrsProviderClassName(String className) {
+    attrsProviderSet.add(className);
   }
 
   private boolean showMenu() {
@@ -109,7 +114,7 @@ public class UETool {
   }
 
   public Set<String> getFilterClasses() {
-    return filterClasses;
+    return filterClassesSet;
   }
 
   public Activity getTargetActivity() {
@@ -120,8 +125,8 @@ public class UETool {
     this.targetActivity = targetActivity;
   }
 
-  public List<IAttrs> getAttrsList() {
-    return attrsList;
+  public Set<String> getAttrsProvider() {
+    return attrsProviderSet;
   }
 
   void release() {
