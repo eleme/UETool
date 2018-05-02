@@ -30,7 +30,8 @@ public class UETool {
   private List<IAttrs> attrsList = new ArrayList<>();
 
   private UETool() {
-    for (String attrsClassName : Arrays.asList("me.ele.uetool.fresco.UETFresco")) {
+    for (String attrsClassName : Arrays.asList(UETCore.class.getName(),
+        "me.ele.uetool.fresco.UETFresco")) {
       try {
         attrsList.add((IAttrs) Class.forName(attrsClassName).newInstance());
       } catch (Exception e) {
@@ -119,7 +120,7 @@ public class UETool {
     this.targetActivity = targetActivity;
   }
 
-  List<IAttrs> getAttrsList() {
+  public List<IAttrs> getAttrsList() {
     return attrsList;
   }
 

@@ -16,19 +16,23 @@ import com.facebook.drawee.view.GenericDraweeView;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import me.ele.uetool.base.BitmapItem;
+import me.ele.uetool.base.item.BitmapItem;
+import me.ele.uetool.base.Element;
 import me.ele.uetool.base.IAttrs;
-import me.ele.uetool.base.Item;
-import me.ele.uetool.base.TextItem;
-import me.ele.uetool.base.TitleItem;
+import me.ele.uetool.base.item.Item;
+import me.ele.uetool.base.item.TextItem;
+import me.ele.uetool.base.item.TitleItem;
 
 import static me.ele.uetool.base.Util.getDrawableBitmap;
 import static me.ele.uetool.base.Util.px2dip;
 
 public class UETFresco implements IAttrs {
 
-  @Override public List<Item> getAttrs(View view) {
+  @Override public List<Item> getAttrs(Element element) {
     List<Item> items = new ArrayList<>();
+
+    View view = element.getView();
+
     if (view instanceof DraweeView) {
       items.add(new TitleItem("DraweeView"));
       items.add(new TextItem("CornerRadius", getCornerRadius((DraweeView) view)));

@@ -1,6 +1,6 @@
-package me.ele.uetool.items;
+package me.ele.uetool.base.item;
 
-import me.ele.uetool.Element;
+import me.ele.uetool.base.Element;
 
 public class AddMinusEditItem extends EditTextItem {
 

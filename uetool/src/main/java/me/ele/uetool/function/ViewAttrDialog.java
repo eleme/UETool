@@ -27,18 +27,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.ArrayList;
 import java.util.List;
-import me.ele.uetool.Element;
 import me.ele.uetool.R;
+import me.ele.uetool.UETool;
 import me.ele.uetool.Util;
-import me.ele.uetool.base.BitmapItem;
-import me.ele.uetool.base.Item;
-import me.ele.uetool.base.TextItem;
-import me.ele.uetool.base.TitleItem;
-import me.ele.uetool.items.AddMinusEditItem;
-import me.ele.uetool.items.EditTextItem;
-import me.ele.uetool.items.SwitchItem;
+import me.ele.uetool.base.item.BitmapItem;
+import me.ele.uetool.base.Element;
+import me.ele.uetool.base.IAttrs;
+import me.ele.uetool.base.item.Item;
+import me.ele.uetool.base.ItemArrayList;
+import me.ele.uetool.base.item.TextItem;
+import me.ele.uetool.base.item.TitleItem;
+import me.ele.uetool.base.item.AddMinusEditItem;
+import me.ele.uetool.base.item.EditTextItem;
+import me.ele.uetool.base.item.SwitchItem;
 
 import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_ADD_MINUS_EDIT;
 import static me.ele.uetool.function.ViewAttrDialog.Adapter.ViewType.TYPE_BITMAP;
@@ -78,11 +80,13 @@ public class ViewAttrDialog extends Dialog {
 
   public static class Adapter extends RecyclerView.Adapter {
 
-    private List<Item> items = new ArrayList<>();
+    private List<Item> items = new ItemArrayList<>();
 
     public void notifyDataSetChanged(Element element) {
       items.clear();
-      items.addAll(element.getAttrs());
+      for (IAttrs attrs : UETool.getInstance().getAttrsList()) {
+        items.addAll(attrs.getAttrs(element));
+      }
       notifyDataSetChanged();
     }
 
