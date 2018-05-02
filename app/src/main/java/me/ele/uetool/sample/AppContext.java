@@ -15,6 +15,9 @@ public class AppContext extends Application {
     LeakCanary.install(this);
     Fresco.initialize(this);
 
+    UETool.putFilterClass(FilterOutView.class);
+    UETool.putAttrsProviderClass(CustomAttribution.class);
+
     registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 
       private int visibleActivityCount;

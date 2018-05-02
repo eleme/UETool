@@ -91,10 +91,26 @@
         android:translationX="100dp"
         />
 
-    <android.support.v7.widget.SwitchCompat
+    <me.ele.uetool.sample.FilterOutView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#90000000"
+        android:padding="10dp"
+        android:text="you won't select me by UETool"
+        android:textColor="#fff"
         />
+
+    <me.ele.uetool.sample.CustomView
+        android:id="@+id/custom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="#90688fdb"
+        android:padding="10dp"
+        android:text="this is a custom view"
+        />
+
 
     <ImageView
         android:layout_width="100dp"

@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     updateDraweeView();
     updateSpanTextView();
+    updateCustomView();
   }
 
   public void onClick(View view) {
@@ -74,5 +75,10 @@ public class MainActivity extends AppCompatActivity {
     VerticalImageSpan imageSpan = new VerticalImageSpan(drawable);
     spannableString.setSpan(imageSpan, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
     spanTextView.setText(spannableString);
+  }
+
+  private void updateCustomView() {
+    CustomView customView = findViewById(R.id.custom);
+    customView.setMoreAttribution("more attribution");
   }
 }
