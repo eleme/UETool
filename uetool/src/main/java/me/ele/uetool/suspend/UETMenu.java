@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Build;
+import android.support.v4.view.ViewCompat;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -174,11 +175,15 @@ public class UETMenu extends LinearLayout {
   }
 
   public void show() {
-    windowManager.addView(this, getWindowLayoutParams());
+    if (!ViewCompat.isAttachedToWindow(this)) {
+      windowManager.addView(this, getWindowLayoutParams());
+    }
   }
 
   public int dismiss() {
-    windowManager.removeView(this);
+    if (ViewCompat.isAttachedToWindow(this)) {
+      windowManager.removeView(this);
+    }
     return params.y;
   }
 
