@@ -3,6 +3,18 @@ UETool
 
 [![License](https://img.shields.io/badge/license-MIT-000000.svg)](https://github.com/BigKeeper/big-keeper/blob/master/LICENSE)
 
+### INTRODUCTION
+
+UETool is a debug tool for anyone who needs show/edit one or more view's attributions. It works on Activity/Fragment/Dialog/PopupWindow or any else view which shows on the screen.
+
+At present UETool provides functionality as bellows:
+
+- show / edit normal view's attributions like edit TextView's text、textSize、textColor etc.
+- if you are using Fresco's DraweeView, UETool provides show more attributions like ImageURI、PlaceHolderImage、CornerRadius etc.
+- you can customize any view's attributions you want with simple way
+- show two view's relative position
+- show gridding for checking some view alignment 
+
 ### EFFECT
 
 <div>
@@ -67,12 +79,46 @@ dependencies {
 
 #### Usage
 
+##### show floating window
+
 ```java
-// open 
 UETool.showUETMenu();
 
-// close
+UETool.showUETMenu(int y);
+```
+
+##### dismiss floating window
+
+```java
 UETool.dismissUETMenu();
+```
+
+##### filter out view whitch you don't want to select
+
+```java
+UETool.putFilterClass(Class viewClazz);
+
+UETool.putFilterClass(String viewClassName);
+```
+
+##### customize with your view
+
+```java
+
+// step 1, implements IAttrs
+
+public class UETFresco implements IAttrs {
+  @Override public List<Item> getAttrs(Element element) {
+  
+  }  
+}
+
+// step 2, put in UETool
+
+UETool.putAttrsProviderClass(Class customizeClazz);
+
+UETool.putAttrsProviderClass(String customizeClassName);
+
 ```
 
 ### License
