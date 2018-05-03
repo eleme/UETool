@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Toast;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -124,6 +125,7 @@ public class CollectViewsLayout extends View {
   }
 
   protected Element getTargetElement(float x, float y) {
+    Element target = null;
     for (int i = elements.size() - 1; i >= 0; i--) {
       final Element element = elements.get(i);
       if (element.getRect().contains((int) x, (int) y)) {
@@ -136,10 +138,16 @@ public class CollectViewsLayout extends View {
             parentElement = new Element((View) parentView);
           }
         }
-        return parentElement;
+        target = parentElement;
+        break;
       }
     }
-    return null;
+    if (target == null) {
+      Toast.makeText(getContext(),
+          getResources().getString(R.string.uet_target_element_not_found, x, y), Toast.LENGTH_SHORT)
+          .show();
+    }
+    return target;
   }
 
   protected void drawText(Canvas canvas, String text, float x, float y) {

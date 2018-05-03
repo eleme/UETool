@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Toast;
 import me.ele.uetool.CollectViewsLayout;
+import me.ele.uetool.R;
 import me.ele.uetool.base.Element;
 
 import static me.ele.uetool.base.DimenUtil.dip2px;
@@ -69,12 +70,7 @@ public class RelativePositionLayout extends CollectViewsLayout {
           }
           searchCount++;
           invalidate();
-        } else {
-          Toast.makeText(getContext(),
-              "该坐标(" + event.getX() + " , " + event.getY() + ")未找到控件，请重新选择控件", Toast.LENGTH_SHORT)
-              .show();
         }
-
         break;
     }
     return true;
@@ -151,7 +147,8 @@ public class RelativePositionLayout extends CollectViewsLayout {
 
   @Override protected void onAttachedToWindow() {
     super.onAttachedToWindow();
-    Toast.makeText(getContext(), "相对位置已打开，请点击您感兴趣的控件", Toast.LENGTH_SHORT).show();
+    Toast.makeText(getContext(), getResources().getString(R.string.uet_enable_relative_position),
+        Toast.LENGTH_SHORT).show();
   }
 
   @Override protected void onDetachedFromWindow() {

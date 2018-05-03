@@ -71,11 +71,11 @@ At present UETool provides functionality as bellows:
 
 ```gradle
 dependencies {
-  debugCompile 'me.ele:uetool:1.0.6'
-  releaseCompile 'me.ele:uetool-no-op:1.0.6'
+  debugCompile 'me.ele:uetool:1.0.7'
+  releaseCompile 'me.ele:uetool-no-op:1.0.7'
 
   // if you want to show attrs about Fresco's DraweeView
-  debugCompile 'me.ele:uetool-fresco:1.0.6'
+  debugCompile 'me.ele:uetool-fresco:1.0.7'
 }
 ```
 

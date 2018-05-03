@@ -9,6 +9,10 @@ android {
   defaultConfig {
     minSdkVersion versions.minSdk
   }
+
+  lintOptions {
+    abortOnError false
+  }
 }
 
 dependencies {

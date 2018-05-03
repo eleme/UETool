@@ -49,7 +49,7 @@ public class TransparentActivity extends AppCompatActivity {
         vContainer.addView(new GriddingLayout(this));
         break;
       default:
-        Toast.makeText(this, "敬请期待", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.uet_coming_soon), Toast.LENGTH_SHORT).show();
         finish();
         break;
     }

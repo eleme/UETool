@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="uet_target_element_not_found">could not found view in (%1$s , %1$s), please select view again</string>
+  <string name="uet_coming_soon">coming soon</string>
+  <string name="uet_enable_edit_attr">edit attribution is enabled, please select view which you want</string>
+  <string name="uet_enable_relative_position">""relative position is enabled, please select view which you want</string>
+</resources>
