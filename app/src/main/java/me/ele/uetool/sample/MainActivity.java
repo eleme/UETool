@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         }
       }
     });
+    control.setChecked(true);
 
     updateDraweeView();
     updateSpanTextView();
