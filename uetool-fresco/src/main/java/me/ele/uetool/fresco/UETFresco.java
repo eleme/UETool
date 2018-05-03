@@ -16,15 +16,14 @@ import com.facebook.drawee.view.GenericDraweeView;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import me.ele.uetool.base.item.BitmapItem;
 import me.ele.uetool.base.Element;
 import me.ele.uetool.base.IAttrs;
+import me.ele.uetool.base.item.BitmapItem;
 import me.ele.uetool.base.item.Item;
 import me.ele.uetool.base.item.TextItem;
 import me.ele.uetool.base.item.TitleItem;
 
-import static me.ele.uetool.base.Util.getDrawableBitmap;
-import static me.ele.uetool.base.Util.px2dip;
+import static me.ele.uetool.base.DimenUtil.px2dip;
 
 public class UETFresco implements IAttrs {
 
@@ -56,7 +55,7 @@ public class UETFresco implements IAttrs {
             return null;
           }
         }
-        return px2dip(draweeView.getContext(), firstRadii) + "dp";
+        return px2dip(firstRadii) + "dp";
       }
     }
     return null;
@@ -138,7 +137,6 @@ public class UETFresco implements IAttrs {
       if (drawable instanceof ScaleTypeDrawable) {
         return ((BitmapDrawable) drawable.getCurrent()).getBitmap();
       }
-      return getDrawableBitmap(drawable);
     } catch (Exception e) {
       e.printStackTrace();
     }

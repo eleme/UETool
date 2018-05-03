@@ -6,13 +6,16 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import me.ele.uetool.Util;
+
+import static me.ele.uetool.base.DimenUtil.dip2px;
+import static me.ele.uetool.base.DimenUtil.getScreenHeight;
+import static me.ele.uetool.base.DimenUtil.getScreenWidth;
 
 public class GriddingLayout extends View {
 
-  private final int LINE_SPACE = Util.dip2px(5);
-  private final int SCREEN_WIDTH = Util.getScreenWidth();
-  private final int SCREEN_HEIGHT = Util.getScreenHeight();
+  private final int LINE_SPACE = dip2px(5);
+  private final int SCREEN_WIDTH = getScreenWidth();
+  private final int SCREEN_HEIGHT = getScreenHeight();
 
   private Paint paint = new Paint() {
     {

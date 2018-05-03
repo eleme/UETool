@@ -2,7 +2,6 @@ package me.ele.uetool;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,11 +15,11 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import me.ele.uetool.base.Application;
 
 public class UETool {
 
   private static volatile UETool instance;
-  private Application application = getApplicationContext();
   private Set<String> filterClassesSet = new HashSet<>();
   private Set<String> attrsProviderSet = new LinkedHashSet<>();
   private Activity targetActivity;
@@ -72,10 +71,6 @@ public class UETool {
     return getInstance().dismissMenu();
   }
 
-  static Application getApplication() {
-    return getInstance().application;
-  }
-
   private void putFilterClassName(String className) {
     filterClassesSet.add(className);
   }
@@ -90,15 +85,15 @@ public class UETool {
 
   private boolean showMenu(int y) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      if (!Settings.canDrawOverlays(getApplication())) {
-        requestPermission(getApplication());
-        Toast.makeText(application, "After grant this permission, re-enable UETool",
+      if (!Settings.canDrawOverlays(Application.getApplicationContext())) {
+        requestPermission(Application.getApplicationContext());
+        Toast.makeText(Application.getApplicationContext(), "After grant this permission, re-enable UETool",
             Toast.LENGTH_LONG).show();
         return false;
       }
     }
     if (uetMenu == null) {
-      uetMenu = new UETMenu(getApplication(), y);
+      uetMenu = new UETMenu(Application.getApplicationContext(), y);
     }
     uetMenu.show();
     return true;
@@ -138,17 +133,6 @@ public class UETool {
         Uri.parse("package:" + context.getPackageName()));
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     context.startActivity(intent);
-  }
-
-  private Application getApplicationContext() {
-    try {
-      Class activityThreadClass = Class.forName("android.app.ActivityThread");
-      Method method = activityThreadClass.getMethod("currentApplication");
-      return (Application) method.invoke(null);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return null;
   }
 
   public Activity getCurrentActivity() {

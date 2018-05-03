@@ -16,26 +16,30 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import me.ele.uetool.UETool;
-import me.ele.uetool.Util;
 import me.ele.uetool.base.Element;
+
+import static me.ele.uetool.base.DimenUtil.dip2px;
+import static me.ele.uetool.base.DimenUtil.getScreenHeight;
+import static me.ele.uetool.base.DimenUtil.getScreenWidth;
+import static me.ele.uetool.base.DimenUtil.px2dip;
+import static me.ele.uetool.base.DimenUtil.sp2px;
 
 public class CollectViewsLayout extends View {
 
-  private final int ENDPOINT_LINE_HALF_WIDTH = Util.dip2px(2.5f);
-  private final int TEXT_BG_FILLING_SPACE = Util.dip2px(2);
-  private final int TEXT_LINE_DISTANCE = Util.dip2px(5);
-  protected final int SCREEN_WIDTH = Util.getScreenWidth();
-  protected final int SCREEN_HEIGHT = Util.getScreenHeight();
+  private final int ENDPOINT_LINE_HALF_WIDTH = dip2px(2.5f);
+  private final int TEXT_BG_FILLING_SPACE = dip2px(2);
+  private final int TEXT_LINE_DISTANCE = dip2px(5);
+  protected final int SCREEN_WIDTH = getScreenWidth();
+  protected final int SCREEN_HEIGHT = getScreenHeight();
 
   protected List<Element> elements = new ArrayList<>();
   protected Element childElement, parentElement;
   protected Paint textPaint = new Paint() {
     {
       setAntiAlias(true);
-      setTextSize(Util.sp2px(10));
+      setTextSize(sp2px(10));
       setColor(Color.RED);
-      setStrokeWidth(Util.dip2px(1));
+      setStrokeWidth(dip2px(1));
     }
   };
 
@@ -181,13 +185,13 @@ public class CollectViewsLayout extends View {
     if (startX == endX) {
       drawLineWithEndPoint(canvas, startX, startY + getLineEndPointSpace(), endX,
           endY - getLineEndPointSpace());
-      String text = Util.px2dip(endY - startY) + "dp";
+      String text = px2dip(endY - startY) + "dp";
       drawText(canvas, text, startX + TEXT_LINE_DISTANCE,
           startY + (endY - startY) / 2 + getTextHeight(text) / 2);
     } else if (startY == endY) {
       drawLineWithEndPoint(canvas, startX + getLineEndPointSpace(), startY,
           endX - getLineEndPointSpace(), endY);
-      String text = Util.px2dip(endX - startX) + "dp";
+      String text = px2dip(endX - startX) + "dp";
       drawText(canvas, text, startX + (endX - startX) / 2 - getTextWidth(text) / 2,
           startY - TEXT_LINE_DISTANCE);
     }

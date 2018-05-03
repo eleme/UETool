@@ -32,7 +32,7 @@ public class Element {
     int right = left + width;
     int top = location[1];
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-      top -= Util.getStatusBarHeight(view.getContext());
+      top -= DimenUtil.getStatusBarHeight();
     }
     int bottom = top + height;
 
