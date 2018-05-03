@@ -45,6 +45,7 @@ import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_EDIT_TEXT;
 import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_SWITCH;
 import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_TEXT;
 import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_TITLE;
+import static me.ele.uetool.base.DimenUtil.*;
 
 public class ViewAttrDialog extends Dialog {
 
@@ -71,7 +72,7 @@ public class ViewAttrDialog extends Dialog {
     dialogWindow.setGravity(Gravity.LEFT | Gravity.TOP);
     lp.x = element.getRect().left;
     lp.y = element.getRect().bottom;
-    lp.height = Util.getScreenHeight() / 2;
+    lp.height = getScreenHeight() / 2;
     dialogWindow.setAttributes(lp);
   }
 
@@ -271,43 +272,43 @@ public class ViewAttrDialog extends Dialog {
               }
             } else if (item.getType() == EditTextItem.Type.TYPE_WIDTH) {
               View view = item.getElement().getView();
-              int width = Util.dip2px(Integer.valueOf(s.toString()));
-              if (Math.abs(width - view.getWidth()) >= Util.dip2px(1)) {
+              int width = dip2px(Integer.valueOf(s.toString()));
+              if (Math.abs(width - view.getWidth()) >= dip2px(1)) {
                 view.getLayoutParams().width = width;
                 view.requestLayout();
               }
             } else if (item.getType() == EditTextItem.Type.TYPE_HEIGHT) {
               View view = item.getElement().getView();
-              int height = Util.dip2px(Integer.valueOf(s.toString()));
-              if (Math.abs(height - view.getHeight()) >= Util.dip2px(1)) {
+              int height = dip2px(Integer.valueOf(s.toString()));
+              if (Math.abs(height - view.getHeight()) >= dip2px(1)) {
                 view.getLayoutParams().height = height;
                 view.requestLayout();
               }
             } else if (item.getType() == EditTextItem.Type.TYPE_PADDING_LEFT) {
               View view = item.getElement().getView();
-              int paddingLeft = Util.dip2px(Integer.valueOf(s.toString()));
-              if (Math.abs(paddingLeft - view.getPaddingLeft()) >= Util.dip2px(1)) {
+              int paddingLeft = dip2px(Integer.valueOf(s.toString()));
+              if (Math.abs(paddingLeft - view.getPaddingLeft()) >= dip2px(1)) {
                 view.setPadding(paddingLeft, view.getPaddingTop(), view.getPaddingRight(),
                     view.getPaddingBottom());
               }
             } else if (item.getType() == EditTextItem.Type.TYPE_PADDING_RIGHT) {
               View view = item.getElement().getView();
-              int paddingRight = Util.dip2px(Integer.valueOf(s.toString()));
-              if (Math.abs(paddingRight - view.getPaddingRight()) >= Util.dip2px(1)) {
+              int paddingRight = dip2px(Integer.valueOf(s.toString()));
+              if (Math.abs(paddingRight - view.getPaddingRight()) >= dip2px(1)) {
                 view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), paddingRight,
                     view.getPaddingBottom());
               }
             } else if (item.getType() == EditTextItem.Type.TYPE_PADDING_TOP) {
               View view = item.getElement().getView();
-              int paddingTop = Util.dip2px(Integer.valueOf(s.toString()));
-              if (Math.abs(paddingTop - view.getPaddingTop()) >= Util.dip2px(1)) {
+              int paddingTop = dip2px(Integer.valueOf(s.toString()));
+              if (Math.abs(paddingTop - view.getPaddingTop()) >= dip2px(1)) {
                 view.setPadding(view.getPaddingLeft(), paddingTop, view.getPaddingRight(),
                     view.getPaddingBottom());
               }
             } else if (item.getType() == EditTextItem.Type.TYPE_PADDING_BOTTOM) {
               View view = item.getElement().getView();
-              int paddingBottom = Util.dip2px(Integer.valueOf(s.toString()));
-              if (Math.abs(paddingBottom - view.getPaddingBottom()) >= Util.dip2px(1)) {
+              int paddingBottom = dip2px(Integer.valueOf(s.toString()));
+              if (Math.abs(paddingBottom - view.getPaddingBottom()) >= dip2px(1)) {
                 view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(),
                     paddingBottom);
               }
@@ -435,7 +436,7 @@ public class ViewAttrDialog extends Dialog {
 
     public static class BitmapInfoViewHolder extends BaseViewHolder<BitmapItem> {
 
-      private final int IMAGE_HEIGHT = Util.dip2px(58);
+      private final int IMAGE_HEIGHT = dip2px(58);
 
       private TextView vName;
       private ImageView vImage;

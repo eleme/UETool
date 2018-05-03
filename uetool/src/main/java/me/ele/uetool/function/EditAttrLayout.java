@@ -10,13 +10,14 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Toast;
 import me.ele.uetool.CollectViewsLayout;
-import me.ele.uetool.Util;
 import me.ele.uetool.ViewAttrDialog;
 import me.ele.uetool.base.Element;
 
+import static me.ele.uetool.base.DimenUtil.dip2px;
+
 public class EditAttrLayout extends CollectViewsLayout {
 
-  private final int LINE_BORDER_DISTANCE = Util.dip2px(5);
+  private final int LINE_BORDER_DISTANCE = dip2px(5);
 
   private Paint areaPaint = new Paint() {
     {

@@ -7,15 +7,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
-import me.ele.uetool.base.item.BitmapItem;
 import me.ele.uetool.base.Element;
 import me.ele.uetool.base.IAttrs;
+import me.ele.uetool.base.item.AddMinusEditItem;
+import me.ele.uetool.base.item.BitmapItem;
+import me.ele.uetool.base.item.EditTextItem;
 import me.ele.uetool.base.item.Item;
+import me.ele.uetool.base.item.SwitchItem;
 import me.ele.uetool.base.item.TextItem;
 import me.ele.uetool.base.item.TitleItem;
-import me.ele.uetool.base.item.AddMinusEditItem;
-import me.ele.uetool.base.item.EditTextItem;
-import me.ele.uetool.base.item.SwitchItem;
+
+import static me.ele.uetool.base.DimenUtil.px2dip;
+import static me.ele.uetool.base.DimenUtil.px2sp;
 
 public class UETCore implements IAttrs {
 
@@ -36,7 +39,7 @@ public class UETCore implements IAttrs {
       items.add(new EditTextItem("Text", element, EditTextItem.Type.TYPE_TEXT,
           textView.getText().toString()));
       items.add(new AddMinusEditItem("TextSize（sp）", element, EditTextItem.Type.TYPE_TEXT_SIZE,
-          Util.px2sp(textView.getTextSize()) + ""));
+          px2sp(textView.getTextSize()) + ""));
       items.add(new EditTextItem("TextColor", element, EditTextItem.Type.TYPE_TEXT_COLOR,
           Util.intToHexColor(textView.getCurrentTextColor())));
       List<Pair<String, Bitmap>> pairs = Util.getTextViewBitmap((TextView) view);
@@ -51,9 +54,9 @@ public class UETCore implements IAttrs {
       items.add(new TextItem("ScaleType", Util.getImageViewScaleType((ImageView) view)));
     }
     items.add(new AddMinusEditItem("Width（dp）", element, EditTextItem.Type.TYPE_WIDTH,
-        Util.px2dip(view.getWidth()) + ""));
+        px2dip(view.getWidth()) + ""));
     items.add(new AddMinusEditItem("Height（dp）", element, EditTextItem.Type.TYPE_HEIGHT,
-        Util.px2dip(view.getHeight()) + ""));
+        px2dip(view.getHeight()) + ""));
     items.add(new TextItem("Alpha", view.getAlpha() + ""));
     Object background = Util.getBackground(view);
     if (background instanceof String) {
@@ -62,15 +65,15 @@ public class UETCore implements IAttrs {
       items.add(new BitmapItem("Background", (Bitmap) background));
     }
     items.add(new AddMinusEditItem("PaddingLeft（dp）", element, EditTextItem.Type.TYPE_PADDING_LEFT,
-        Util.px2dip(view.getPaddingLeft()) + ""));
+        px2dip(view.getPaddingLeft()) + ""));
     items.add(
         new AddMinusEditItem("PaddingRight（dp）", element, EditTextItem.Type.TYPE_PADDING_RIGHT,
-            Util.px2dip(view.getPaddingRight()) + ""));
+            px2dip(view.getPaddingRight()) + ""));
     items.add(new AddMinusEditItem("PaddingTop（dp）", element, EditTextItem.Type.TYPE_PADDING_TOP,
-        Util.px2dip(view.getPaddingTop()) + ""));
+        px2dip(view.getPaddingTop()) + ""));
     items.add(
         new AddMinusEditItem("PaddingBottom（dp）", element, EditTextItem.Type.TYPE_PADDING_BOTTOM,
-            Util.px2dip(view.getPaddingBottom()) + ""));
+            px2dip(view.getPaddingBottom()) + ""));
 
     return items;
   }
