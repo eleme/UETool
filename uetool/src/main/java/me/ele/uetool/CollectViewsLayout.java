@@ -133,10 +133,7 @@ public class CollectViewsLayout extends View {
           childElement = element;
           parentElement = element;
         } else {
-          Object parentView = parentElement.getView().getParent();
-          if (parentView instanceof View) {
-            parentElement = new Element((View) parentView);
-          }
+          parentElement = parentElement.getParentElement();
         }
         target = parentElement;
         break;

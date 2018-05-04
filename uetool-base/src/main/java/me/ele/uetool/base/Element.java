@@ -8,6 +8,8 @@ public class Element {
 
   private View view;
   private Rect rect = new Rect();
+  private int[] location = new int[2];
+  private Element parentElement;
 
   public Element(View view) {
     this.view = view;
@@ -23,7 +25,6 @@ public class Element {
   }
 
   public void reset() {
-    int[] location = new int[2];
     view.getLocationOnScreen(location);
     int width = view.getWidth();
     int height = view.getHeight();
@@ -37,5 +38,15 @@ public class Element {
     int bottom = top + height;
 
     rect.set(left, top, right, bottom);
+  }
+
+  public Element getParentElement() {
+    if (parentElement == null) {
+      Object parentView = view.getParent();
+      if (parentView instanceof View) {
+        parentElement = new Element((View) parentView);
+      }
+    }
+    return parentElement;
   }
 }

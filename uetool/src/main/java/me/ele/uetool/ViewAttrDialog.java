@@ -45,12 +45,14 @@ import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_EDIT_TEXT;
 import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_SWITCH;
 import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_TEXT;
 import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_TITLE;
-import static me.ele.uetool.base.DimenUtil.*;
+import static me.ele.uetool.base.DimenUtil.dip2px;
+import static me.ele.uetool.base.DimenUtil.getScreenHeight;
 
 public class ViewAttrDialog extends Dialog {
 
   private RecyclerView vList;
   private Adapter adapter = new Adapter();
+  private RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
 
   public ViewAttrDialog(Context context) {
     super(context, R.style.uet_Theme_Holo_Dialog_background_Translucent);
@@ -61,11 +63,10 @@ public class ViewAttrDialog extends Dialog {
     setContentView(R.layout.uet_info_layout);
     vList = findViewById(R.id.list);
     vList.setAdapter(adapter);
-    vList.setLayoutManager(new LinearLayoutManager(getContext()));
+    vList.setLayoutManager(layoutManager);
   }
 
   public void show(Element element) {
-    adapter.notifyDataSetChanged(element);
     show();
     Window dialogWindow = getWindow();
     WindowManager.LayoutParams lp = dialogWindow.getAttributes();
@@ -74,11 +75,26 @@ public class ViewAttrDialog extends Dialog {
     lp.y = element.getRect().bottom;
     lp.height = getScreenHeight() / 2;
     dialogWindow.setAttributes(lp);
+    adapter.notifyDataSetChanged(element);
+    layoutManager.scrollToPosition(0);
+  }
+
+  public void setAttrDialogCallback(AttrDialogCallback callback) {
+    adapter.setAttrDialogCallback(callback);
+  }
+
+  public interface AttrDialogCallback {
+    void enableMove();
   }
 
   public static class Adapter extends RecyclerView.Adapter {
 
     private List<Item> items = new ItemArrayList<>();
+    private AttrDialogCallback callback;
+
+    public void setAttrDialogCallback(AttrDialogCallback callback) {
+      this.callback = callback;
+    }
 
     public void notifyDataSetChanged(Element element) {
       items.clear();
@@ -103,7 +119,7 @@ public class ViewAttrDialog extends Dialog {
         case TYPE_EDIT_TEXT:
           return EditTextViewHolder.newInstance(parent);
         case TYPE_SWITCH:
-          return SwitchViewHolder.newInstance(parent);
+          return SwitchViewHolder.newInstance(parent, callback);
         case TYPE_ADD_MINUS_EDIT:
           return AddMinusEditViewHolder.newInstance(parent);
         case TYPE_BITMAP:
@@ -400,7 +416,7 @@ public class ViewAttrDialog extends Dialog {
       private TextView vName;
       private SwitchCompat vSwitch;
 
-      public SwitchViewHolder(View itemView) {
+      public SwitchViewHolder(View itemView, final AttrDialogCallback callback) {
         super(itemView);
 
         vName = itemView.findViewById(R.id.name);
@@ -408,6 +424,12 @@ public class ViewAttrDialog extends Dialog {
         vSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
           @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             try {
+              if (item.getType() == SwitchItem.Type.TYPE_MOVE) {
+                if (callback != null && isChecked) {
+                  callback.enableMove();
+                }
+                return;
+              }
               if (item.getElement().getView() instanceof TextView) {
                 TextView textView = ((TextView) (item.getElement().getView()));
                 if (item.getType() == SwitchItem.Type.TYPE_IS_BOLD) {
@@ -421,9 +443,9 @@ public class ViewAttrDialog extends Dialog {
         });
       }
 
-      public static SwitchViewHolder newInstance(ViewGroup parent) {
+      public static SwitchViewHolder newInstance(ViewGroup parent, AttrDialogCallback callback) {
         return new SwitchViewHolder(LayoutInflater.from(parent.getContext())
-            .inflate(R.layout.uet_cell_switch, parent, false));
+            .inflate(R.layout.uet_cell_switch, parent, false), callback);
       }
 
       @Override public void bindView(SwitchItem switchItem) {
