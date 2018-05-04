@@ -27,6 +27,7 @@ public class UETCore implements IAttrs {
 
     View view = element.getView();
 
+    items.add(new SwitchItem("Move", element, SwitchItem.Type.TYPE_MOVE));
     items.add(new TitleItem("COMMON"));
     items.add(new TextItem("Class", view.getClass().getName()));
     items.add(new TextItem("Id", Util.getResId(view)));

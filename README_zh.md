@@ -9,6 +9,7 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 
 目前 UETool 提供以下功能：
 
+- 移动屏幕上的任意 view，如果重复选中一个 view，将会选中其父 view
 - 查看/修改常用控件的属性，比如修改 TextView 的文本内容、文本大小、文本颜色等等
 - 如果你的项目里正在使用 Fresco 的 DraweeView 来呈现图片，那么 UETool 将会提供更多的属性比如图片 URI、默认占位图、圆角大小等等
 - 你可以很轻松的定制任何 view 的属性
@@ -18,7 +19,11 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 ## 效果
 
 <div>
+<img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/move_view.gif"/>
+
 <img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/show_image_uri.gif"/>
+
+<br/>
 
 <img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/relative_position.gif"/>
 
@@ -69,11 +74,11 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 
 ```gradle
 dependencies {
-  debugCompile 'me.ele:uetool:1.0.7'
-  releaseCompile 'me.ele:uetool-no-op:1.0.7'
+  debugCompile 'me.ele:uetool:1.0.8'
+  releaseCompile 'me.ele:uetool-no-op:1.0.8'
 
   // if you want to show attrs about Fresco's DraweeView
-  debugCompile 'me.ele:uetool-fresco:1.0.7'
+  debugCompile 'me.ele:uetool-fresco:1.0.8'
 }
 ```
 

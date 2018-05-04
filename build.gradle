@@ -9,8 +9,8 @@ buildscript {
                   'supportLibrary': '27.1.1',
                   'fresco': '1.4.0',
 
-                  'debug'   : '1.0.7-SNAPSHOT',
-                  'release'   : '1.0.7',]
+                  'debug'   : '1.0.8-SNAPSHOT',
+                  'release'   : '1.0.8',]
   repositories {
     jcenter()
     maven {

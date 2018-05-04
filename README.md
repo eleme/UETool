@@ -11,6 +11,7 @@ UETool is a debug tool for anyone who needs show/edit one or more view's attribu
 
 At present UETool provides functionality as bellows:
 
+- move any view on the screen, select view repeatedly will select its parent view
 - show / edit normal view's attributions such as edit TextView's text、textSize、textColor etc.
 - if you are using Fresco's DraweeView, UETool provides show more attributions like ImageURI、PlaceHolderImage、CornerRadius etc.
 - you can customize any view's attributions you want with simple way
@@ -20,7 +21,11 @@ At present UETool provides functionality as bellows:
 ## EFFECT
 
 <div>
+<img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/move_view.gif"/>
+
 <img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/show_image_uri.gif"/>
+
+<br/>
 
 <img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/relative_position.gif"/>
 
@@ -71,11 +76,11 @@ At present UETool provides functionality as bellows:
 
 ```gradle
 dependencies {
-  debugCompile 'me.ele:uetool:1.0.7'
-  releaseCompile 'me.ele:uetool-no-op:1.0.7'
+  debugCompile 'me.ele:uetool:1.0.8'
+  releaseCompile 'me.ele:uetool-no-op:1.0.8'
 
   // if you want to show attrs about Fresco's DraweeView
-  debugCompile 'me.ele:uetool-fresco:1.0.7'
+  debugCompile 'me.ele:uetool-fresco:1.0.8'
 }
 ```
 
