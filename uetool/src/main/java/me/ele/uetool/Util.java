@@ -130,20 +130,11 @@ public class Util {
   private static List<Pair<String, Bitmap>> getTextViewDrawableBitmap(TextView textView) {
     List<Pair<String, Bitmap>> bitmaps = new ArrayList<>();
     try {
-      Field mDrawablesField = TextView.class.getDeclaredField("mDrawables");
-      mDrawablesField.setAccessible(true);
-      Field mDrawableLeftInitialFiled = Class.forName("android.widget.TextView$Drawables")
-          .getDeclaredField("mDrawableLeftInitial");
-      mDrawableLeftInitialFiled.setAccessible(true);
-      bitmaps.add(
-          new Pair<>("DrawableLeft", getDrawableBitmap((Drawable) mDrawableLeftInitialFiled.get(
-              mDrawablesField.get(textView)))));
-      Field mDrawableRightInitialFiled = Class.forName("android.widget.TextView$Drawables")
-          .getDeclaredField("mDrawableRightInitial");
-      mDrawableRightInitialFiled.setAccessible(true);
-      bitmaps.add(
-          new Pair<>("DrawableRight", getDrawableBitmap((Drawable) mDrawableRightInitialFiled.get(
-              mDrawablesField.get(textView)))));
+      Drawable[] drawables = textView.getCompoundDrawables();
+      bitmaps.add(new Pair<>("DrawableLeft", getDrawableBitmap(drawables[0])));
+      bitmaps.add(new Pair<>("DrawableTop", getDrawableBitmap(drawables[1])));
+      bitmaps.add(new Pair<>("DrawableRight", getDrawableBitmap(drawables[2])));
+      bitmaps.add(new Pair<>("DrawableBottom", getDrawableBitmap(drawables[3])));
     } catch (Exception e) {
       e.printStackTrace();
     }

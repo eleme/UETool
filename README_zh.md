@@ -74,11 +74,11 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 
 ```gradle
 dependencies {
-  debugCompile 'me.ele:uetool:1.0.8'
-  releaseCompile 'me.ele:uetool-no-op:1.0.8'
+  debugCompile 'me.ele:uetool:1.0.9'
+  releaseCompile 'me.ele:uetool-no-op:1.0.9'
 
-  // if you want to show attrs about Fresco's DraweeView
-  debugCompile 'me.ele:uetool-fresco:1.0.8'
+  // if you want to show more attrs about Fresco's DraweeView
+  debugCompile 'me.ele:uetool-fresco:1.0.9'
 }
 ```
 

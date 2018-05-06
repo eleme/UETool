@@ -82,10 +82,10 @@ public class RelativePositionLayout extends CollectViewsLayout {
     for (Element element : relativeElements) {
       if (element != null) {
         Rect rect = element.getRect();
-        canvas.drawLine(0, rect.top, SCREEN_WIDTH, rect.top, dashLinePaint);
-        canvas.drawLine(0, rect.bottom, SCREEN_WIDTH, rect.bottom, dashLinePaint);
-        canvas.drawLine(rect.left, 0, rect.left, SCREEN_HEIGHT, dashLinePaint);
-        canvas.drawLine(rect.right, 0, rect.right, SCREEN_HEIGHT, dashLinePaint);
+        canvas.drawLine(0, rect.top, screenWidth, rect.top, dashLinePaint);
+        canvas.drawLine(0, rect.bottom, screenWidth, rect.bottom, dashLinePaint);
+        canvas.drawLine(rect.left, 0, rect.left, screenHeight, dashLinePaint);
+        canvas.drawLine(rect.right, 0, rect.right, screenHeight, dashLinePaint);
         canvas.drawRect(rect, areaPaint);
       } else {
         doubleNotNull = false;
@@ -156,7 +156,8 @@ public class RelativePositionLayout extends CollectViewsLayout {
     relativeElements = null;
   }
 
-  @Override protected int getLineEndPointSpace() {
-    return dip2px(2);
+  @Override
+  protected void drawLineWithText(Canvas canvas, int startX, int startY, int endX, int endY) {
+    drawLineWithText(canvas, startX, startY, endX, endY, dip2px(2));
   }
 }

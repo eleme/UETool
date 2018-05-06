@@ -5,7 +5,6 @@ import android.app.Application;
 import android.os.Bundle;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.leakcanary.LeakCanary;
-
 import me.ele.uetool.UETool;
 
 public class AppContext extends Application {
@@ -21,6 +20,7 @@ public class AppContext extends Application {
     registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 
       private int visibleActivityCount;
+      private int uetoolDismissY = -1;
 
       @Override public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
 
@@ -28,8 +28,8 @@ public class AppContext extends Application {
 
       @Override public void onActivityStarted(Activity activity) {
         visibleActivityCount++;
-        if (visibleActivityCount == 1) {
-
+        if (visibleActivityCount == 1 && uetoolDismissY >= 0) {
+          UETool.showUETMenu(uetoolDismissY);
         }
       }
 
@@ -44,7 +44,7 @@ public class AppContext extends Application {
       @Override public void onActivityStopped(Activity activity) {
         visibleActivityCount--;
         if (visibleActivityCount == 0) {
-          UETool.dismissUETMenu();
+          uetoolDismissY = UETool.dismissUETMenu();
         }
       }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,8 +23,7 @@
       android:id="@+id/detail"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="5dp"
-      android:layout_toRightOf="@+id/name"
+      android:layout_marginLeft="10dp"
       android:gravity="right"
       android:textColor="#fff"
       android:textSize="@dimen/uet_info_text_size"
@@ -32,4 +31,4 @@
       tools:textColor="#999"
       />
 
-</RelativeLayout>
+</LinearLayout>

@@ -27,11 +27,11 @@ import static me.ele.uetool.base.DimenUtil.sp2px;
 
 public class CollectViewsLayout extends View {
 
-  private final int ENDPOINT_LINE_HALF_WIDTH = dip2px(2.5f);
-  private final int TEXT_BG_FILLING_SPACE = dip2px(2);
-  private final int TEXT_LINE_DISTANCE = dip2px(5);
-  protected final int SCREEN_WIDTH = getScreenWidth();
-  protected final int SCREEN_HEIGHT = getScreenHeight();
+  private final int halfEndPointWidth = dip2px(2.5f);
+  private final int textBgFillingSpace = dip2px(2);
+  private final int textLineDistance = dip2px(5);
+  protected final int screenWidth = getScreenWidth();
+  protected final int screenHeight = getScreenHeight();
 
   protected List<Element> elements = new ArrayList<>();
   protected Element childElement, parentElement;
@@ -112,9 +112,8 @@ public class CollectViewsLayout extends View {
 
   private void traverse(View view) {
     if (UETool.getInstance().getFilterClasses().contains(view.getClass().getName())) return;
-    if (view.getVisibility() != View.VISIBLE) return;
-    if (view.getAlpha() == 0) return;
-    if ("DESABLE_UETOOL".equals(view.getTag())) return;
+    if (view.getAlpha() == 0 || view.getVisibility() != View.VISIBLE) return;
+    if (getResources().getString(R.string.uet_disable).equals(view.getTag())) return;
     elements.add(new Element(view));
     if (view instanceof ViewGroup) {
       ViewGroup parent = (ViewGroup) view;
@@ -148,29 +147,33 @@ public class CollectViewsLayout extends View {
   }
 
   protected void drawText(Canvas canvas, String text, float x, float y) {
-    canvas.drawRect(x - TEXT_BG_FILLING_SPACE, y - getTextHeight(text),
-        x + getTextWidth(text) + TEXT_BG_FILLING_SPACE, y + TEXT_BG_FILLING_SPACE,
+    canvas.drawRect(x - textBgFillingSpace, y - getTextHeight(text),
+        x + getTextWidth(text) + textBgFillingSpace, y + textBgFillingSpace,
         textBgPaint);
     canvas.drawText(text, x, y, textPaint);
   }
 
-  private void drawLineWithEndPoint(Canvas canvas, int startX, int startY, int endX,
-      int endY) {
+  private void drawLineWithEndPoint(Canvas canvas, int startX, int startY, int endX, int endY) {
     canvas.drawLine(startX, startY, endX, endY, textPaint);
     if (startX == endX) {
-      canvas.drawLine(startX - ENDPOINT_LINE_HALF_WIDTH, startY, endX + ENDPOINT_LINE_HALF_WIDTH,
+      canvas.drawLine(startX - halfEndPointWidth, startY, endX + halfEndPointWidth,
           startY, textPaint);
-      canvas.drawLine(startX - ENDPOINT_LINE_HALF_WIDTH, endY, endX + ENDPOINT_LINE_HALF_WIDTH,
+      canvas.drawLine(startX - halfEndPointWidth, endY, endX + halfEndPointWidth,
           endY, textPaint);
     } else if (startY == endY) {
-      canvas.drawLine(startX, startY - ENDPOINT_LINE_HALF_WIDTH, startX,
-          endY + ENDPOINT_LINE_HALF_WIDTH, textPaint);
-      canvas.drawLine(endX, startY - ENDPOINT_LINE_HALF_WIDTH, endX,
-          endY + ENDPOINT_LINE_HALF_WIDTH, textPaint);
+      canvas.drawLine(startX, startY - halfEndPointWidth, startX,
+          endY + halfEndPointWidth, textPaint);
+      canvas.drawLine(endX, startY - halfEndPointWidth, endX,
+          endY + halfEndPointWidth, textPaint);
     }
   }
 
   protected void drawLineWithText(Canvas canvas, int startX, int startY, int endX, int endY) {
+    drawLineWithText(canvas, startX, startY, endX, endY, 0);
+  }
+
+  protected void drawLineWithText(Canvas canvas, int startX, int startY, int endX, int endY,
+      int endPointSpace) {
 
     if (startX == endX && startY == endY) {
       return;
@@ -188,17 +191,15 @@ public class CollectViewsLayout extends View {
     }
 
     if (startX == endX) {
-      drawLineWithEndPoint(canvas, startX, startY + getLineEndPointSpace(), endX,
-          endY - getLineEndPointSpace());
+      drawLineWithEndPoint(canvas, startX, startY + endPointSpace, endX, endY - endPointSpace);
       String text = px2dip(endY - startY) + "dp";
-      drawText(canvas, text, startX + TEXT_LINE_DISTANCE,
+      drawText(canvas, text, startX + textLineDistance,
           startY + (endY - startY) / 2 + getTextHeight(text) / 2);
     } else if (startY == endY) {
-      drawLineWithEndPoint(canvas, startX + getLineEndPointSpace(), startY,
-          endX - getLineEndPointSpace(), endY);
+      drawLineWithEndPoint(canvas, startX + endPointSpace, startY, endX - endPointSpace, endY);
       String text = px2dip(endX - startX) + "dp";
       drawText(canvas, text, startX + (endX - startX) / 2 - getTextWidth(text) / 2,
-          startY - TEXT_LINE_DISTANCE);
+          startY - textLineDistance);
     }
   }
 
@@ -210,9 +211,5 @@ public class CollectViewsLayout extends View {
 
   protected float getTextWidth(String text) {
     return textPaint.measureText(text);
-  }
-
-  protected int getLineEndPointSpace() {
-    return 0;
   }
 }

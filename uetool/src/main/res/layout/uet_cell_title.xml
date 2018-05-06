@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/title"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    >
-
-  <TextView
-      android:id="@+id/title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="#fff"
-      android:textSize="14sp"
-      />
-
-</FrameLayout>
+    android:textColor="#fff"
+    android:textSize="14sp"
+    />

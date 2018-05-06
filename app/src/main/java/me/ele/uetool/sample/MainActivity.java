@@ -3,7 +3,6 @@ package me.ele.uetool.sample;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import me.ele.uetool.UETool;
-import me.ele.uetool.base.DimenUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,11 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
   private void updateCustomView() {
     final CustomView customView = findViewById(R.id.custom);
-    customView.setMoreAttribution("more attribution");
-    new Handler().postDelayed(new Runnable() {
-      @Override public void run() {
-        customView.offsetLeftAndRight(DimenUtil.dip2px(100));
-      }
-    }, 100);
+    customView.setMoreAttribution("more attribution more attributionmore attributionmore attributionmore attributionmore attributionmore attributionmore attributionmore attributionmore attribution");
+    Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_up_vote);
+    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+    customView.setCompoundDrawables(null, drawable, null, null);
   }
 }
