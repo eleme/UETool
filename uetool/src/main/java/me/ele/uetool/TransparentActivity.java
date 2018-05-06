@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -16,7 +17,7 @@ import me.ele.uetool.function.RelativePositionLayout;
 
 import static me.ele.uetool.TransparentActivity.Type.TYPE_EDIT_ATTR;
 import static me.ele.uetool.TransparentActivity.Type.TYPE_RELATIVE_POSITION;
-import static me.ele.uetool.TransparentActivity.Type.TYPE_SHOW_GRDDING;
+import static me.ele.uetool.TransparentActivity.Type.TYPE_SHOW_GRIDDING;
 import static me.ele.uetool.TransparentActivity.Type.TYPE_UNKNOWN;
 
 public class TransparentActivity extends AppCompatActivity {
@@ -45,7 +46,7 @@ public class TransparentActivity extends AppCompatActivity {
       case TYPE_RELATIVE_POSITION:
         vContainer.addView(new RelativePositionLayout(this));
         break;
-      case TYPE_SHOW_GRDDING:
+      case TYPE_SHOW_GRIDDING:
         vContainer.addView(new GriddingLayout(this));
         break;
       default:
@@ -53,10 +54,12 @@ public class TransparentActivity extends AppCompatActivity {
         finish();
         break;
     }
+
+    LayoutInflater.from(this).inflate(R.layout.uet_text_debug, vContainer, true);
   }
 
   @Override public boolean dispatchTouchEvent(MotionEvent ev) {
-    if (type == TYPE_SHOW_GRDDING) {
+    if (type == TYPE_SHOW_GRIDDING) {
       bindActivity.dispatchTouchEvent(ev);
     }
     return super.dispatchTouchEvent(ev);
@@ -81,13 +84,13 @@ public class TransparentActivity extends AppCompatActivity {
   @IntDef({
       TYPE_UNKNOWN,
       TYPE_EDIT_ATTR,
-      TYPE_SHOW_GRDDING,
+      TYPE_SHOW_GRIDDING,
       TYPE_RELATIVE_POSITION,
   })
   @Retention(RetentionPolicy.SOURCE) public @interface Type {
     int TYPE_UNKNOWN = -1;
     int TYPE_EDIT_ATTR = 1;
-    int TYPE_SHOW_GRDDING = 2;
+    int TYPE_SHOW_GRIDDING = 2;
     int TYPE_RELATIVE_POSITION = 3;
   }
 }

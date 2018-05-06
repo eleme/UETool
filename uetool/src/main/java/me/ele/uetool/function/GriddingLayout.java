@@ -13,9 +13,9 @@ import static me.ele.uetool.base.DimenUtil.getScreenWidth;
 
 public class GriddingLayout extends View {
 
-  private final int LINE_SPACE = dip2px(5);
-  private final int SCREEN_WIDTH = getScreenWidth();
-  private final int SCREEN_HEIGHT = getScreenHeight();
+  private final int lineSpace = dip2px(5);
+  private final int screenWidth = getScreenWidth();
+  private final int screenHeight = getScreenHeight();
 
   private Paint paint = new Paint() {
     {
@@ -41,15 +41,15 @@ public class GriddingLayout extends View {
   @Override protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
     int startX = 0;
-    while (startX < SCREEN_WIDTH) {
-      canvas.drawLine(startX, 0, startX, SCREEN_HEIGHT, paint);
-      startX = startX + LINE_SPACE;
+    while (startX < screenWidth) {
+      canvas.drawLine(startX, 0, startX, screenHeight, paint);
+      startX = startX + lineSpace;
     }
 
     int startY = 0;
-    while (startY < SCREEN_HEIGHT) {
-      canvas.drawLine(0, startY, SCREEN_WIDTH, startY, paint);
-      startY = startY + LINE_SPACE;
+    while (startY < screenHeight) {
+      canvas.drawLine(0, startY, screenWidth, startY, paint);
+      startY = startY + lineSpace;
     }
   }
 }

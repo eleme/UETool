@@ -47,6 +47,7 @@ import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_TEXT;
 import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_TITLE;
 import static me.ele.uetool.base.DimenUtil.dip2px;
 import static me.ele.uetool.base.DimenUtil.getScreenHeight;
+import static me.ele.uetool.base.DimenUtil.getScreenWidth;
 
 public class ViewAttrDialog extends Dialog {
 
@@ -73,6 +74,7 @@ public class ViewAttrDialog extends Dialog {
     dialogWindow.setGravity(Gravity.LEFT | Gravity.TOP);
     lp.x = element.getRect().left;
     lp.y = element.getRect().bottom;
+    lp.width = getScreenWidth() - dip2px(30);
     lp.height = getScreenHeight() / 2;
     dialogWindow.setAttributes(lp);
     adapter.notifyDataSetChanged(element);

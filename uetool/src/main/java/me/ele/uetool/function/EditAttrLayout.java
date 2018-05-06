@@ -24,8 +24,8 @@ import static me.ele.uetool.function.EditAttrLayout.Mode.SHOW;
 
 public class EditAttrLayout extends CollectViewsLayout {
 
-  private final int MOVE_UNIT = dip2px(1);
-  private final int LINE_BORDER_DISTANCE = dip2px(5);
+  private final int moveUnit = dip2px(1);
+  private final int lineBorderDistance = dip2px(5);
 
   private Paint areaPaint = new Paint() {
     {
@@ -57,20 +57,20 @@ public class EditAttrLayout extends CollectViewsLayout {
       Rect rect = element.getRect();
       canvas.drawRect(rect, areaPaint);
       if (mode == SHOW) {
-        drawLineWithText(canvas, rect.left, rect.top - LINE_BORDER_DISTANCE, rect.right,
-            rect.top - LINE_BORDER_DISTANCE);
-        drawLineWithText(canvas, rect.right + LINE_BORDER_DISTANCE, rect.top,
-            rect.right + LINE_BORDER_DISTANCE, rect.bottom);
+        drawLineWithText(canvas, rect.left, rect.top - lineBorderDistance, rect.right,
+            rect.top - lineBorderDistance);
+        drawLineWithText(canvas, rect.right + lineBorderDistance, rect.top,
+            rect.right + lineBorderDistance, rect.bottom);
       } else if (mode == MOVE) {
         Element parentElement = element.getParentElement();
         if (parentElement != null) {
           Rect parentRect = parentElement.getRect();
           int x = rect.left + rect.width() / 2;
           int y = rect.top + rect.height() / 2;
-          drawLineWithText(canvas, rect.left, y, parentRect.left, y);
-          drawLineWithText(canvas, x, rect.top, x, parentRect.top);
-          drawLineWithText(canvas, rect.right, y, parentRect.right, y);
-          drawLineWithText(canvas, x, rect.bottom, x, parentRect.bottom);
+          drawLineWithText(canvas, rect.left, y, parentRect.left, y, dip2px(2));
+          drawLineWithText(canvas, x, rect.top, x, parentRect.top, dip2px(2));
+          drawLineWithText(canvas, rect.right, y, parentRect.right, y, dip2px(2));
+          drawLineWithText(canvas, x, rect.bottom, x, parentRect.bottom, dip2px(2));
         }
       }
     }
@@ -117,13 +117,13 @@ public class EditAttrLayout extends CollectViewsLayout {
           boolean changed = false;
           View view = element.getView();
           float diffX = event.getX() - lastX;
-          if (Math.abs(diffX) >= MOVE_UNIT) {
+          if (Math.abs(diffX) >= moveUnit) {
             view.setTranslationX(view.getTranslationX() + diffX);
             lastX = event.getX();
             changed = true;
           }
           float diffY = event.getY() - lastY;
-          if (Math.abs(diffY) >= MOVE_UNIT) {
+          if (Math.abs(diffY) >= moveUnit) {
             view.setTranslationY(view.getTranslationY() + diffY);
             lastY = event.getY();
             changed = true;
