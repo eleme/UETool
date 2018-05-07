@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Spannable;
@@ -46,14 +45,11 @@ public class MainActivity extends AppCompatActivity {
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.btn1:
-        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+        Intent intent = new Intent(this, SecondActivity.class);
         startActivity(intent);
         break;
       case R.id.btn2:
-        new AlertDialog.Builder(this).setTitle("title")
-            .setMessage("this is a dialog")
-            .create()
-            .show();
+        new CustomDialog(this).show();
         break;
     }
   }
@@ -80,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
   private void updateCustomView() {
     final CustomView customView = findViewById(R.id.custom);
-    customView.setMoreAttribution("more attribution more attributionmore attributionmore attributionmore attributionmore attributionmore attributionmore attributionmore attributionmore attribution");
+    customView.setMoreAttribution("more attribution");
     Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_up_vote);
     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
     customView.setCompoundDrawables(null, drawable, null, null);
