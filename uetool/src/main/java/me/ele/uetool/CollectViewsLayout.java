@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -73,29 +74,45 @@ public class CollectViewsLayout extends View {
       Field mGlobalField =
           Class.forName("android.view.WindowManagerImpl").getDeclaredField("mGlobal");
       mGlobalField.setAccessible(true);
-      Field mRootsField =
-          Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mRoots");
-      mRootsField.setAccessible(true);
-      List viewRootImpls;
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-        viewRootImpls = (List) mRootsField.get(mGlobalField.get(windowManager));
+
+      if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+        Field mViewsField =
+            Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mViews");
+        mViewsField.setAccessible(true);
+        List<View> views = (List<View>) mViewsField.get(mGlobalField.get(windowManager));
+        for (int i = views.size() - 1; i >= 0; i--) {
+          View targetView = getTargetDecorView(targetActivity, views.get(i));
+          if (targetView != null) {
+            traverse(targetView);
+            break;
+          }
+        }
       } else {
-        viewRootImpls = Arrays.asList((Object[]) mRootsField.get(mGlobalField.get(windowManager)));
-      }
-      for (int i = viewRootImpls.size() - 1; i >= 0; i--) {
-        Class clazz = Class.forName("android.view.ViewRootImpl");
-        Object object = viewRootImpls.get(i);
-        Field mWindowAttributesField = clazz.getDeclaredField("mWindowAttributes");
-        mWindowAttributesField.setAccessible(true);
-        Field mViewField = clazz.getDeclaredField("mView");
-        mViewField.setAccessible(true);
-        View decorView = (View) mViewField.get(object);
-        WindowManager.LayoutParams layoutParams =
-            (WindowManager.LayoutParams) mWindowAttributesField.get(object);
-        if (layoutParams.getTitle().toString().contains(targetActivity.getClass().getName())
-            || decorView.getContext() == targetActivity) {
-          traverse(decorView);
-          break;
+        Field mRootsField =
+            Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mRoots");
+        mRootsField.setAccessible(true);
+        List viewRootImpls;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+          viewRootImpls = (List) mRootsField.get(mGlobalField.get(windowManager));
+        } else {
+          viewRootImpls =
+              Arrays.asList((Object[]) mRootsField.get(mGlobalField.get(windowManager)));
+        }
+        for (int i = viewRootImpls.size() - 1; i >= 0; i--) {
+          Class clazz = Class.forName("android.view.ViewRootImpl");
+          Object object = viewRootImpls.get(i);
+          Field mWindowAttributesField = clazz.getDeclaredField("mWindowAttributes");
+          mWindowAttributesField.setAccessible(true);
+          Field mViewField = clazz.getDeclaredField("mView");
+          mViewField.setAccessible(true);
+          View decorView = (View) mViewField.get(object);
+          WindowManager.LayoutParams layoutParams =
+              (WindowManager.LayoutParams) mWindowAttributesField.get(object);
+          if (layoutParams.getTitle().toString().contains(targetActivity.getClass().getName())
+              || getTargetDecorView(targetActivity, decorView) != null) {
+            traverse(decorView);
+            break;
+          }
         }
       }
     } catch (Exception e) {
@@ -121,6 +138,24 @@ public class CollectViewsLayout extends View {
         traverse(parent.getChildAt(i));
       }
     }
+  }
+
+  private View getTargetDecorView(Activity targetActivity, View decorView) {
+    View targetView = null;
+    Context context = decorView.getContext();
+    if (context == targetActivity) {
+      targetView = decorView;
+    } else {
+      while (context instanceof ContextThemeWrapper) {
+        Context baseContext = ((ContextThemeWrapper) context).getBaseContext();
+        if (baseContext == targetActivity) {
+          targetView = decorView;
+          break;
+        }
+        context = baseContext;
+      }
+    }
+    return targetView;
   }
 
   protected Element getTargetElement(float x, float y) {
