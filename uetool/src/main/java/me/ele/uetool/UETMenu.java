@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -190,7 +191,11 @@ public class UETMenu extends LinearLayout {
   private WindowManager.LayoutParams getWindowLayoutParams() {
     params.width = FrameLayout.LayoutParams.WRAP_CONTENT;
     params.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-    params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+      params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+    } else {
+      params.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+    }
     params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
     params.format = PixelFormat.TRANSLUCENT;
     params.gravity = Gravity.TOP | Gravity.LEFT;
