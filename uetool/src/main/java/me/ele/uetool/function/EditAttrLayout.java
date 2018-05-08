@@ -62,6 +62,8 @@ public class EditAttrLayout extends CollectViewsLayout {
         drawLineWithText(canvas, rect.right + lineBorderDistance, rect.top,
             rect.right + lineBorderDistance, rect.bottom);
       } else if (mode == MOVE) {
+        Rect originRect = element.getOriginRect();
+        canvas.drawRect(originRect, dashLinePaint);
         Element parentElement = element.getParentElement();
         if (parentElement != null) {
           Rect parentRect = parentElement.getRect();

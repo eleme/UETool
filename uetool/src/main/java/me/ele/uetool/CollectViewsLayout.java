@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
@@ -50,6 +51,16 @@ public class CollectViewsLayout extends View {
       setAntiAlias(true);
       setColor(Color.WHITE);
       setStrokeJoin(Join.ROUND);
+    }
+  };
+
+  protected Paint dashLinePaint = new Paint() {
+    {
+      setAntiAlias(true);
+      setColor(0x90FF0000);
+      setStyle(Style.STROKE);
+      setPathEffect(new DashPathEffect(
+          new float[] { dip2px(4), dip2px(8) }, 0));
     }
   };
 
@@ -182,10 +193,31 @@ public class CollectViewsLayout extends View {
   }
 
   protected void drawText(Canvas canvas, String text, float x, float y) {
-    canvas.drawRect(x - textBgFillingSpace, y - getTextHeight(text),
-        x + getTextWidth(text) + textBgFillingSpace, y + textBgFillingSpace,
-        textBgPaint);
-    canvas.drawText(text, x, y, textPaint);
+    float left = x - textBgFillingSpace;
+    float top = y - getTextHeight(text);
+    float right = x + getTextWidth(text) + textBgFillingSpace;
+    float bottom = y + textBgFillingSpace;
+    // ensure text in screen bound
+    if (left < 0) {
+      right -= left;
+      left = 0;
+    }
+    if (top < 0) {
+      bottom -= top;
+      top = 0;
+    }
+    if (bottom > screenHeight) {
+      float diff = top - bottom;
+      bottom = screenHeight;
+      top = bottom + diff;
+    }
+    if (right > screenWidth) {
+      float diff = left - right;
+      right = screenWidth;
+      left = right + diff;
+    }
+    canvas.drawRect(left, top, right, bottom, textBgPaint);
+    canvas.drawText(text, left + textBgFillingSpace, bottom - textBgFillingSpace, textPaint);
   }
 
   private void drawLineWithEndPoint(Canvas canvas, int startX, int startY, int endX, int endY) {
@@ -227,12 +259,12 @@ public class CollectViewsLayout extends View {
 
     if (startX == endX) {
       drawLineWithEndPoint(canvas, startX, startY + endPointSpace, endX, endY - endPointSpace);
-      String text = px2dip(endY - startY) + "dp";
+      String text = px2dip(endY - startY, true);
       drawText(canvas, text, startX + textLineDistance,
           startY + (endY - startY) / 2 + getTextHeight(text) / 2);
     } else if (startY == endY) {
       drawLineWithEndPoint(canvas, startX + endPointSpace, startY, endX - endPointSpace, endY);
-      String text = px2dip(endX - startX) + "dp";
+      String text = px2dip(endX - startX, true);
       drawText(canvas, text, startX + (endX - startX) / 2 - getTextWidth(text) / 2,
           startY - textLineDistance);
     }

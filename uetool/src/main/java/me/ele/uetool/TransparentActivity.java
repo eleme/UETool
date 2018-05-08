@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -55,7 +56,10 @@ public class TransparentActivity extends AppCompatActivity {
         break;
     }
 
-    LayoutInflater.from(this).inflate(R.layout.uet_text_debug, vContainer, true);
+    TextView label =
+        (TextView) LayoutInflater.from(this).inflate(R.layout.uet_text_debug, vContainer, false);
+    label.setText(getString(R.string.uet_name) + " / " + bindActivity.getClass().getName());
+    vContainer.addView(label);
   }
 
   @Override public boolean dispatchTouchEvent(MotionEvent ev) {
