@@ -38,11 +38,25 @@ public class TransparentActivity extends AppCompatActivity {
 
     vContainer = findViewById(R.id.container);
 
+    final String targetActivityInfo =
+        getString(R.string.uet_name) + " / " + bindActivity.getClass().getName();
+
+    final TextView board =
+        (TextView) LayoutInflater.from(this).inflate(R.layout.uet_info_board, vContainer, false);
+    board.setText(targetActivityInfo);
+    vContainer.addView(board);
+
     type = getIntent().getIntExtra(EXTRA_TYPE, TYPE_UNKNOWN);
 
     switch (type) {
       case TYPE_EDIT_ATTR:
-        vContainer.addView(new EditAttrLayout(this));
+        EditAttrLayout editAttrLayout = new EditAttrLayout(this);
+        editAttrLayout.setOnDragListener(new EditAttrLayout.OnDragListener() {
+          @Override public void showOffset(String offsetContent) {
+            board.setText(offsetContent + "\n" + targetActivityInfo);
+          }
+        });
+        vContainer.addView(editAttrLayout);
         break;
       case TYPE_RELATIVE_POSITION:
         vContainer.addView(new RelativePositionLayout(this));
@@ -55,11 +69,6 @@ public class TransparentActivity extends AppCompatActivity {
         finish();
         break;
     }
-
-    TextView label =
-        (TextView) LayoutInflater.from(this).inflate(R.layout.uet_text_debug, vContainer, false);
-    label.setText(getString(R.string.uet_name) + " / " + bindActivity.getClass().getName());
-    vContainer.addView(label);
   }
 
   @Override public boolean dispatchTouchEvent(MotionEvent ev) {

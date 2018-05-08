@@ -19,6 +19,7 @@ import me.ele.uetool.ViewAttrDialog;
 import me.ele.uetool.base.Element;
 
 import static me.ele.uetool.base.DimenUtil.dip2px;
+import static me.ele.uetool.base.DimenUtil.px2dip;
 import static me.ele.uetool.function.EditAttrLayout.Mode.MOVE;
 import static me.ele.uetool.function.EditAttrLayout.Mode.SHOW;
 
@@ -37,6 +38,7 @@ public class EditAttrLayout extends CollectViewsLayout {
   private @Mode int mode = SHOW;
   private Element element;
   private ViewAttrDialog dialog;
+  private OnDragListener onDragListener;
 
   public EditAttrLayout(Context context) {
     super(context);
@@ -73,6 +75,14 @@ public class EditAttrLayout extends CollectViewsLayout {
           drawLineWithText(canvas, x, rect.top, x, parentRect.top, dip2px(2));
           drawLineWithText(canvas, rect.right, y, parentRect.right, y, dip2px(2));
           drawLineWithText(canvas, x, rect.bottom, x, parentRect.bottom, dip2px(2));
+        }
+        if (onDragListener != null) {
+          onDragListener.showOffset(
+              "Offset:\n"
+                  + "x -> "
+                  + px2dip(rect.left - originRect.left, true)
+                  + " y -> "
+                  + px2dip(rect.top - originRect.top, true));
         }
       }
     }
@@ -155,6 +165,10 @@ public class EditAttrLayout extends CollectViewsLayout {
     }
   }
 
+  public void setOnDragListener(OnDragListener onDragListener) {
+    this.onDragListener = onDragListener;
+  }
+
   @IntDef({
       SHOW,
       MOVE,
@@ -162,5 +176,9 @@ public class EditAttrLayout extends CollectViewsLayout {
   @Retention(RetentionPolicy.SOURCE) public @interface Mode {
     int SHOW = 1;
     int MOVE = 2;
+  }
+
+  public interface OnDragListener {
+    void showOffset(String offsetContent);
   }
 }
