@@ -3,7 +3,6 @@ package me.ele.uetool.function;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
@@ -24,16 +23,6 @@ public class RelativePositionLayout extends CollectViewsLayout {
       setColor(Color.RED);
       setStyle(Style.STROKE);
       setStrokeWidth(dip2px(1));
-    }
-  };
-
-  private Paint dashLinePaint = new Paint() {
-    {
-      setAntiAlias(true);
-      setColor(0x90FF0000);
-      setStyle(Style.STROKE);
-      setPathEffect(new DashPathEffect(
-          new float[] { dip2px(4), dip2px(8) }, 0));
     }
   };
 

@@ -7,6 +7,7 @@ import android.view.View;
 public class Element {
 
   private View view;
+  private Rect originRect = new Rect();
   private Rect rect = new Rect();
   private int[] location = new int[2];
   private Element parentElement;
@@ -14,6 +15,7 @@ public class Element {
   public Element(View view) {
     this.view = view;
     reset();
+    originRect.set(rect.left, rect.top, rect.right, rect.bottom);
   }
 
   public View getView() {
@@ -22,6 +24,10 @@ public class Element {
 
   public Rect getRect() {
     return rect;
+  }
+
+  public Rect getOriginRect() {
+    return originRect;
   }
 
   public void reset() {

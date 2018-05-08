@@ -12,9 +12,13 @@ public class DimenUtil {
 
   }
 
-  public static int px2dip(float pxValue) {
+  public static String px2dip(float pxValue) {
+    return px2dip(pxValue, false);
+  }
+
+  public static String px2dip(float pxValue, boolean withUnit) {
     float scale = CONTEXT.getResources().getDisplayMetrics().density;
-    return (int) (pxValue / scale + 0.5F);
+    return (int) (pxValue / scale + 0.5F) + (withUnit ? "dp" : "");
   }
 
   public static int dip2px(float dpValue) {
@@ -26,9 +30,9 @@ public class DimenUtil {
     return (int) TypedValue.applyDimension(2, sp, CONTEXT.getResources().getDisplayMetrics());
   }
 
-  public static int px2sp(float pxValue) {
+  public static String px2sp(float pxValue) {
     final float fontScale = CONTEXT.getResources().getDisplayMetrics().scaledDensity;
-    return (int) (pxValue / fontScale + 0.5f);
+    return String.valueOf((int) (pxValue / fontScale + 0.5f));
   }
 
   public static int getScreenWidth() {

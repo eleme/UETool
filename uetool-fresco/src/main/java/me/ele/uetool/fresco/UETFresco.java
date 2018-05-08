@@ -55,7 +55,7 @@ public class UETFresco implements IAttrs {
             return null;
           }
         }
-        return px2dip(firstRadii) + "dp";
+        return px2dip(firstRadii, true);
       }
     }
     return null;
