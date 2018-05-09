@@ -1,5 +1,6 @@
 package me.ele.uetool;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -25,6 +26,8 @@ public class GriddingLayout extends View {
       setStrokeWidth(1);
     }
   };
+
+  private Activity bindActivity = UETool.getInstance().getTargetActivity();
 
   public GriddingLayout(Context context) {
     super(context);
@@ -55,11 +58,16 @@ public class GriddingLayout extends View {
   }
 
   @Override public boolean dispatchTouchEvent(MotionEvent event) {
-    UETool.getInstance().getTargetActivity().dispatchTouchEvent(event);
+    bindActivity.dispatchTouchEvent(event);
     return super.dispatchTouchEvent(event);
   }
 
   @Override public boolean onTouchEvent(MotionEvent event) {
     return true;
+  }
+
+  @Override protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    bindActivity = null;
   }
 }
