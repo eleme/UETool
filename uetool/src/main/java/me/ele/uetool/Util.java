@@ -217,6 +217,6 @@ public class Util {
     ClipData clipData = ClipData.newPlainText("", clipText);
     ((ClipboardManager) (context.getSystemService(Context.CLIPBOARD_SERVICE))).setPrimaryClip(
         clipData);
-    Toast.makeText(context, "已复制到剪切板", Toast.LENGTH_SHORT).show();
+    Toast.makeText(context, "copied", Toast.LENGTH_SHORT).show();
   }
 }

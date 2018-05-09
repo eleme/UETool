@@ -1,4 +1,4 @@
-package me.ele.uetool.function;
+package me.ele.uetool;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,18 +10,14 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import me.ele.uetool.CollectViewsLayout;
-import me.ele.uetool.R;
-import me.ele.uetool.ViewAttrDialog;
 import me.ele.uetool.base.Element;
 
+import static me.ele.uetool.EditAttrLayout.Mode.MOVE;
+import static me.ele.uetool.EditAttrLayout.Mode.SHOW;
 import static me.ele.uetool.base.DimenUtil.dip2px;
 import static me.ele.uetool.base.DimenUtil.px2dip;
-import static me.ele.uetool.function.EditAttrLayout.Mode.MOVE;
-import static me.ele.uetool.function.EditAttrLayout.Mode.SHOW;
 
 public class EditAttrLayout extends CollectViewsLayout {
 
@@ -37,7 +33,7 @@ public class EditAttrLayout extends CollectViewsLayout {
 
   private @Mode int mode = SHOW;
   private Element element;
-  private ViewAttrDialog dialog;
+  private AttrsDialog dialog;
   private OnDragListener onDragListener;
 
   public EditAttrLayout(Context context) {
@@ -104,8 +100,8 @@ public class EditAttrLayout extends CollectViewsLayout {
             this.element = element;
             invalidate();
             if (dialog == null) {
-              dialog = new ViewAttrDialog(getContext());
-              dialog.setAttrDialogCallback(new ViewAttrDialog.AttrDialogCallback() {
+              dialog = new AttrsDialog(getContext());
+              dialog.setAttrDialogCallback(new AttrsDialog.AttrDialogCallback() {
                 @Override public void enableMove() {
                   mode = MOVE;
                   dialog.dismiss();
@@ -149,12 +145,6 @@ public class EditAttrLayout extends CollectViewsLayout {
         break;
     }
     return true;
-  }
-
-  @Override protected void onAttachedToWindow() {
-    super.onAttachedToWindow();
-    Toast.makeText(getContext(), getResources().getString(R.string.uet_enable_edit_attr),
-        Toast.LENGTH_SHORT).show();
   }
 
   @Override protected void onDetachedFromWindow() {

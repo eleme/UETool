@@ -39,29 +39,29 @@ import me.ele.uetool.base.item.SwitchItem;
 import me.ele.uetool.base.item.TextItem;
 import me.ele.uetool.base.item.TitleItem;
 
-import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_ADD_MINUS_EDIT;
-import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_BITMAP;
-import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_EDIT_TEXT;
-import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_SWITCH;
-import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_TEXT;
-import static me.ele.uetool.ViewAttrDialog.Adapter.ViewType.TYPE_TITLE;
+import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_ADD_MINUS_EDIT;
+import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_BITMAP;
+import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_EDIT_TEXT;
+import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_SWITCH;
+import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_TEXT;
+import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_TITLE;
 import static me.ele.uetool.base.DimenUtil.dip2px;
 import static me.ele.uetool.base.DimenUtil.getScreenHeight;
 import static me.ele.uetool.base.DimenUtil.getScreenWidth;
 
-public class ViewAttrDialog extends Dialog {
+public class AttrsDialog extends Dialog {
 
   private RecyclerView vList;
   private Adapter adapter = new Adapter();
   private RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
 
-  public ViewAttrDialog(Context context) {
+  public AttrsDialog(Context context) {
     super(context, R.style.uet_Theme_Holo_Dialog_background_Translucent);
   }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.uet_info_layout);
+    setContentView(R.layout.uet_dialog_attrs);
     vList = findViewById(R.id.list);
     vList.setAdapter(adapter);
     vList.setLayoutManager(layoutManager);
