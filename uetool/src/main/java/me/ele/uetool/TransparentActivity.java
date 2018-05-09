@@ -1,21 +1,18 @@
 package me.ele.uetool;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import me.ele.uetool.function.EditAttrLayout;
-import me.ele.uetool.function.GriddingLayout;
-import me.ele.uetool.function.RelativePositionLayout;
+import me.ele.uetool.base.DimenUtil;
 
+import static android.view.Gravity.BOTTOM;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static me.ele.uetool.TransparentActivity.Type.TYPE_EDIT_ATTR;
 import static me.ele.uetool.TransparentActivity.Type.TYPE_RELATIVE_POSITION;
 import static me.ele.uetool.TransparentActivity.Type.TYPE_SHOW_GRIDDING;
@@ -25,7 +22,6 @@ public class TransparentActivity extends AppCompatActivity {
 
   public static final String EXTRA_TYPE = "extra_type";
 
-  private Activity bindActivity = UETool.getInstance().getTargetActivity();
   private ViewGroup vContainer;
   private int type;
 
@@ -38,13 +34,7 @@ public class TransparentActivity extends AppCompatActivity {
 
     vContainer = findViewById(R.id.container);
 
-    final String targetActivityInfo =
-        getString(R.string.uet_name) + " / " + bindActivity.getClass().getName();
-
-    final TextView board =
-        (TextView) LayoutInflater.from(this).inflate(R.layout.uet_info_board, vContainer, false);
-    board.setText(targetActivityInfo);
-    vContainer.addView(board);
+    final BoardTextView board = new BoardTextView(this);
 
     type = getIntent().getIntExtra(EXTRA_TYPE, TYPE_UNKNOWN);
 
@@ -53,7 +43,7 @@ public class TransparentActivity extends AppCompatActivity {
         EditAttrLayout editAttrLayout = new EditAttrLayout(this);
         editAttrLayout.setOnDragListener(new EditAttrLayout.OnDragListener() {
           @Override public void showOffset(String offsetContent) {
-            board.setText(offsetContent + "\n" + targetActivityInfo);
+            board.updateInfo(offsetContent);
           }
         });
         vContainer.addView(editAttrLayout);
@@ -63,19 +53,17 @@ public class TransparentActivity extends AppCompatActivity {
         break;
       case TYPE_SHOW_GRIDDING:
         vContainer.addView(new GriddingLayout(this));
+        board.updateInfo("LINE_INTERVAL: " + DimenUtil.px2dip(GriddingLayout.LINE_INTERVAL, true));
         break;
       default:
         Toast.makeText(this, getString(R.string.uet_coming_soon), Toast.LENGTH_SHORT).show();
         finish();
         break;
     }
-  }
 
-  @Override public boolean dispatchTouchEvent(MotionEvent ev) {
-    if (type == TYPE_SHOW_GRIDDING) {
-      bindActivity.dispatchTouchEvent(ev);
-    }
-    return super.dispatchTouchEvent(ev);
+    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+    params.gravity = BOTTOM;
+    vContainer.addView(board, params);
   }
 
   @Override public void finish() {
@@ -85,7 +73,6 @@ public class TransparentActivity extends AppCompatActivity {
 
   @Override protected void onDestroy() {
     super.onDestroy();
-    bindActivity = null;
     UETool.getInstance().release();
   }
 

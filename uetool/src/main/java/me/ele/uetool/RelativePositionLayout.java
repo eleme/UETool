@@ -1,4 +1,4 @@
-package me.ele.uetool.function;
+package me.ele.uetool;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,9 +8,6 @@ import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.Toast;
-import me.ele.uetool.CollectViewsLayout;
-import me.ele.uetool.R;
 import me.ele.uetool.base.Element;
 
 import static me.ele.uetool.base.DimenUtil.dip2px;
@@ -132,12 +129,6 @@ public class RelativePositionLayout extends CollectViewsLayout {
           secondRect.bottom,
           secondRect.left + secondRect.width() / 2, firstRect.bottom);
     }
-  }
-
-  @Override protected void onAttachedToWindow() {
-    super.onAttachedToWindow();
-    Toast.makeText(getContext(), getResources().getString(R.string.uet_enable_relative_position),
-        Toast.LENGTH_SHORT).show();
   }
 
   @Override protected void onDetachedFromWindow() {

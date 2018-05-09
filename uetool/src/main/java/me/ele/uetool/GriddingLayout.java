@@ -1,10 +1,11 @@
-package me.ele.uetool.function;
+package me.ele.uetool;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import static me.ele.uetool.base.DimenUtil.dip2px;
@@ -13,7 +14,7 @@ import static me.ele.uetool.base.DimenUtil.getScreenWidth;
 
 public class GriddingLayout extends View {
 
-  private final int lineSpace = dip2px(5);
+  public static final int LINE_INTERVAL = dip2px(5);
   private final int screenWidth = getScreenWidth();
   private final int screenHeight = getScreenHeight();
 
@@ -43,13 +44,22 @@ public class GriddingLayout extends View {
     int startX = 0;
     while (startX < screenWidth) {
       canvas.drawLine(startX, 0, startX, screenHeight, paint);
-      startX = startX + lineSpace;
+      startX = startX + LINE_INTERVAL;
     }
 
     int startY = 0;
     while (startY < screenHeight) {
       canvas.drawLine(0, startY, screenWidth, startY, paint);
-      startY = startY + lineSpace;
+      startY = startY + LINE_INTERVAL;
     }
+  }
+
+  @Override public boolean dispatchTouchEvent(MotionEvent event) {
+    UETool.getInstance().getTargetActivity().dispatchTouchEvent(event);
+    return super.dispatchTouchEvent(event);
+  }
+
+  @Override public boolean onTouchEvent(MotionEvent event) {
+    return true;
   }
 }

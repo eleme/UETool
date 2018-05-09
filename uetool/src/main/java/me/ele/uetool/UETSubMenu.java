@@ -7,11 +7,12 @@ import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import me.ele.uetool.R;
 
 import static me.ele.uetool.base.DimenUtil.dip2px;
 
 public class UETSubMenu extends LinearLayout {
+
+  private final int padding = dip2px(5);
 
   private ImageView vImage;
   private TextView vTitle;
@@ -20,8 +21,7 @@ public class UETSubMenu extends LinearLayout {
     this(context, null);
   }
 
-  public UETSubMenu(Context context,
-      @Nullable AttributeSet attrs) {
+  public UETSubMenu(Context context, @Nullable AttributeSet attrs) {
     this(context, attrs, 0);
   }
 
@@ -30,7 +30,6 @@ public class UETSubMenu extends LinearLayout {
     inflate(context, R.layout.uet_sub_menu_layout, this);
     setGravity(Gravity.CENTER);
     setOrientation(VERTICAL);
-    int padding = dip2px(5);
     setPadding(padding, 0, padding, 0);
     setTranslationY(dip2px(2));
     vImage = findViewById(R.id.image);
