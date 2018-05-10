@@ -4,6 +4,15 @@ android {
   compileSdkVersion versions.compileSdk
   buildToolsVersion versions.buildTool
 
+  signingConfigs {
+    release {
+      storeFile file("../uetool.jks")
+      keyAlias 'uetool'
+      keyPassword 'uetool'
+      storePassword 'uetool'
+    }
+  }
+
   defaultConfig {
     applicationId "me.ele.uetool.sample"
     minSdkVersion versions.minSdk
@@ -13,6 +22,7 @@ android {
   }
   buildTypes {
     release {
+      signingConfig signingConfigs.release
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
