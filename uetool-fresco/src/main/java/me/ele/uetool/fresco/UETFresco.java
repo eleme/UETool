@@ -39,6 +39,7 @@ public class UETFresco implements IAttrs {
       items.add(new TextItem("ActualScaleType", getScaleType((DraweeView) view), true));
       items.add(new TextItem("IsSupportAnimation", isSupportAnimation((DraweeView) view)));
       items.add(new BitmapItem("PlaceHolderImage", getPlaceHolderBitmap((DraweeView) view)));
+      items.add(new TextItem("FadeDuration", getFadeDuration((DraweeView) view)));
     }
     return items;
   }
@@ -103,6 +104,15 @@ public class UETFresco implements IAttrs {
       }
     }
     return null;
+  }
+
+  private String getFadeDuration(DraweeView draweeView) {
+    int duration = 0;
+    GenericDraweeHierarchy hierarchy = getGenericDraweeHierarchy(draweeView);
+    if (hierarchy != null) {
+      duration = hierarchy.getFadeDuration();
+    }
+    return duration + "ms";
   }
 
   private GenericDraweeHierarchy getGenericDraweeHierarchy(DraweeView draweeView) {
