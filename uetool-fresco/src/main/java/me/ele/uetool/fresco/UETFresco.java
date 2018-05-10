@@ -97,7 +97,7 @@ public class UETFresco implements IAttrs {
         Drawable[] layers = (Drawable[]) mLayersField.get(fadeDrawable);
         // PLACEHOLDER_IMAGE_INDEX == 1
         Drawable drawable = layers[1];
-        return ((BitmapDrawable) drawable).getBitmap();
+        return getFrescoDrawableBitmap(drawable);
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -136,6 +136,8 @@ public class UETFresco implements IAttrs {
     try {
       if (drawable instanceof ScaleTypeDrawable) {
         return ((BitmapDrawable) drawable.getCurrent()).getBitmap();
+      } else if (drawable instanceof BitmapDrawable) {
+        return ((BitmapDrawable) drawable).getBitmap();
       }
     } catch (Exception e) {
       e.printStackTrace();
