@@ -14,7 +14,7 @@ At present UETool provides functionality as bellows:
 - move any view on the screen, select view repeatedly will select its parent view
 - show / edit normal view's attributions such as edit TextView's text、textSize、textColor etc.
 - if you are using Fresco's DraweeView, UETool provides show more attributions like ImageURI、PlaceHolderImage、CornerRadius etc.
-- you can customize any view's attributions you want with simple way
+- you can customize any view's attributions you want with simple way such as some biz param
 - show two view's relative position
 - show gridding for checking some view alignment 
 
@@ -76,11 +76,11 @@ At present UETool provides functionality as bellows:
 
 ```gradle
 dependencies {
-  debugCompile 'me.ele:uetool:1.0.10'
-  releaseCompile 'me.ele:uetool-no-op:1.0.10'
+  debugCompile 'me.ele:uetool:1.0.11'
+  releaseCompile 'me.ele:uetool-no-op:1.0.11'
 
   // if you want to show more attrs about Fresco's DraweeView
-  debugCompile 'me.ele:uetool-fresco:1.0.10'
+  debugCompile 'me.ele:uetool-fresco:1.0.11'
 }
 ```
 

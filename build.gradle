@@ -10,7 +10,7 @@ buildscript {
                   'fresco': '1.4.0',
 
                   'debug'   : '1.0.9-SNAPSHOT',
-                  'release'   : '1.0.10',]
+                  'release'   : '1.0.11',]
   repositories {
     jcenter()
     maven {
