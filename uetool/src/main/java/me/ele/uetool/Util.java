@@ -1,5 +1,6 @@
 package me.ele.uetool;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -28,8 +29,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import me.ele.uetool.base.Application;
 
 import static android.view.View.NO_ID;
@@ -218,5 +221,29 @@ public class Util {
     ((ClipboardManager) (context.getSystemService(Context.CLIPBOARD_SERVICE))).setPrimaryClip(
         clipData);
     Toast.makeText(context, "copied", Toast.LENGTH_SHORT).show();
+  }
+
+  public static Activity getCurrentActivity() {
+    try {
+      Class activityThreadClass = Class.forName("android.app.ActivityThread");
+      Method currentActivityThreadMethod = activityThreadClass.getMethod("currentActivityThread");
+      Object currentActivityThread = currentActivityThreadMethod.invoke(null);
+      Field mActivitiesField = activityThreadClass.getDeclaredField("mActivities");
+      mActivitiesField.setAccessible(true);
+      Map activities = (Map) mActivitiesField.get(currentActivityThread);
+      for (Object record : activities.values()) {
+        Class recordClass = record.getClass();
+        Field pausedField = recordClass.getDeclaredField("paused");
+        pausedField.setAccessible(true);
+        if (!(boolean) pausedField.get(record)) {
+          Field activityField = recordClass.getDeclaredField("activity");
+          activityField.setAccessible(true);
+          return (Activity) activityField.get(record);
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 }

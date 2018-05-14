@@ -8,12 +8,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.widget.Toast;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 import me.ele.uetool.base.Application;
 
@@ -87,7 +84,8 @@ public class UETool {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       if (!Settings.canDrawOverlays(Application.getApplicationContext())) {
         requestPermission(Application.getApplicationContext());
-        Toast.makeText(Application.getApplicationContext(), "After grant this permission, re-enable UETool",
+        Toast.makeText(Application.getApplicationContext(),
+            "After grant this permission, re-enable UETool",
             Toast.LENGTH_LONG).show();
         return false;
       }
@@ -133,29 +131,5 @@ public class UETool {
         Uri.parse("package:" + context.getPackageName()));
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     context.startActivity(intent);
-  }
-
-  public Activity getCurrentActivity() {
-    try {
-      Class activityThreadClass = Class.forName("android.app.ActivityThread");
-      Method currentActivityThreadMethod = activityThreadClass.getMethod("currentActivityThread");
-      Object currentActivityThread = currentActivityThreadMethod.invoke(null);
-      Field mActivitiesField = activityThreadClass.getDeclaredField("mActivities");
-      mActivitiesField.setAccessible(true);
-      Map activities = (Map) mActivitiesField.get(currentActivityThread);
-      for (Object record : activities.values()) {
-        Class recordClass = record.getClass();
-        Field pausedField = recordClass.getDeclaredField("paused");
-        pausedField.setAccessible(true);
-        if (!(boolean) pausedField.get(record)) {
-          Field activityField = recordClass.getDeclaredField("activity");
-          activityField.setAccessible(true);
-          return (Activity) activityField.get(record);
-        }
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return null;
   }
 }

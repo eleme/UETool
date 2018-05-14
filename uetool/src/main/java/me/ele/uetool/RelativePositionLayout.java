@@ -48,12 +48,7 @@ public class RelativePositionLayout extends CollectViewsLayout {
 
         final Element element = getTargetElement(event.getX(), event.getY());
         if (element != null) {
-          if (element == relativeElements[(searchCount + 1) % 2]) {
-            relativeElements[(searchCount + 1) % 2] = null;
-          } else {
-            int index = searchCount % 2;
-            relativeElements[index] = element;
-          }
+          relativeElements[searchCount % 2] = element;
           searchCount++;
           invalidate();
         }
