@@ -5,17 +5,12 @@ import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import me.ele.uetool.base.Element;
 
-import static me.ele.uetool.EditAttrLayout.Mode.MOVE;
-import static me.ele.uetool.EditAttrLayout.Mode.SHOW;
 import static me.ele.uetool.base.DimenUtil.dip2px;
 import static me.ele.uetool.base.DimenUtil.px2dip;
 
@@ -31,9 +26,10 @@ public class EditAttrLayout extends CollectViewsLayout {
     }
   };
 
-  private @Mode int mode = SHOW;
   private Element element;
   private AttrsDialog dialog;
+  private IMode mode = new ShowMode();
+  private float lastX, lastY;
   private OnDragListener onDragListener;
 
   public EditAttrLayout(Context context) {
@@ -52,39 +48,10 @@ public class EditAttrLayout extends CollectViewsLayout {
   @Override protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
     if (element != null) {
-      Rect rect = element.getRect();
-      canvas.drawRect(rect, areaPaint);
-      if (mode == SHOW) {
-        drawLineWithText(canvas, rect.left, rect.top - lineBorderDistance, rect.right,
-            rect.top - lineBorderDistance);
-        drawLineWithText(canvas, rect.right + lineBorderDistance, rect.top,
-            rect.right + lineBorderDistance, rect.bottom);
-      } else if (mode == MOVE) {
-        Rect originRect = element.getOriginRect();
-        canvas.drawRect(originRect, dashLinePaint);
-        Element parentElement = element.getParentElement();
-        if (parentElement != null) {
-          Rect parentRect = parentElement.getRect();
-          int x = rect.left + rect.width() / 2;
-          int y = rect.top + rect.height() / 2;
-          drawLineWithText(canvas, rect.left, y, parentRect.left, y, dip2px(2));
-          drawLineWithText(canvas, x, rect.top, x, parentRect.top, dip2px(2));
-          drawLineWithText(canvas, rect.right, y, parentRect.right, y, dip2px(2));
-          drawLineWithText(canvas, x, rect.bottom, x, parentRect.bottom, dip2px(2));
-        }
-        if (onDragListener != null) {
-          onDragListener.showOffset(
-              "Offset:\n"
-                  + "x -> "
-                  + px2dip(rect.left - originRect.left, true)
-                  + " y -> "
-                  + px2dip(rect.top - originRect.top, true));
-        }
-      }
+      canvas.drawRect(element.getRect(), areaPaint);
+      mode.onDraw(canvas);
     }
   }
-
-  private float lastX, lastY;
 
   @Override public boolean onTouchEvent(MotionEvent event) {
     switch (event.getAction()) {
@@ -93,55 +60,10 @@ public class EditAttrLayout extends CollectViewsLayout {
         lastY = event.getY();
         break;
       case MotionEvent.ACTION_UP:
-
-        if (mode == SHOW) {
-          final Element element = getTargetElement(event.getX(), event.getY());
-          if (element != null) {
-            this.element = element;
-            invalidate();
-            if (dialog == null) {
-              dialog = new AttrsDialog(getContext());
-              dialog.setAttrDialogCallback(new AttrsDialog.AttrDialogCallback() {
-                @Override public void enableMove() {
-                  mode = MOVE;
-                  dialog.dismiss();
-                }
-              });
-              dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override public void onDismiss(DialogInterface dialog) {
-                  element.reset();
-                  invalidate();
-                }
-              });
-            }
-            dialog.show(element);
-          }
-        }
-
+        mode.triggerActionUp(event);
         break;
       case MotionEvent.ACTION_MOVE:
-
-        if (mode == MOVE && element != null) {
-          boolean changed = false;
-          View view = element.getView();
-          float diffX = event.getX() - lastX;
-          if (Math.abs(diffX) >= moveUnit) {
-            view.setTranslationX(view.getTranslationX() + diffX);
-            lastX = event.getX();
-            changed = true;
-          }
-          float diffY = event.getY() - lastY;
-          if (Math.abs(diffY) >= moveUnit) {
-            view.setTranslationY(view.getTranslationY() + diffY);
-            lastY = event.getY();
-            changed = true;
-          }
-          if (changed) {
-            element.reset();
-            invalidate();
-          }
-        }
-
+        mode.triggerActionMove(event);
         break;
     }
     return true;
@@ -159,13 +81,105 @@ public class EditAttrLayout extends CollectViewsLayout {
     this.onDragListener = onDragListener;
   }
 
-  @IntDef({
-      SHOW,
-      MOVE,
-  })
-  @Retention(RetentionPolicy.SOURCE) public @interface Mode {
-    int SHOW = 1;
-    int MOVE = 2;
+  class MoveMode implements IMode {
+
+    @Override public void onDraw(Canvas canvas) {
+      Rect rect = element.getRect();
+      Rect originRect = element.getOriginRect();
+      canvas.drawRect(originRect, dashLinePaint);
+      Element parentElement = element.getParentElement();
+      if (parentElement != null) {
+        Rect parentRect = parentElement.getRect();
+        int x = rect.left + rect.width() / 2;
+        int y = rect.top + rect.height() / 2;
+        drawLineWithText(canvas, rect.left, y, parentRect.left, y, dip2px(2));
+        drawLineWithText(canvas, x, rect.top, x, parentRect.top, dip2px(2));
+        drawLineWithText(canvas, rect.right, y, parentRect.right, y, dip2px(2));
+        drawLineWithText(canvas, x, rect.bottom, x, parentRect.bottom, dip2px(2));
+      }
+      if (onDragListener != null) {
+        onDragListener.showOffset(
+            "Offset:\n"
+                + "x -> "
+                + px2dip(rect.left - originRect.left, true)
+                + " y -> "
+                + px2dip(rect.top - originRect.top, true));
+      }
+    }
+
+    @Override public void triggerActionMove(MotionEvent event) {
+      if (element != null) {
+        boolean changed = false;
+        View view = element.getView();
+        float diffX = event.getX() - lastX;
+        if (Math.abs(diffX) >= moveUnit) {
+          view.setTranslationX(view.getTranslationX() + diffX);
+          lastX = event.getX();
+          changed = true;
+        }
+        float diffY = event.getY() - lastY;
+        if (Math.abs(diffY) >= moveUnit) {
+          view.setTranslationY(view.getTranslationY() + diffY);
+          lastY = event.getY();
+          changed = true;
+        }
+        if (changed) {
+          element.reset();
+          invalidate();
+        }
+      }
+    }
+
+    @Override public void triggerActionUp(MotionEvent event) {
+
+    }
+  }
+
+  class ShowMode implements IMode {
+
+    @Override public void onDraw(Canvas canvas) {
+      Rect rect = element.getRect();
+      drawLineWithText(canvas, rect.left, rect.top - lineBorderDistance, rect.right,
+          rect.top - lineBorderDistance);
+      drawLineWithText(canvas, rect.right + lineBorderDistance, rect.top,
+          rect.right + lineBorderDistance, rect.bottom);
+    }
+
+    @Override public void triggerActionMove(MotionEvent event) {
+
+    }
+
+    @Override public void triggerActionUp(MotionEvent event) {
+      final Element element = getTargetElement(event.getX(), event.getY());
+      if (element != null) {
+        EditAttrLayout.this.element = element;
+        invalidate();
+        if (dialog == null) {
+          dialog = new AttrsDialog(getContext());
+          dialog.setAttrDialogCallback(new AttrsDialog.AttrDialogCallback() {
+            @Override public void enableMove() {
+              mode = new MoveMode();
+              dialog.dismiss();
+            }
+          });
+          dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override public void onDismiss(DialogInterface dialog) {
+              element.reset();
+              invalidate();
+            }
+          });
+        }
+        dialog.show(element);
+      }
+    }
+  }
+
+  public interface IMode {
+    void onDraw(Canvas canvas);
+
+    void triggerActionMove(MotionEvent event);
+
+    void triggerActionUp(MotionEvent event);
   }
 
   public interface OnDragListener {

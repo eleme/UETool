@@ -177,7 +177,7 @@ public class CollectViewsLayout extends View {
         if (element != childElement) {
           childElement = element;
           parentElement = element;
-        } else {
+        } else if (parentElement != null) {
           parentElement = parentElement.getParentElement();
         }
         target = parentElement;
