@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    tools:background="#fff"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:gravity="center_vertical"
+       tools:background="#fff"
     >
 
-  <ImageView
-      android:id="@+id/menu"
-      android:layout_width="54dp"
-      android:layout_height="54dp"
-      android:src="@drawable/uet_menu"
-      />
-
-  <HorizontalScrollView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      >
-
-    <LinearLayout
-        android:id="@+id/sub_menu_container"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:background="@drawable/uet_sub_menu_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        android:paddingRight="10dp"
-        android:translationX="-10000dp"
+    <ImageView
+        android:id="@+id/menu"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:src="@drawable/uet_menu"
         />
 
-  </HorizontalScrollView>
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:id="@+id/sub_menu_container"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/uet_sub_menu_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:translationX="-10000dp"
+            />
+
+    </HorizontalScrollView>
 
 </merge>

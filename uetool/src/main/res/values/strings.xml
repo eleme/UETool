@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="uet_name">UETool</string>
-  <string name="uet_target_element_not_found">could not found view in (%1$.0f , %2$.0f), please select view again</string>
-  <string name="uet_coming_soon">coming soon</string>
-  <string name="uet_disable">DESABLE_UETOOL</string>
+    <string name="uet_name">UETool</string>
+    <string name="uet_target_element_not_found">could not found view in (%1$.0f , %2$.0f), please select view again</string>
+    <string name="uet_coming_soon">coming soon</string>
+    <string name="uet_disable">DESABLE_UETOOL</string>
 </resources>

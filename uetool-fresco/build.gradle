@@ -3,34 +3,34 @@ apply plugin: 'eradle'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
-  compileSdkVersion versions.compileSdk
-  buildToolsVersion versions.buildTool
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTool
 
-  defaultConfig {
-    minSdkVersion versions.minSdk
-  }
+    defaultConfig {
+        minSdkVersion versions.minSdk
+    }
 }
 
 dependencies {
-  compile project(':uetool-base')
-  //  compile "me.ele:uetool-base:${versions.release}"
-  provided "com.facebook.fresco:fresco:${versions.fresco}"
+    compile project(':uetool-base')
+    //  compile "me.ele:uetool-base:${versions.release}"
+    provided "com.facebook.fresco:fresco:${versions.fresco}"
 }
 
 modifyPom {
-  project {
-    groupId 'me.ele'
-    artifactId 'uetool-fresco'
-    version versions.debug
-    packaging 'aar'
-  }
+    project {
+        groupId 'me.ele'
+        artifactId 'uetool-fresco'
+        version versions.debug
+        packaging 'aar'
+    }
 }
 
 publish {
-  userOrg = 'jackcho'
-  groupId = 'me.ele'
-  artifactId = 'uetool-fresco'
-  publishVersion = versions.release
-  desc = 'show/edit any view\'s attributions on the screen.'
-  website = 'www.ele.me'
+    userOrg = 'jackcho'
+    groupId = 'me.ele'
+    artifactId = 'uetool-fresco'
+    publishVersion = versions.release
+    desc = 'show/edit any view\'s attributions on the screen.'
+    website = 'www.ele.me'
 }
