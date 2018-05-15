@@ -111,7 +111,7 @@ public class AttrsDialog extends Dialog {
       notifyDataSetChanged();
     }
 
-    @NonNull @Override
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
       switch (viewType) {
         case TYPE_TITLE:
@@ -127,7 +127,7 @@ public class AttrsDialog extends Dialog {
         case TYPE_BITMAP:
           return BitmapInfoViewHolder.newInstance(parent);
       }
-      return null;
+      throw new RuntimeException(viewType + " is an unknown view type!");
     }
 
     @Override public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {

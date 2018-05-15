@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.widget.Toast;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -18,15 +17,17 @@ public class UETool {
 
   private static volatile UETool instance;
   private Set<String> filterClassesSet = new HashSet<>();
-  private Set<String> attrsProviderSet = new LinkedHashSet<>();
+  private Set<String> attrsProviderSet = new LinkedHashSet<String>() {
+    {
+      add(UETCore.class.getName());
+      add("me.ele.uetool.fresco.UETFresco");
+    }
+  };
   private Activity targetActivity;
   private UETMenu uetMenu;
 
   private UETool() {
-    for (String attrsClassName : Arrays.asList(UETCore.class.getName(),
-        "me.ele.uetool.fresco.UETFresco")) {
-      attrsProviderSet.add(attrsClassName);
-    }
+
   }
 
   static UETool getInstance() {

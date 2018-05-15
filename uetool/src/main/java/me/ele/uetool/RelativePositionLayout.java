@@ -14,6 +14,7 @@ import static me.ele.uetool.base.DimenUtil.dip2px;
 
 public class RelativePositionLayout extends CollectViewsLayout {
 
+  private final int elementsNum = 2;
   private Paint areaPaint = new Paint() {
     {
       setAntiAlias(true);
@@ -23,7 +24,7 @@ public class RelativePositionLayout extends CollectViewsLayout {
     }
   };
 
-  private Element[] relativeElements = new Element[2];
+  private Element[] relativeElements = new Element[elementsNum];
   private int searchCount = 0;
 
   public RelativePositionLayout(Context context) {
@@ -48,7 +49,7 @@ public class RelativePositionLayout extends CollectViewsLayout {
 
         final Element element = getTargetElement(event.getX(), event.getY());
         if (element != null) {
-          relativeElements[searchCount % 2] = element;
+          relativeElements[searchCount % elementsNum] = element;
           searchCount++;
           invalidate();
         }
@@ -74,8 +75,8 @@ public class RelativePositionLayout extends CollectViewsLayout {
     }
 
     if (doubleNotNull) {
-      Rect firstRect = relativeElements[searchCount % 2].getRect();
-      Rect secondRect = relativeElements[(searchCount - 1) % 2].getRect();
+      Rect firstRect = relativeElements[searchCount % elementsNum].getRect();
+      Rect secondRect = relativeElements[(searchCount - 1) % elementsNum].getRect();
 
       if (secondRect.top > firstRect.bottom) {
         int x = secondRect.left + secondRect.width() / 2;
