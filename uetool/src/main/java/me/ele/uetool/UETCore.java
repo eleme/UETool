@@ -34,26 +34,6 @@ public class UETCore implements IAttrs {
     items.add(new TextItem("ResName", Util.getResourceName(view.getResources(), view.getId())));
     items.add(new TextItem("Clickable", Boolean.toString(view.isClickable()).toUpperCase()));
     items.add(new TextItem("Focused", Boolean.toString(view.isFocused()).toUpperCase()));
-    if (view instanceof TextView) {
-      items.add(new TitleItem("TextView"));
-      TextView textView = ((TextView) view);
-      items.add(new EditTextItem("Text", element, EditTextItem.Type.TYPE_TEXT,
-          textView.getText().toString()));
-      items.add(new AddMinusEditItem("TextSize（sp）", element, EditTextItem.Type.TYPE_TEXT_SIZE,
-          px2sp(textView.getTextSize())));
-      items.add(new EditTextItem("TextColor", element, EditTextItem.Type.TYPE_TEXT_COLOR,
-          Util.intToHexColor(textView.getCurrentTextColor())));
-      List<Pair<String, Bitmap>> pairs = Util.getTextViewBitmap((TextView) view);
-      for (Pair<String, Bitmap> pair : pairs) {
-        items.add(new BitmapItem(pair.first, pair.second));
-      }
-      items.add(new SwitchItem("IsBold", element, SwitchItem.Type.TYPE_IS_BOLD,
-          textView.getTypeface() != null ? textView.getTypeface().isBold() : false));
-    } else if (view instanceof ImageView) {
-      items.add(new TitleItem("ImageView"));
-      items.add(new BitmapItem("Bitmap", Util.getImageViewBitmap((ImageView) view)));
-      items.add(new TextItem("ScaleType", Util.getImageViewScaleType((ImageView) view)));
-    }
     items.add(new AddMinusEditItem("Width（dp）", element, EditTextItem.Type.TYPE_WIDTH,
         px2dip(view.getWidth())));
     items.add(new AddMinusEditItem("Height（dp）", element, EditTextItem.Type.TYPE_HEIGHT,
@@ -76,6 +56,57 @@ public class UETCore implements IAttrs {
         new AddMinusEditItem("PaddingBottom（dp）", element, EditTextItem.Type.TYPE_PADDING_BOTTOM,
             px2dip(view.getPaddingBottom())));
 
+    IAttrs iAttrs = AttrsManager.createAttrs(view);
+    if (iAttrs != null) {
+      items.addAll(iAttrs.getAttrs(element));
+    }
+
     return items;
+  }
+
+  static class AttrsManager {
+
+    public static IAttrs createAttrs(View view) {
+      if (view instanceof TextView) {
+        return new UETTextView();
+      } else if (view instanceof ImageView) {
+        return new UETImageView();
+      }
+      return null;
+    }
+  }
+
+  static class UETTextView implements IAttrs {
+
+    @Override public List<Item> getAttrs(Element element) {
+      List<Item> items = new ArrayList<>();
+      TextView textView = ((TextView) element.getView());
+      items.add(new TitleItem("TextView"));
+      items.add(new EditTextItem("Text", element, EditTextItem.Type.TYPE_TEXT,
+          textView.getText().toString()));
+      items.add(new AddMinusEditItem("TextSize（sp）", element, EditTextItem.Type.TYPE_TEXT_SIZE,
+          px2sp(textView.getTextSize())));
+      items.add(new EditTextItem("TextColor", element, EditTextItem.Type.TYPE_TEXT_COLOR,
+          Util.intToHexColor(textView.getCurrentTextColor())));
+      List<Pair<String, Bitmap>> pairs = Util.getTextViewBitmap(textView);
+      for (Pair<String, Bitmap> pair : pairs) {
+        items.add(new BitmapItem(pair.first, pair.second));
+      }
+      items.add(new SwitchItem("IsBold", element, SwitchItem.Type.TYPE_IS_BOLD,
+          textView.getTypeface() != null ? textView.getTypeface().isBold() : false));
+      return items;
+    }
+  }
+
+  static class UETImageView implements IAttrs {
+
+    @Override public List<Item> getAttrs(Element element) {
+      List<Item> items = new ArrayList<>();
+      ImageView imageView = ((ImageView) element.getView());
+      items.add(new TitleItem("ImageView"));
+      items.add(new BitmapItem("Bitmap", Util.getImageViewBitmap(imageView)));
+      items.add(new TextItem("ScaleType", Util.getImageViewScaleType(imageView)));
+      return items;
+    }
   }
 }
