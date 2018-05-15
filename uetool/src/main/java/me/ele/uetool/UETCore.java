@@ -31,6 +31,12 @@ public class UETCore implements IAttrs {
         View view = element.getView();
 
         items.add(new SwitchItem("Move", element, SwitchItem.Type.TYPE_MOVE));
+
+        IAttrs iAttrs = AttrsManager.createAttrs(view);
+        if (iAttrs != null) {
+            items.addAll(iAttrs.getAttrs(element));
+        }
+
         items.add(new TitleItem("COMMON"));
         items.add(new TextItem("Class", view.getClass().getName()));
         items.add(new TextItem("Id", Util.getResId(view)));
@@ -50,11 +56,6 @@ public class UETCore implements IAttrs {
         items.add(new AddMinusEditItem("PaddingRight（dp）", element, EditTextItem.Type.TYPE_PADDING_RIGHT, px2dip(view.getPaddingRight())));
         items.add(new AddMinusEditItem("PaddingTop（dp）", element, EditTextItem.Type.TYPE_PADDING_TOP, px2dip(view.getPaddingTop())));
         items.add(new AddMinusEditItem("PaddingBottom（dp）", element, EditTextItem.Type.TYPE_PADDING_BOTTOM, px2dip(view.getPaddingBottom())));
-
-        IAttrs iAttrs = AttrsManager.createAttrs(view);
-        if (iAttrs != null) {
-            items.addAll(iAttrs.getAttrs(element));
-        }
 
         return items;
     }
