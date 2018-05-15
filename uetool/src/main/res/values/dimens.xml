@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <dimen name="uet_info_text_size">12sp</dimen>
+    <dimen name="uet_info_text_size">12sp</dimen>
 </resources>

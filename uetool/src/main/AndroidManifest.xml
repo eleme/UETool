@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.ele.uetool">
+          package="me.ele.uetool">
 
-  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
-  <application>
-    <activity
-        android:name="me.ele.uetool.TransparentActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/uet_Theme.AppCompat.Translucent"
-        android:launchMode="singleTask"/>
-  </application>
+    <application>
+        <activity
+            android:name="me.ele.uetool.TransparentActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/uet_Theme.AppCompat.Translucent"/>
+    </application>
 
 </manifest>

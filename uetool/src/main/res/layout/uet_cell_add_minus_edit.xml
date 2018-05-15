@@ -1,61 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:paddingBottom="5dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="5dp"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:paddingBottom="5dp"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:paddingTop="5dp"
     >
 
-  <TextView
-      android:id="@+id/name"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="#ccc"
-      android:textSize="@dimen/uet_info_text_size"
-      tools:text="text"
-      />
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentRight="true"
-      android:gravity="center_vertical|right"
-      >
-
-    <View
-        android:id="@+id/minus"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:background="@drawable/uet_selector_minus"
-        />
-
-    <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/detail"
+    <TextView
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@null"
-        android:gravity="center"
-        android:minWidth="30dp"
-        android:textColor="#fff"
+        android:textColor="#ccc"
         android:textSize="@dimen/uet_info_text_size"
-        tools:text="112222"
-        tools:textColor="#999"
+        tools:text="text"
         />
 
-    <View
-        android:id="@+id/add"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:background="@drawable/uet_selector_add"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical|right"
+        >
+
+        <View
+            android:id="@+id/minus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/uet_selector_minus"
+            />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@null"
+            android:gravity="center"
+            android:minWidth="30dp"
+            android:textColor="#fff"
+            android:textSize="@dimen/uet_info_text_size"
+            tools:text="112222"
+            tools:textColor="#999"
+            />
+
+        <View
+            android:id="@+id/add"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/uet_selector_add"
+            />
 
 
-  </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

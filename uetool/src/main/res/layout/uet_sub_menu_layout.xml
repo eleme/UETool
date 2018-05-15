@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:paddingLeft="3dp"
-    android:paddingRight="3dp"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:gravity="center"
+       android:orientation="vertical"
+       android:paddingLeft="3dp"
+       android:paddingRight="3dp"
     >
 
-  <ImageView
-      android:id="@+id/image"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      tools:src="@drawable/uet_edit_attr"
-      />
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:src="@drawable/uet_edit_attr"
+        />
 
-  <Space
-      android:layout_width="wrap_content"
-      android:layout_height="3dp"
-      />
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="3dp"
+        />
 
-  <TextView
-      android:id="@+id/title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="#fff"
-      android:textSize="9sp"
-      tools:text="捕捉"
-      />
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textSize="9sp"
+        tools:text="捕捉"
+        />
 
 </merge>

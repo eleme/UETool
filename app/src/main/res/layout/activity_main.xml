@@ -6,165 +6,165 @@
     android:layout_height="match_parent"
     >
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="#f5f5f5"
-      android:orientation="vertical"
-      >
-
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/control"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="on-off control   "
-        />
-
-    <FrameLayout
-        android:id="@+id/parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/gradient_background"
-        >
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_margin="20dp"
-          android:background="#90000000"
-          android:padding="10dp"
-          android:text="Hello World"
-          android:textColor="#fff"
-          android:textSize="20sp"
-          android:textStyle="bold"
-          />
-
-    </FrameLayout>
-
-
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"
-        />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        >
-
-      <Button
-          android:id="@+id/btn1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:onClick="onClick"
-          android:text="next activity"
-          />
-
-      <Space
-          android:layout_width="10dp"
-          android:layout_height="match_parent"
-          />
-
-      <Button
-          android:id="@+id/btn2"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:onClick="onClick"
-          android:text="show dialog"
-          />
-
-    </LinearLayout>
-
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"
-        android:visibility="invisible"
-        />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="world"
-        android:translationX="100dp"
-        />
-
-    <me.ele.uetool.sample.FilterOutView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#90000000"
-        android:padding="10dp"
-        android:text="you won't select me by UETool"
-        android:textColor="#fff"
-        />
-
-    <me.ele.uetool.sample.CustomView
-        android:id="@+id/custom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="#90688fdb"
-        android:padding="10dp"
-        android:text="this is a custom view"
-        />
-
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher"
-        />
-
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/drawee_view"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_gravity="right"
-        app:placeholderImage="@drawable/ic_placeholder"
-        app:roundedCornerRadius="3dp"
-        />
-
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@drawable/ic_placeholder"
-        />
-
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/ic_tip"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:drawableLeft="@drawable/ic_up_vote"
-        android:drawablePadding="5dp"
-        android:drawableRight="@drawable/ic_down_vote"
-        android:text="hello world"
-        />
-
-    <TextView
-        android:id="@+id/span"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        />
+        android:layout_height="match_parent"
+        android:background="#f5f5f5"
+        android:orientation="vertical"
+        >
 
-  </LinearLayout>
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/control"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="on-off control   "
+            />
+
+        <FrameLayout
+            android:id="@+id/parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/gradient_background"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="#90000000"
+                android:padding="10dp"
+                android:text="Hello World"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+
+        </FrameLayout>
+
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+
+            <Button
+                android:id="@+id/btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClick"
+                android:text="next activity"
+                />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                />
+
+            <Button
+                android:id="@+id/btn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClick"
+                android:text="show dialog"
+                />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:visibility="invisible"
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="world"
+            android:translationX="100dp"
+            />
+
+        <me.ele.uetool.sample.FilterOutView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#90000000"
+            android:padding="10dp"
+            android:text="you won't select me by UETool"
+            android:textColor="#fff"
+            />
+
+        <me.ele.uetool.sample.CustomView
+            android:id="@+id/custom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="#90688fdb"
+            android:padding="10dp"
+            android:text="this is a custom view"
+            />
+
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/drawee_view"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="right"
+            app:placeholderImage="@drawable/ic_placeholder"
+            app:roundedCornerRadius="3dp"
+            />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/ic_placeholder"
+            />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ic_tip"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:drawableLeft="@drawable/ic_up_vote"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/ic_down_vote"
+            android:text="hello world"
+            />
+
+        <TextView
+            android:id="@+id/span"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            />
+
+    </LinearLayout>
 
 
 </ScrollView>

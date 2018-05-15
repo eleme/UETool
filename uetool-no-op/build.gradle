@@ -3,28 +3,28 @@ apply plugin: 'eradle'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
-  compileSdkVersion versions.compileSdk
-  buildToolsVersion versions.buildTool
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTool
 
-  defaultConfig {
-    minSdkVersion versions.minSdk
-  }
+    defaultConfig {
+        minSdkVersion versions.minSdk
+    }
 }
 
 modifyPom {
-  project {
-    groupId 'me.ele'
-    artifactId 'uetool-no-op'
-    version versions.debug
-    packaging 'aar'
-  }
+    project {
+        groupId 'me.ele'
+        artifactId 'uetool-no-op'
+        version versions.debug
+        packaging 'aar'
+    }
 }
 
 publish {
-  userOrg = 'jackcho'
-  groupId = 'me.ele'
-  artifactId = 'uetool-no-op'
-  publishVersion = versions.release
-  desc = 'show/edit any view\'s attributions on the screen.'
-  website = 'www.ele.me'
+    userOrg = 'jackcho'
+    groupId = 'me.ele'
+    artifactId = 'uetool-no-op'
+    publishVersion = versions.release
+    desc = 'show/edit any view\'s attributions on the screen.'
+    website = 'www.ele.me'
 }

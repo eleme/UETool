@@ -2,13 +2,13 @@ package me.ele.uetool.base.item;
 
 public class TitleItem extends Item {
 
-  private String name;
+    private String name;
 
-  public TitleItem(String name) {
-    this.name = name;
-  }
+    public TitleItem(String name) {
+        this.name = name;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 }
