@@ -5,7 +5,7 @@ UETool ![](https://img.shields.io/badge/platform-android-lightgrey.svg) [![Licen
 
 ## INTRODUCTION
 
-[中文版](https://github.elenet.me/waimai/UETool/blob/master/README_zh.md)
+[中文版](https://github.com/eleme/UETool/blob/master/README_zh.md)
 
 UETool is a debug tool for anyone who needs show/edit one or more view's attributions. It works on Activity/Fragment/Dialog/PopupWindow or any else view shows on the screen.
 
