@@ -130,7 +130,6 @@ UETool.putAttrsProviderClass(String customizeClassName);
 
 ## License
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/License_icon-mit-88x31-2.svg/128px-License_icon-mit-88x31-2.svg.png)
+[MIT](http://opensource.org/licenses/MIT)
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
