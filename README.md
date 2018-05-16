@@ -1,7 +1,7 @@
-UETool ![](https://img.shields.io/badge/platform-android-lightgrey.svg) [![License](https://img.shields.io/badge/license-MIT-000000.svg)](https://github.elenet.me/waimai/UETool/blob/master/LICENSE) 
+UETool ![](https://img.shields.io/badge/platform-android-lightgrey.svg) [![License](https://img.shields.io/badge/license-MIT-000000.svg)](https://github.com/eleme/UETool/blob/master/LICENSE) 
 ======
 
-![](https://github.elenet.me/waimai/UETool/blob/master/art/uet_banner.jpeg)
+![](https://github.com/eleme/UETool/blob/master/art/uet_banner.jpeg)
 
 ## INTRODUCTION
 
@@ -21,15 +21,15 @@ At present UETool provides functionality as bellows:
 ## EFFECT
 
 <div>
-<img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/move_view.gif"/>
+<img width="270" height="480" src="https://github.com/eleme/UETool/blob/master/art/move_view.gif"/>
 
-<img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/show_image_uri.gif"/>
+<img width="270" height="480" src="https://github.com/eleme/UETool/blob/master/art/show_image_uri.gif"/>
 
 <br/>
 
-<img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/relative_position.gif"/>
+<img width="270" height="480" src="https://github.com/eleme/UETool/blob/master/art/relative_position.gif"/>
 
-<img width="270" height="480" src="https://github.elenet.me/waimai/UETool/blob/master/art/show_gridding.png"/>
+<img width="270" height="480" src="https://github.com/eleme/UETool/blob/master/art/show_gridding.png"/>
 </div>
 
 
