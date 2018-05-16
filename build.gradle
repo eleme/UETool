@@ -9,17 +9,12 @@ buildscript {
                     'supportLibrary': '27.1.1',
                     'fresco'        : '1.4.0',
 
-                    'debug'         : '1.0.9-SNAPSHOT',
                     'release'       : '1.0.12',]
     repositories {
         jcenter()
-        maven {
-            url "http://maven.dev.elenet.me/nexus/content/groups/public"
-        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath 'me.ele:eradle:1.7.0'
         classpath 'com.novoda:bintray-release:0.4.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -29,9 +24,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven {
-            url "http://maven.dev.elenet.me/nexus/content/groups/public"
-        }
+        maven { url "https://maven.google.com" }
     }
 }
 

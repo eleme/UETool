@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'eradle'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
@@ -8,15 +7,6 @@ android {
 
     defaultConfig {
         minSdkVersion versions.minSdk
-    }
-}
-
-modifyPom {
-    project {
-        groupId 'me.ele'
-        artifactId 'uetool-no-op'
-        version versions.debug
-        packaging 'aar'
     }
 }
 
