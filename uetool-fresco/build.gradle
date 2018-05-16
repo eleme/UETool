@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'eradle'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
@@ -15,15 +14,6 @@ dependencies {
     compile project(':uetool-base')
     //  compile "me.ele:uetool-base:${versions.release}"
     provided "com.facebook.fresco:fresco:${versions.fresco}"
-}
-
-modifyPom {
-    project {
-        groupId 'me.ele'
-        artifactId 'uetool-fresco'
-        version versions.debug
-        packaging 'aar'
-    }
 }
 
 publish {

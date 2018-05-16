@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'eradle'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
@@ -12,15 +11,6 @@ android {
 
     dependencies {
         compile "com.android.support:appcompat-v7:${versions.supportLibrary}"
-    }
-}
-
-modifyPom {
-    project {
-        groupId 'me.ele'
-        artifactId 'uetool-base'
-        version versions.debug
-        packaging 'aar'
     }
 }
 
