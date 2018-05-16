@@ -1,4 +1,4 @@
-UETool ![](https://img.shields.io/badge/platform-android-lightgrey.svg) [![License](https://img.shields.io/badge/license-MIT-000000.svg)](https://github.com/eleme/UETool/blob/master/LICENSE) 
+UETool [![platform](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html) [![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/eleme/UETool/blob/master/LICENSE)
 ======
 
 ![](https://github.com/eleme/UETool/blob/master/art/uet_banner.jpeg)
