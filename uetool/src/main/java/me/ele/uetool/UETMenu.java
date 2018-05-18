@@ -7,6 +7,7 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.view.Gravity;
@@ -50,21 +51,21 @@ public class UETMenu extends LinearLayout {
 
         vMenu = findViewById(R.id.menu);
         vSubMenuContainer = findViewById(R.id.sub_menu_container);
-
-        subMenus.add(new UETSubMenu.SubMenu("捕捉控件", R.drawable.uet_edit_attr, new OnClickListener() {
+        Resources resources = context.getResources();
+        subMenus.add(new UETSubMenu.SubMenu(resources.getString(R.string.catch_view), R.drawable.uet_edit_attr, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 open(TransparentActivity.Type.TYPE_EDIT_ATTR);
             }
         }));
-        subMenus.add(new UETSubMenu.SubMenu("相对位置", R.drawable.uet_relative_position,
+        subMenus.add(new UETSubMenu.SubMenu(resources.getString(R.string.relative_location), R.drawable.uet_relative_position,
                 new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         open(TransparentActivity.Type.TYPE_RELATIVE_POSITION);
                     }
                 }));
-        subMenus.add(new UETSubMenu.SubMenu("网格栅栏", R.drawable.uet_show_gridding,
+        subMenus.add(new UETSubMenu.SubMenu(resources.getString(R.string.grid), R.drawable.uet_show_gridding,
                 new OnClickListener() {
                     @Override
                     public void onClick(View v) {
