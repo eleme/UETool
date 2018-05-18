@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="catch_view">catch</string>
+  <string name="relative_location">location</string>
+  <string name="grid">gridding</string>
+</resources>

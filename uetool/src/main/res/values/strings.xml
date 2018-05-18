@@ -4,4 +4,7 @@
     <string name="uet_target_element_not_found">could not found view in (%1$.0f , %2$.0f), please select view again</string>
     <string name="uet_coming_soon">coming soon</string>
     <string name="uet_disable">DESABLE_UETOOL</string>
+    <string name="catch_view">catch</string>
+    <string name="relative_location">location</string>
+    <string name="grid">gridding</string>
 </resources>
