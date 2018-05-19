@@ -27,7 +27,7 @@ public class EditAttrLayout extends CollectViewsLayout {
         }
     };
 
-    private Element element;
+    private Element targetElement;
     private AttrsDialog dialog;
     private IMode mode = new ShowMode();
     private float lastX, lastY;
@@ -48,8 +48,8 @@ public class EditAttrLayout extends CollectViewsLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (element != null) {
-            canvas.drawRect(element.getRect(), areaPaint);
+        if (targetElement != null) {
+            canvas.drawRect(targetElement.getRect(), areaPaint);
             mode.onDraw(canvas);
         }
     }
@@ -74,7 +74,7 @@ public class EditAttrLayout extends CollectViewsLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        element = null;
+        targetElement = null;
         if (dialog != null) {
             dialog.dismiss();
         }
@@ -88,10 +88,10 @@ public class EditAttrLayout extends CollectViewsLayout {
 
         @Override
         public void onDraw(Canvas canvas) {
-            Rect rect = element.getRect();
-            Rect originRect = element.getOriginRect();
+            Rect rect = targetElement.getRect();
+            Rect originRect = targetElement.getOriginRect();
             canvas.drawRect(originRect, dashLinePaint);
-            Element parentElement = element.getParentElement();
+            Element parentElement = targetElement.getParentElement();
             if (parentElement != null) {
                 Rect parentRect = parentElement.getRect();
                 int x = rect.left + rect.width() / 2;
@@ -108,9 +108,9 @@ public class EditAttrLayout extends CollectViewsLayout {
 
         @Override
         public void triggerActionMove(MotionEvent event) {
-            if (element != null) {
+            if (targetElement != null) {
                 boolean changed = false;
-                View view = element.getView();
+                View view = targetElement.getView();
                 float diffX = event.getX() - lastX;
                 if (Math.abs(diffX) >= moveUnit) {
                     view.setTranslationX(view.getTranslationX() + diffX);
@@ -124,7 +124,7 @@ public class EditAttrLayout extends CollectViewsLayout {
                     changed = true;
                 }
                 if (changed) {
-                    element.reset();
+                    targetElement.reset();
                     invalidate();
                 }
             }
@@ -140,7 +140,7 @@ public class EditAttrLayout extends CollectViewsLayout {
 
         @Override
         public void onDraw(Canvas canvas) {
-            Rect rect = element.getRect();
+            Rect rect = targetElement.getRect();
             drawLineWithText(canvas, rect.left, rect.top - lineBorderDistance, rect.right, rect.top - lineBorderDistance);
             drawLineWithText(canvas, rect.right + lineBorderDistance, rect.top, rect.right + lineBorderDistance, rect.bottom);
         }
@@ -151,10 +151,10 @@ public class EditAttrLayout extends CollectViewsLayout {
         }
 
         @Override
-        public void triggerActionUp(MotionEvent event) {
+        public void triggerActionUp(final MotionEvent event) {
             final Element element = getTargetElement(event.getX(), event.getY());
             if (element != null) {
-                EditAttrLayout.this.element = element;
+                targetElement = element;
                 invalidate();
                 if (dialog == null) {
                     dialog = new AttrsDialog(getContext());
@@ -164,16 +164,33 @@ public class EditAttrLayout extends CollectViewsLayout {
                             mode = new MoveMode();
                             dialog.dismiss();
                         }
+
+                        @Override
+                        public void showValidViews(int position, boolean isChecked) {
+                            int positionStart = position + 1;
+                            if (isChecked) {
+                                dialog.notifyValidViewItemInserted(positionStart, getTargetElements(lastX, lastY), targetElement);
+                            } else {
+                                dialog.notifyItemRangeRemoved(positionStart);
+                            }
+                        }
+
+                        @Override
+                        public void selectView(Element element) {
+                            targetElement = element;
+                            dialog.dismiss();
+                            dialog.show(targetElement);
+                        }
                     });
                     dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialog) {
-                            element.reset();
+                            targetElement.reset();
                             invalidate();
                         }
                     });
                 }
-                dialog.show(element);
+                dialog.show(targetElement);
             }
         }
     }

@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
 import java.util.List;
 
 import me.ele.uetool.base.Element;
@@ -35,6 +36,7 @@ import me.ele.uetool.base.IAttrs;
 import me.ele.uetool.base.ItemArrayList;
 import me.ele.uetool.base.item.AddMinusEditItem;
 import me.ele.uetool.base.item.BitmapItem;
+import me.ele.uetool.base.item.BriefDescItem;
 import me.ele.uetool.base.item.EditTextItem;
 import me.ele.uetool.base.item.Item;
 import me.ele.uetool.base.item.SwitchItem;
@@ -43,6 +45,7 @@ import me.ele.uetool.base.item.TitleItem;
 
 import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_ADD_MINUS_EDIT;
 import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_BITMAP;
+import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_BRIEF_DESC;
 import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_EDIT_TEXT;
 import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_SWITCH;
 import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_TEXT;
@@ -84,17 +87,35 @@ public class AttrsDialog extends Dialog {
         layoutManager.scrollToPosition(0);
     }
 
+    public void notifyValidViewItemInserted(int positionStart, List<Element> validElements, Element targetElement) {
+        List<Item> validItems = new ArrayList<>();
+        for (int i = 0, N = validElements.size(); i < N; i++) {
+            Element element = validElements.get(i);
+            validItems.add(new BriefDescItem(element, targetElement.equals(element)));
+        }
+        adapter.notifyValidViewItemInserted(positionStart, validItems);
+    }
+
+    public final void notifyItemRangeRemoved(int positionStart) {
+        adapter.notifyValidViewItemRemoved(positionStart);
+    }
+
     public void setAttrDialogCallback(AttrDialogCallback callback) {
         adapter.setAttrDialogCallback(callback);
     }
 
     public interface AttrDialogCallback {
         void enableMove();
+
+        void showValidViews(int position, boolean isChecked);
+
+        void selectView(Element element);
     }
 
     public static class Adapter extends RecyclerView.Adapter {
 
         private List<Item> items = new ItemArrayList<>();
+        private List<Item> validItems = new ArrayList<>();
         private AttrDialogCallback callback;
 
         public void setAttrDialogCallback(AttrDialogCallback callback) {
@@ -114,6 +135,17 @@ public class AttrsDialog extends Dialog {
             notifyDataSetChanged();
         }
 
+        public void notifyValidViewItemInserted(int positionStart, List<Item> validItems) {
+            this.validItems.addAll(validItems);
+            items.addAll(positionStart, validItems);
+            notifyItemRangeInserted(positionStart, validItems.size());
+        }
+
+        public void notifyValidViewItemRemoved(int positionStart) {
+            items.removeAll(validItems);
+            notifyItemRangeRemoved(positionStart, validItems.size());
+        }
+
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             switch (viewType) {
@@ -129,6 +161,8 @@ public class AttrsDialog extends Dialog {
                     return AddMinusEditViewHolder.newInstance(parent);
                 case TYPE_BITMAP:
                     return BitmapInfoViewHolder.newInstance(parent);
+                case TYPE_BRIEF_DESC:
+                    return BriefDescViewHolder.newInstance(parent, callback);
             }
             throw new RuntimeException(viewType + " is an unknown view type!");
         }
@@ -147,6 +181,8 @@ public class AttrsDialog extends Dialog {
                 ((AddMinusEditViewHolder) holder).bindView((AddMinusEditItem) getItem(position));
             } else if (holder.getClass() == BitmapInfoViewHolder.class) {
                 ((BitmapInfoViewHolder) holder).bindView((BitmapItem) getItem(position));
+            } else if (holder.getClass() == BriefDescViewHolder.class) {
+                ((BriefDescViewHolder) holder).bindView((BriefDescItem) getItem(position));
             }
         }
 
@@ -165,6 +201,8 @@ public class AttrsDialog extends Dialog {
                 return TYPE_ADD_MINUS_EDIT;
             } else if (item.getClass() == BitmapItem.class) {
                 return TYPE_BITMAP;
+            } else if (item.getClass() == BriefDescItem.class) {
+                return TYPE_BRIEF_DESC;
             }
             throw new RuntimeException("Unknown item type.");
         }
@@ -190,6 +228,7 @@ public class AttrsDialog extends Dialog {
                 TYPE_SWITCH,
                 TYPE_ADD_MINUS_EDIT,
                 TYPE_BITMAP,
+                TYPE_BRIEF_DESC,
         })
         @Retention(RetentionPolicy.SOURCE)
         @interface ViewType {
@@ -199,6 +238,7 @@ public class AttrsDialog extends Dialog {
             int TYPE_SWITCH = 4;
             int TYPE_ADD_MINUS_EDIT = 5;
             int TYPE_BITMAP = 6;
+            int TYPE_BRIEF_DESC = 7;
         }
 
         public static abstract class BaseViewHolder<T extends Item> extends RecyclerView.ViewHolder {
@@ -442,6 +482,12 @@ public class AttrsDialog extends Dialog {
                                     callback.enableMove();
                                 }
                                 return;
+                            } else if (item.getType() == SwitchItem.Type.TYPE_SHOW_VALID_VIEWS) {
+                                item.setChecked(isChecked);
+                                if (callback != null) {
+                                    callback.showValidViews(getAdapterPosition(), isChecked);
+                                }
+                                return;
                             }
                             if (item.getElement().getView() instanceof TextView) {
                                 TextView textView = ((TextView) (item.getElement().getView()));
@@ -504,6 +550,43 @@ public class AttrsDialog extends Dialog {
                 layoutParams.height = height;
                 vImage.setImageBitmap(bitmap);
                 vInfo.setText(bitmap.getWidth() + "px*" + bitmap.getHeight() + "px");
+            }
+        }
+
+        public static class BriefDescViewHolder extends BaseViewHolder<BriefDescItem> {
+
+            private TextView vDesc;
+
+            public BriefDescViewHolder(View itemView, final AttrDialogCallback callback) {
+                super(itemView);
+                vDesc = (TextView) itemView;
+                vDesc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (callback != null) {
+                            callback.selectView(item.getElement());
+                        }
+                    }
+                });
+            }
+
+            public static BriefDescViewHolder newInstance(ViewGroup parent, AttrDialogCallback callback) {
+                return new BriefDescViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.uet_cell_brief_view_desc, parent, false), callback);
+            }
+
+            @Override
+            public void bindView(BriefDescItem briefDescItem) {
+                super.bindView(briefDescItem);
+                View view = briefDescItem.getElement().getView();
+                StringBuilder sb = new StringBuilder();
+                sb.append(view.getClass().getName());
+                String resName = Util.getResourceName(view.getId());
+                if (!TextUtils.isEmpty(resName)) {
+                    sb.append("@").append(resName);
+                }
+                vDesc.setText(sb.toString());
+
+                vDesc.setSelected(briefDescItem.isSelected());
             }
         }
     }

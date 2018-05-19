@@ -55,4 +55,20 @@ public class Element {
         }
         return parentElement;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Element element = (Element) o;
+
+        return view != null ? view.equals(element.view) : element.view == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return view != null ? view.hashCode() : 0;
+    }
 }
