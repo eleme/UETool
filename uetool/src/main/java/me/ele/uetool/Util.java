@@ -60,7 +60,8 @@ public class Util {
         }
     }
 
-    public static String getResourceName(Resources resources, int id) {
+    public static String getResourceName(int id) {
+        Resources resources = Application.getApplicationContext().getResources();
         try {
             if (id == NO_ID || id == 0) {
                 return "";

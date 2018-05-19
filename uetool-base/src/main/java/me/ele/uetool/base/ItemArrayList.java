@@ -18,6 +18,17 @@ public class ItemArrayList<T extends Item> extends ArrayList<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
+        removeInvalidItem(c);
+        return super.addAll(c);
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends T> c) {
+        removeInvalidItem(c);
+        return super.addAll(index, c);
+    }
+
+    private void removeInvalidItem(Collection<? extends T> c) {
         Iterator<T> iterator = (Iterator<T>) c.iterator();
         while (iterator.hasNext()) {
             T t = iterator.next();
@@ -25,6 +36,5 @@ public class ItemArrayList<T extends Item> extends ArrayList<T> {
                 iterator.remove();
             }
         }
-        return super.addAll(c);
     }
 }

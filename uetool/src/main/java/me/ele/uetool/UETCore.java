@@ -31,6 +31,7 @@ public class UETCore implements IAttrs {
         View view = element.getView();
 
         items.add(new SwitchItem("Move", element, SwitchItem.Type.TYPE_MOVE));
+        items.add(new SwitchItem("ValidViews", element, SwitchItem.Type.TYPE_SHOW_VALID_VIEWS));
 
         IAttrs iAttrs = AttrsManager.createAttrs(view);
         if (iAttrs != null) {
@@ -40,7 +41,7 @@ public class UETCore implements IAttrs {
         items.add(new TitleItem("COMMON"));
         items.add(new TextItem("Class", view.getClass().getName()));
         items.add(new TextItem("Id", Util.getResId(view)));
-        items.add(new TextItem("ResName", Util.getResourceName(view.getResources(), view.getId())));
+        items.add(new TextItem("ResName", Util.getResourceName(view.getId())));
         items.add(new TextItem("Clickable", Boolean.toString(view.isClickable()).toUpperCase()));
         items.add(new TextItem("Focused", Boolean.toString(view.isFocused()).toUpperCase()));
         items.add(new AddMinusEditItem("Width（dp）", element, EditTextItem.Type.TYPE_WIDTH, px2dip(view.getWidth())));

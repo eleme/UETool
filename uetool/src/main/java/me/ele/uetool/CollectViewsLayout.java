@@ -187,6 +187,18 @@ public class CollectViewsLayout extends View {
         return target;
     }
 
+    protected List<Element> getTargetElements(float x, float y) {
+        List<Element> validList = new ArrayList<>();
+        for (int i = elements.size() - 1; i >= 0; i--) {
+            final Element element = elements.get(i);
+            if (element.getRect().contains((int) x, (int) y)) {
+                validList.add(element);
+            }
+        }
+        return validList;
+    }
+
+
     protected void drawText(Canvas canvas, String text, float x, float y) {
         float left = x - textBgFillingSpace;
         float top = y - getTextHeight(text);

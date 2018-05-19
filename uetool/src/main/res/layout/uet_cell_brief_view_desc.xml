@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/uet_selector_brief_desc"
+          android:paddingBottom="2dp"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
+          android:paddingTop="2dp"
+          android:textColor="#ccc"
+          android:textSize="@dimen/uet_info_text_size"
+          tools:text="111"/>
