@@ -79,11 +79,11 @@ At present UETool provides functionality as bellows:
 
 ```gradle
 dependencies {
-  debugCompile 'me.ele:uetool:1.0.12'
-  releaseCompile 'me.ele:uetool-no-op:1.0.12'
+  debugCompile 'me.ele:uetool:1.0.13'
+  releaseCompile 'me.ele:uetool-no-op:1.0.13'
 
   // if you want to show more attrs about Fresco's DraweeView
-  debugCompile 'me.ele:uetool-fresco:1.0.12'
+  debugCompile 'me.ele:uetool-fresco:1.0.13'
 }
 ```
 
@@ -103,7 +103,7 @@ UETool.showUETMenu(int y);
 UETool.dismissUETMenu();
 ```
 
-#### filter out view whitch you don't want to select
+#### filter out view which you don't want to select
 
 ```java
 UETool.putFilterClass(Class viewClazz);
