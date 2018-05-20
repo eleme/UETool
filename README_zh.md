@@ -1,4 +1,4 @@
-UETool [![platform](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html) [![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/eleme/UETool/blob/master/LICENSE)
+UETool [![GitHub release](https://img.shields.io/github/release/eleme/UETool.svg?style=social)](https://github.com/eleme/UETool/tree/1.0.13) [![platform](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html) [![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/eleme/UETool/blob/master/LICENSE)
 ======
 
 ![](https://github.com/eleme/UETool/blob/master/art/uet_banner.jpeg)
@@ -58,6 +58,8 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 | SpanBitmap | [PICTURE] 72px*39px | |
 | DrawableLeft | [PICTURE] 51px*51px |  |
 | DrawableRight | [PICTURE] 36px*36px |  |
+| DrawableTop | [PICTURE] 36px*36px |  |
+| DrawableBottom | [PICTURE] 36px*36px |  |
 | **ImageView** |  |  |
 | Bitmap | [PICTURE] 144px*144px |  |
 | ScaleType | CENTER_CROP |  |

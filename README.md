@@ -1,4 +1,4 @@
-UETool [![platform](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html) [![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/eleme/UETool/blob/master/LICENSE)
+UETool [![GitHub release](https://img.shields.io/github/release/eleme/UETool.svg?style=social)](https://github.com/eleme/UETool/tree/1.0.13) [![platform](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html) [![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/eleme/UETool/blob/master/LICENSE)
 ======
 
 ![](https://github.com/eleme/UETool/blob/master/art/uet_banner.jpeg)
@@ -58,9 +58,11 @@ At present UETool provides functionality as bellows:
 | TextSize(sp) | 14 | YES |
 | TextColor | #DE000000 | YES |
 | IsBold | TRUE | YES |
-| SpanBitmap | [PICTURE] 72px*39px | |
+| SpanBitmap | [PICTURE] 72px*39px |  |
 | DrawableLeft | [PICTURE] 51px*51px |  |
 | DrawableRight | [PICTURE] 36px*36px |  |
+| DrawableTop | [PICTURE] 36px*36px |  |
+| DrawableBottom | [PICTURE] 36px*36px |  |
 | **ImageView** |  |  |
 | Bitmap | [PICTURE] 144px*144px |  |
 | ScaleType | CENTER_CROP |  |
