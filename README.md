@@ -15,6 +15,7 @@ At present UETool provides functionality as bellows:
 - show / edit normal view's attributions such as edit TextView's text、textSize、textColor etc.
 - if you are using Fresco's DraweeView, UETool provides show more attributions like ImageURI、PlaceHolderImage、CornerRadius etc.
 - you can customize any view's attributions you want with simple way such as some biz param
+- sometimes target view which UETool offered isn’t you want, you can check ValidViews and choose which you want
 - show two view's relative position
 - show gridding for checking some view alignment 
 
@@ -37,6 +38,8 @@ At present UETool provides functionality as bellows:
 
 | Attribute | Value Sample | Editable |
 | --- | --- | --- |
+| Move | if you checked it, you can move view easily |  |
+| ValidViews | sometimes target view which UETool offered isn’t you want, you can check it and choose which you want |  |
 | Class | android.widget.LinearLayout |  |
 | Id | 0x7f0d009c |  |
 | ResName | btn |  |

@@ -13,6 +13,7 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 - 查看/修改常用控件的属性，比如修改 TextView 的文本内容、文本大小、文本颜色等等
 - 如果你的项目里正在使用 Fresco 的 DraweeView 来呈现图片，那么 UETool 将会提供更多的属性比如图片 URI、默认占位图、圆角大小等等
 - 你可以很轻松的定制任何 view 的属性，比如你想查看一些额外的业务参数
+- 有的时候 UETool 为你选中的 view 并不是你想要的，你可以选择打开 ValidView，然后选中你需要的 View
 - 显示两个 view 的相对位置关系
 - 显示网格栅栏，方便查看控件是否对齐
 
@@ -34,6 +35,8 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 
 | Attribute | Value Sample | Editable |
 | --- | --- | --- |
+| Move | if you checked it, you can move view easily |  |
+| ValidViews | sometimes target view which UETool offered isn’t you want, you can check it and choose which you want |  |
 | Class | android.widget.LinearLayout |  |
 | Id | 0x7f0d009c |  |
 | ResName | btn |  |
