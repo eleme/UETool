@@ -74,10 +74,10 @@ public class EditAttrLayout extends CollectViewsLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        targetElement = null;
         if (dialog != null) {
             dialog.dismiss();
         }
+        targetElement = null;
     }
 
     public void setOnDragListener(OnDragListener onDragListener) {
