@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="catch_view">捕捉控件</string>
-  <string name="relative_location">相对位置</string>
-  <string name="grid">网格栅栏</string>
+  <string name="uet_catch_view">捕捉控件</string>
+  <string name="uet_relative_location">相对位置</string>
+  <string name="uet_grid">网格栅栏</string>
 </resources>
