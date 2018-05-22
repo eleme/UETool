@@ -52,20 +52,20 @@ public class UETMenu extends LinearLayout {
         vMenu = findViewById(R.id.menu);
         vSubMenuContainer = findViewById(R.id.sub_menu_container);
         Resources resources = context.getResources();
-        subMenus.add(new UETSubMenu.SubMenu(resources.getString(R.string.catch_view), R.drawable.uet_edit_attr, new OnClickListener() {
+        subMenus.add(new UETSubMenu.SubMenu(resources.getString(R.string.uet_catch_view), R.drawable.uet_edit_attr, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 open(TransparentActivity.Type.TYPE_EDIT_ATTR);
             }
         }));
-        subMenus.add(new UETSubMenu.SubMenu(resources.getString(R.string.relative_location), R.drawable.uet_relative_position,
+        subMenus.add(new UETSubMenu.SubMenu(resources.getString(R.string.uet_relative_location), R.drawable.uet_relative_position,
                 new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         open(TransparentActivity.Type.TYPE_RELATIVE_POSITION);
                     }
                 }));
-        subMenus.add(new UETSubMenu.SubMenu(resources.getString(R.string.grid), R.drawable.uet_show_gridding,
+        subMenus.add(new UETSubMenu.SubMenu(resources.getString(R.string.uet_grid), R.drawable.uet_show_gridding,
                 new OnClickListener() {
                     @Override
                     public void onClick(View v) {
