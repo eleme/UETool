@@ -204,7 +204,7 @@ public class Util {
                 mCachedBitmapField.setAccessible(true);
                 return (Bitmap) mCachedBitmapField.get(mVectorStateField.get(drawable));
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
         return null;
