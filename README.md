@@ -7,17 +7,17 @@ UETool [![GitHub release](https://img.shields.io/github/release/eleme/UETool.svg
 
 [中文版](https://github.com/eleme/UETool/blob/master/README_zh.md)
 
-UETool is a debug tool for anyone who needs show/edit one or more view's attributions. It works on Activity/Fragment/Dialog/PopupWindow or any else view shows on the screen.
+UETool is a debug tool for anyone who needs show/edit one or more views' attributions. It works on Activity/Fragment/Dialog/PopupWindow or any other view.
 
-At present UETool provides functionality as bellows:
+At present, UETool provides functionality as follows:
 
-- move any view on the screen, select view repeatedly will select its parent view
-- show / edit normal view's attributions such as edit TextView's text、textSize、textColor etc.
-- if you are using Fresco's DraweeView, UETool provides show more attributions like ImageURI、PlaceHolderImage、CornerRadius etc.
-- you can customize any view's attributions you want with simple way such as some biz param
-- sometimes target view which UETool offered isn’t you want, you can check ValidViews and choose which you want
-- show two view's relative position
-- show gridding for checking some view alignment 
+- Move any view on the screen (selecting view repeatedly will select its parent's view)
+- Show/edit normal view's attributions such as edit TextView's text、textSize、textColor etc.
+- If you are using Fresco's DraweeView, UETool provides show more attributions like ImageURI、PlaceHolderImage、CornerRadius etc.
+- You can customize any view's attributions you want with simple way such as some biz param
+- You can check ValidViews and choose which target view you want (if offered UETool isn’t what you want)
+- Show two view's relative positions
+- Show gridding for checking view alignment 
 
 ## EFFECT
 
