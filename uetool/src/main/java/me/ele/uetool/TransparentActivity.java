@@ -34,7 +34,7 @@ public class TransparentActivity extends AppCompatActivity {
         Util.enableFullscreen(getWindow());
         setContentView(R.layout.uet_activity_transparent);
 
-        vContainer = findViewById(R.id.container);
+        vContainer = (ViewGroup) findViewById(R.id.container);
 
         final BoardTextView board = new BoardTextView(this);
 

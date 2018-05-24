@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final SwitchCompat control = findViewById(R.id.control);
+        final SwitchCompat control = (SwitchCompat) findViewById(R.id.control);
         control.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateDraweeView() {
-        SimpleDraweeView draweeView = findViewById(R.id.drawee_view);
+        SimpleDraweeView draweeView = (SimpleDraweeView) findViewById(R.id.drawee_view);
         DraweeController draweeController = Fresco.newDraweeControllerBuilder()
                 .setUri("http://p0.ifengimg.com/pmop/2017/0823/3B8D6E5B199841F33C1FFB62D849C1D89F6BAA2B_size79_w240_h240.gif")
                 .setAutoPlayAnimations(true)
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateSpanTextView() {
-        TextView spanTextView = findViewById(R.id.span);
+        TextView spanTextView = (TextView) findViewById(R.id.span);
         SpannableString spannableString = new SpannableString("  海底捞火锅");
         Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_food_new);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateCustomView() {
-        final CustomView customView = findViewById(R.id.custom);
+        final CustomView customView = (CustomView) findViewById(R.id.custom);
         customView.setMoreAttribution("more attribution");
         Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_up_vote);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
