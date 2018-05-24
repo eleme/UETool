@@ -1,4 +1,4 @@
-UETool [![GitHub release](https://img.shields.io/github/release/eleme/UETool.svg?style=social)](https://github.com/eleme/UETool/tree/1.0.13) [![platform](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html) [![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/eleme/UETool/blob/master/LICENSE)
+UETool [![GitHub release](https://img.shields.io/github/release/eleme/UETool.svg?style=social)]() [![platform](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html) [![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/eleme/UETool/blob/master/LICENSE)
 ======
 
 ![](https://github.com/eleme/UETool/blob/master/art/uet_banner.jpeg)
@@ -81,11 +81,11 @@ At present UETool provides functionality as bellows:
 
 ```gradle
 dependencies {
-  debugCompile 'me.ele:uetool:1.0.13'
-  releaseCompile 'me.ele:uetool-no-op:1.0.13'
+  debugCompile 'me.ele:uetool:1.0.14'
+  releaseCompile 'me.ele:uetool-no-op:1.0.14'
 
   // if you want to show more attrs about Fresco's DraweeView
-  debugCompile 'me.ele:uetool-fresco:1.0.13'
+  debugCompile 'me.ele:uetool-fresco:1.0.14'
 }
 ```
 
