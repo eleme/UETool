@@ -98,6 +98,10 @@ public class UETool {
         return true;
     }
 
+    public boolean isExist() {
+        return getInstance().uetMenu != null;
+    }
+
     private int dismissMenu() {
         if (uetMenu != null) {
             int y = uetMenu.dismiss();
