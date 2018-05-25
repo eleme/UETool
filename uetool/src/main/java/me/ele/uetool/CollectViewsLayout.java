@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import me.ele.uetool.base.DimenUtil;
 import me.ele.uetool.base.Element;
 
 import static me.ele.uetool.base.DimenUtil.dip2px;
@@ -171,6 +172,9 @@ public class CollectViewsLayout extends View {
         for (int i = elements.size() - 1; i >= 0; i--) {
             final Element element = elements.get(i);
             if (element.getRect().contains((int) x, (int) y)) {
+                if (isParentNotVisible(element.getParentElement())) {
+                    continue;
+                }
                 if (element != childElement) {
                     childElement = element;
                     parentElement = element;
@@ -185,6 +189,18 @@ public class CollectViewsLayout extends View {
             Toast.makeText(getContext(), getResources().getString(R.string.uet_target_element_not_found, x, y), Toast.LENGTH_SHORT).show();
         }
         return target;
+    }
+
+    private boolean isParentNotVisible(Element parent) {
+        if (parent == null) {
+            return false;
+        }
+        if (parent.getRect().left >= DimenUtil.getScreenWidth()
+                || parent.getRect().top >= DimenUtil.getScreenHeight()) {
+            return true;
+        } else {
+            return isParentNotVisible(parent.getParentElement());
+        }
     }
 
     protected List<Element> getTargetElements(float x, float y) {
