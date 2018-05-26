@@ -8,7 +8,6 @@
         <activity
             android:name="me.ele.uetool.TransparentActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
             android:theme="@style/uet_Theme.AppCompat.Translucent"/>
     </application>
 
