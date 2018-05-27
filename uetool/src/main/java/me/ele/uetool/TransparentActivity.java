@@ -30,6 +30,10 @@ public class TransparentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            finish();
+            return;
+        }
         Util.setStatusBarColor(getWindow(), Color.TRANSPARENT);
         Util.enableFullscreen(getWindow());
         setContentView(R.layout.uet_activity_transparent);
