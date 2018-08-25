@@ -181,7 +181,7 @@ public class CollectViewsLayout extends View {
                 } else if (parentElement != null) {
                     parentElement = parentElement.getParentElement();
                 }
-                target = parentElement;
+                target = parentElement == null ? element : parentElement;
                 break;
             }
         }
