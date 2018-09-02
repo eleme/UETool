@@ -62,6 +62,11 @@ public class RelativePositionLayout extends CollectViewsLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        if (relativeElements == null) {
+            return;
+        }
+
         boolean doubleNotNull = true;
         for (Element element : relativeElements) {
             if (element != null) {
