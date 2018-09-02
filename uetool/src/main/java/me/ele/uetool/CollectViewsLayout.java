@@ -84,41 +84,58 @@ public class CollectViewsLayout extends View {
         try {
             Activity targetActivity = UETool.getInstance().getTargetActivity();
             WindowManager windowManager = targetActivity.getWindowManager();
-            Field mGlobalField = Class.forName("android.view.WindowManagerImpl").getDeclaredField("mGlobal");
-            mGlobalField.setAccessible(true);
 
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
-                Field mViewsField = Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mViews");
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+                Field mGlobalField = Class.forName("android.view.WindowManagerImpl").getDeclaredField("mGlobal");
+                mGlobalField.setAccessible(true);
+
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+                    Field mViewsField = Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mViews");
+                    mViewsField.setAccessible(true);
+                    List<View> views = (List<View>) mViewsField.get(mGlobalField.get(windowManager));
+                    for (int i = views.size() - 1; i >= 0; i--) {
+                        View targetView = getTargetDecorView(targetActivity, views.get(i));
+                        if (targetView != null) {
+                            traverse(targetView);
+                            break;
+                        }
+                    }
+                } else {
+                    Field mRootsField = Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mRoots");
+                    mRootsField.setAccessible(true);
+                    List viewRootImpls;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        viewRootImpls = (List) mRootsField.get(mGlobalField.get(windowManager));
+                    } else {
+                        viewRootImpls = Arrays.asList((Object[]) mRootsField.get(mGlobalField.get(windowManager)));
+                    }
+                    for (int i = viewRootImpls.size() - 1; i >= 0; i--) {
+                        Class clazz = Class.forName("android.view.ViewRootImpl");
+                        Object object = viewRootImpls.get(i);
+                        Field mWindowAttributesField = clazz.getDeclaredField("mWindowAttributes");
+                        mWindowAttributesField.setAccessible(true);
+                        Field mViewField = clazz.getDeclaredField("mView");
+                        mViewField.setAccessible(true);
+                        View decorView = (View) mViewField.get(object);
+                        WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) mWindowAttributesField.get(object);
+                        if (layoutParams.getTitle().toString().contains(targetActivity.getClass().getName())
+                                || getTargetDecorView(targetActivity, decorView) != null) {
+                            traverse(decorView);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                // http://androidxref.com/4.1.1/xref/frameworks/base/core/java/android/view/WindowManagerImpl.java
+                Field mWindowManagerField = Class.forName("android.view.WindowManagerImpl$CompatModeWrapper").getDeclaredField("mWindowManager");
+                mWindowManagerField.setAccessible(true);
+                Field mViewsField = Class.forName("android.view.WindowManagerImpl").getDeclaredField("mViews");
                 mViewsField.setAccessible(true);
-                List<View> views = (List<View>) mViewsField.get(mGlobalField.get(windowManager));
+                List<View> views = Arrays.asList((View[]) mViewsField.get(mWindowManagerField.get(windowManager)));
                 for (int i = views.size() - 1; i >= 0; i--) {
                     View targetView = getTargetDecorView(targetActivity, views.get(i));
                     if (targetView != null) {
                         traverse(targetView);
-                        break;
-                    }
-                }
-            } else {
-                Field mRootsField = Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mRoots");
-                mRootsField.setAccessible(true);
-                List viewRootImpls;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    viewRootImpls = (List) mRootsField.get(mGlobalField.get(windowManager));
-                } else {
-                    viewRootImpls = Arrays.asList((Object[]) mRootsField.get(mGlobalField.get(windowManager)));
-                }
-                for (int i = viewRootImpls.size() - 1; i >= 0; i--) {
-                    Class clazz = Class.forName("android.view.ViewRootImpl");
-                    Object object = viewRootImpls.get(i);
-                    Field mWindowAttributesField = clazz.getDeclaredField("mWindowAttributes");
-                    mWindowAttributesField.setAccessible(true);
-                    Field mViewField = clazz.getDeclaredField("mView");
-                    mViewField.setAccessible(true);
-                    View decorView = (View) mViewField.get(object);
-                    WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) mWindowAttributesField.get(object);
-                    if (layoutParams.getTitle().toString().contains(targetActivity.getClass().getName())
-                            || getTargetDecorView(targetActivity, decorView) != null) {
-                        traverse(decorView);
                         break;
                     }
                 }
