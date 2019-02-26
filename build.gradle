@@ -2,14 +2,14 @@
 
 buildscript {
     ext.versions = ['minSdk'        : 14,
-                    'targetSdk'     : 26,
-                    'compileSdk'    : 26,
-                    'buildTool'     : '26.0.1',
+                    'targetSdk'     : 28,
+                    'compileSdk'    : 28,
+                    'buildTool'     : '28.0.1',
 
                     'supportLibrary': '27.1.1',
                     'fresco'        : '1.4.0',
 
-                    'release'       : '1.0.15',]
+                    'release'       : '1.0.16',]
     repositories {
         jcenter()
     }

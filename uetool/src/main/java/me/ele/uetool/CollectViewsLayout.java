@@ -2,11 +2,7 @@ package me.ele.uetool;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.*;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -15,20 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
+import me.ele.uetool.base.DimenUtil;
+import me.ele.uetool.base.Element;
+import me.ele.uetool.base.ReflectionP;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import me.ele.uetool.base.DimenUtil;
-import me.ele.uetool.base.Element;
-
-import static me.ele.uetool.base.DimenUtil.dip2px;
-import static me.ele.uetool.base.DimenUtil.getScreenHeight;
-import static me.ele.uetool.base.DimenUtil.getScreenWidth;
-import static me.ele.uetool.base.DimenUtil.px2dip;
-import static me.ele.uetool.base.DimenUtil.sp2px;
+import static me.ele.uetool.base.DimenUtil.*;
 
 public class CollectViewsLayout extends View {
 
@@ -82,20 +74,20 @@ public class CollectViewsLayout extends View {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         try {
-            Activity targetActivity = UETool.getInstance().getTargetActivity();
-            WindowManager windowManager = targetActivity.getWindowManager();
+            final Activity targetActivity = UETool.getInstance().getTargetActivity();
+            final WindowManager windowManager = targetActivity.getWindowManager();
 
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-                Field mGlobalField = Class.forName("android.view.WindowManagerImpl").getDeclaredField("mGlobal");
+                final Field mGlobalField = Class.forName("android.view.WindowManagerImpl").getDeclaredField("mGlobal");
                 mGlobalField.setAccessible(true);
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
                     Field mViewsField = Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mViews");
                     mViewsField.setAccessible(true);
                     List<View> views;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         views = (List<View>) mViewsField.get(mGlobalField.get(windowManager));
-                    }else {
+                    } else {
                         views = Arrays.asList((View[]) mViewsField.get(mGlobalField.get(windowManager)));
                     }
 
@@ -107,25 +99,34 @@ public class CollectViewsLayout extends View {
                         }
                     }
                 } else {
-                    Field mRootsField = Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mRoots");
-                    mRootsField.setAccessible(true);
-                    List viewRootImpls;
-                    viewRootImpls = (List) mRootsField.get(mGlobalField.get(windowManager));
-                    for (int i = viewRootImpls.size() - 1; i >= 0; i--) {
-                        Class clazz = Class.forName("android.view.ViewRootImpl");
-                        Object object = viewRootImpls.get(i);
-                        Field mWindowAttributesField = clazz.getDeclaredField("mWindowAttributes");
-                        mWindowAttributesField.setAccessible(true);
-                        Field mViewField = clazz.getDeclaredField("mView");
-                        mViewField.setAccessible(true);
-                        View decorView = (View) mViewField.get(object);
-                        WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) mWindowAttributesField.get(object);
-                        if (layoutParams.getTitle().toString().contains(targetActivity.getClass().getName())
-                                || getTargetDecorView(targetActivity, decorView) != null) {
-                            traverse(decorView);
-                            break;
+                    ReflectionP.breakAndroidP(new ReflectionP.Func0() {
+                        @Override
+                        public void call() {
+                            try {
+                                Field mRootsField = Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mRoots");
+                                mRootsField.setAccessible(true);
+                                List viewRootImpls;
+                                viewRootImpls = (List) mRootsField.get(mGlobalField.get(windowManager));
+                                for (int i = viewRootImpls.size() - 1; i >= 0; i--) {
+                                    Class clazz = Class.forName("android.view.ViewRootImpl");
+                                    Object object = viewRootImpls.get(i);
+                                    Field mWindowAttributesField = clazz.getDeclaredField("mWindowAttributes");
+                                    mWindowAttributesField.setAccessible(true);
+                                    Field mViewField = clazz.getDeclaredField("mView");
+                                    mViewField.setAccessible(true);
+                                    View decorView = (View) mViewField.get(object);
+                                    WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) mWindowAttributesField.get(object);
+                                    if (layoutParams.getTitle().toString().contains(targetActivity.getClass().getName())
+                                            || getTargetDecorView(targetActivity, decorView) != null) {
+                                        traverse(decorView);
+                                        break;
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
+                    });
                 }
             } else {
                 // http://androidxref.com/4.1.1/xref/frameworks/base/core/java/android/view/WindowManagerImpl.java

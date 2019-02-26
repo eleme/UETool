@@ -81,11 +81,11 @@ At present, UETool provides functionality as follows:
 
 ```gradle
 dependencies {
-  debugCompile 'me.ele:uetool:1.0.15'
-  releaseCompile 'me.ele:uetool-no-op:1.0.15'
+  debugCompile 'me.ele:uetool:1.0.16'
+  releaseCompile 'me.ele:uetool-no-op:1.0.16'
 
   // if you want to show more attrs about Fresco's DraweeView
-  debugCompile 'me.ele:uetool-fresco:1.0.15'
+  debugCompile 'me.ele:uetool-fresco:1.0.16'
 }
 ```
 
