@@ -10,16 +10,12 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.os.Build;
-import android.view.Gravity;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewConfiguration;
-import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.view.*;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import com.jakewharton.scalpel.ScalpelFrameLayout;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -72,6 +68,30 @@ public class UETMenu extends LinearLayout {
                         open(TransparentActivity.Type.TYPE_SHOW_GRIDDING);
                     }
                 }));
+
+        subMenus.add(new UETSubMenu.SubMenu(resources.getString(R.string.uet_scalpel), R.drawable.uet_scalpel, new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewGroup decorView = (ViewGroup) Util.getCurrentActivity().getWindow().getDecorView();
+                ViewGroup content = decorView.findViewById(android.R.id.content);
+                View contentChild = content.getChildAt(0);
+                if (contentChild != null) {
+                    if (contentChild instanceof ScalpelFrameLayout) {
+                        content.removeAllViews();
+                        View originContent = ((ScalpelFrameLayout) contentChild).getChildAt(0);
+                        ((ScalpelFrameLayout) contentChild).removeAllViews();
+                        content.addView(originContent);
+                    } else {
+                        content.removeAllViews();
+                        ScalpelFrameLayout frameLayout = new ScalpelFrameLayout(getContext());
+                        frameLayout.setLayerInteractionEnabled(true);
+                        frameLayout.setDrawIds(true);
+                        frameLayout.addView(contentChild);
+                        content.addView(frameLayout);
+                    }
+                }
+            }
+        }));
 
         for (UETSubMenu.SubMenu subMenu : subMenus) {
             UETSubMenu uetSubMenu = new UETSubMenu(getContext());
