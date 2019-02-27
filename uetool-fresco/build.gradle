@@ -11,9 +11,9 @@ android {
 }
 
 dependencies {
-    compile project(':uetool-base')
-    //  compile "me.ele:uetool-base:${versions.release}"
-    provided "com.facebook.fresco:fresco:${versions.fresco}"
+    implementation project(':uetool-base')
+    //  implementation "me.ele:uetool-base:${versions.release}"
+    compileOnly "com.facebook.fresco:fresco:${versions.fresco}"
 }
 
 publish {

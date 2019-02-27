@@ -10,7 +10,7 @@ android {
     }
 
     dependencies {
-        compile "com.android.support:appcompat-v7:${versions.supportLibrary}"
+        api "com.android.support:appcompat-v7:${versions.supportLibrary}"
     }
 }
 
