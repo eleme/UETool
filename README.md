@@ -17,7 +17,8 @@ At present, UETool provides functionality as follows:
 - You can customize any view's attributions you want with simple way such as some biz param
 - You can check ValidViews and choose which target view you want (if offered UETool isn’t what you want)
 - Show two view's relative positions
-- Show gridding for checking view alignment 
+- Show gridding for checking view alignment
+- Support Android P
 
 ## EFFECT
 
