@@ -2,11 +2,11 @@ package me.ele.uetool;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.*;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -172,21 +172,21 @@ public class CollectViewsLayout extends View {
     }
 
     private View getTargetDecorView(Activity targetActivity, View decorView) {
-        View targetView = null;
-        Context context = decorView.getContext();
-        if (context == targetActivity) {
-            targetView = decorView;
-        } else {
-            while (context instanceof ContextThemeWrapper) {
-                Context baseContext = ((ContextThemeWrapper) context).getBaseContext();
-                if (baseContext == targetActivity) {
-                    targetView = decorView;
-                    break;
-                }
-                context = baseContext;
+        Context context = null;
+        if (decorView instanceof ViewGroup && ((ViewGroup) decorView).getChildCount() > 0) {
+            context = ((ViewGroup) decorView).getChildAt(0).getContext();
+        }
+
+        while (context != null) {
+            if (context == targetActivity) {
+                return decorView;
+            } else if (context instanceof ContextWrapper) {
+                context = ((ContextWrapper) context).getBaseContext();
+            } else {
+                return null;
             }
         }
-        return targetView;
+        return null;
     }
 
     protected Element getTargetElement(float x, float y) {

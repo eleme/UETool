@@ -9,7 +9,7 @@ buildscript {
                     'supportLibrary': '27.1.1',
                     'fresco'        : '1.4.0',
 
-                    'release'       : '1.0.17',]
+                    'release'       : '1.0.18',]
     repositories {
         jcenter()
         google()
