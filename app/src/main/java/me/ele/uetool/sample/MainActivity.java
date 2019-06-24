@@ -48,11 +48,13 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn1:
-                Intent intent = new Intent(this, SecondActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(this, SecondActivity.class));
                 break;
             case R.id.btn2:
                 new CustomDialog(this).show();
+                break;
+            case R.id.btn3:
+                startActivity(new Intent(this, FragmentSampleActivity.class));
                 break;
         }
     }
