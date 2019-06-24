@@ -18,6 +18,7 @@ dependencies {
     api project(':uetool-base')
     //  api "me.ele:uetool-base:${versions.release}"
     implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
+    implementation "com.android.support:support-v4:${versions.supportLibrary}"
     implementation 'com.jakewharton.scalpel:scalpel:1.1.2'
 }
 

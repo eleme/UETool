@@ -17,6 +17,7 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 - 显示两个 view 的相对位置关系
 - 显示网格栅栏，方便查看控件是否对齐
 - 支持 Android P
+- 支持显示当前控件所在的 Fragment
 
 ## 效果
 
@@ -79,11 +80,11 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 
 ```gradle
 dependencies {
-  debugImplementation 'me.ele:uetool:1.0.18'
-  releaseImplementation 'me.ele:uetool-no-op:1.0.18'
+  debugImplementation 'me.ele:uetool:1.1.4'
+  releaseImplementation 'me.ele:uetool-no-op:1.1.4'
 
   // if you want to show more attrs about Fresco's DraweeView
-  debugImplementation 'me.ele:uetool-fresco:1.0.18'
+  debugImplementation 'me.ele:uetool-fresco:1.1.4'
 }
 ```
 
