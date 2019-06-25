@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-
 import com.facebook.common.internal.Supplier;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
@@ -14,17 +13,16 @@ import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.DraweeView;
 import com.facebook.drawee.view.GenericDraweeView;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 import me.ele.uetool.base.Element;
 import me.ele.uetool.base.IAttrs;
 import me.ele.uetool.base.item.BitmapItem;
 import me.ele.uetool.base.item.Item;
 import me.ele.uetool.base.item.TextItem;
 import me.ele.uetool.base.item.TitleItem;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import static me.ele.uetool.base.DimenUtil.px2dip;
 
@@ -54,13 +52,15 @@ public class UETFresco implements IAttrs {
             RoundingParams params = hierarchy.getRoundingParams();
             if (params != null) {
                 float[] cornersRadii = params.getCornersRadii();
-                float firstRadii = cornersRadii[0];
-                for (int i = 1; i < 8; i++) {
-                    if (firstRadii != cornersRadii[i]) {
-                        return null;
+                if (cornersRadii != null) {
+                    float firstRadii = cornersRadii[0];
+                    for (int i = 1; i < 8; i++) {
+                        if (firstRadii != cornersRadii[i]) {
+                            return null;
+                        }
                     }
+                    return px2dip(firstRadii, true);
                 }
-                return px2dip(firstRadii, true);
             }
         }
         return null;

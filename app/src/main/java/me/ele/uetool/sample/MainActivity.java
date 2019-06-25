@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateDraweeView() {
         SimpleDraweeView draweeView = findViewById(R.id.drawee_view);
         DraweeController draweeController = Fresco.newDraweeControllerBuilder()
-                .setUri("http://p0.ifengimg.com/pmop/2017/0823/3B8D6E5B199841F33C1FFB62D849C1D89F6BAA2B_size79_w240_h240.gif")
+                .setUri("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561443230828&di=066c39a584cfe5cdcb244cc3af74afff&imgtype=0&src=http%3A%2F%2Fzkres1.myzaker.com%2F201905%2F5cda353b77ac6420a360a53f_320.jpg")
                 .setAutoPlayAnimations(true)
                 .build();
         draweeView.setController(draweeController);

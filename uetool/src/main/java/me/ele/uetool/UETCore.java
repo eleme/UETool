@@ -30,9 +30,9 @@ public class UETCore implements IAttrs {
 
         View view = element.getView();
 
+        items.add(new TextItem("Fragment", Util.getCurrentFragmentName(element.getView())));
         items.add(new SwitchItem("Move", element, SwitchItem.Type.TYPE_MOVE));
         items.add(new SwitchItem("ValidViews", element, SwitchItem.Type.TYPE_SHOW_VALID_VIEWS));
-        items.add(new TextItem("Fragment", Util.getCurrentFragmentName(element.getView())));
 
         IAttrs iAttrs = AttrsManager.createAttrs(view);
         if (iAttrs != null) {
