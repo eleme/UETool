@@ -8,12 +8,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.widget.Toast;
+import me.ele.uetool.base.Application;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
-import me.ele.uetool.base.Application;
 
 public class UETool {
 
@@ -94,8 +93,11 @@ public class UETool {
         if (uetMenu == null) {
             uetMenu = new UETMenu(Application.getApplicationContext(), y);
         }
-        uetMenu.show();
-        return true;
+        if (!uetMenu.isShown()) {
+            uetMenu.show();
+            return true;
+        }
+        return false;
     }
 
     private int dismissMenu() {
