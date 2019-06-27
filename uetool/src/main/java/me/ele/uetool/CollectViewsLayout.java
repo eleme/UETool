@@ -16,9 +16,7 @@ import me.ele.uetool.base.Element;
 import me.ele.uetool.base.ReflectionP;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static me.ele.uetool.base.DimenUtil.*;
 
@@ -94,7 +92,7 @@ public class CollectViewsLayout extends View {
                     for (int i = views.size() - 1; i >= 0; i--) {
                         View targetView = getTargetDecorView(targetActivity, views.get(i));
                         if (targetView != null) {
-                            traverse(targetView);
+                            createElements(targetView);
                             break;
                         }
                     }
@@ -118,7 +116,7 @@ public class CollectViewsLayout extends View {
                                     WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) mWindowAttributesField.get(object);
                                     if (layoutParams.getTitle().toString().contains(targetActivity.getClass().getName())
                                             || getTargetDecorView(targetActivity, decorView) != null) {
-                                        traverse(decorView);
+                                        createElements(decorView);
                                         break;
                                     }
                                 }
@@ -138,7 +136,7 @@ public class CollectViewsLayout extends View {
                 for (int i = views.size() - 1; i >= 0; i--) {
                     View targetView = getTargetDecorView(targetActivity, views.get(i));
                     if (targetView != null) {
-                        traverse(targetView);
+                        createElements(targetView);
                         break;
                     }
                 }
@@ -156,7 +154,24 @@ public class CollectViewsLayout extends View {
         parentElement = null;
     }
 
-    private void traverse(View view) {
+    private void createElements(View view) {
+
+        List<Element> elements = new ArrayList<>();
+        traverse(view, elements);
+
+        //  面积从大到小排序
+        Collections.sort(elements, new Comparator<Element>() {
+            @Override
+            public int compare(Element o1, Element o2) {
+                return o2.getArea() - o1.getArea();
+            }
+        });
+
+        this.elements.addAll(elements);
+
+    }
+
+    private void traverse(View view, List<Element> elements) {
         if (UETool.getInstance().getFilterClasses().contains(view.getClass().getName())) return;
         if (view.getAlpha() == 0 || view.getVisibility() != View.VISIBLE) return;
         if (getResources().getString(R.string.uet_disable).equals(view.getTag())) return;
@@ -164,7 +179,7 @@ public class CollectViewsLayout extends View {
         if (view instanceof ViewGroup) {
             ViewGroup parent = (ViewGroup) view;
             for (int i = 0; i < parent.getChildCount(); i++) {
-                traverse(parent.getChildAt(i));
+                traverse(parent.getChildAt(i), elements);
             }
         }
     }
