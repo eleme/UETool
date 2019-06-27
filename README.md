@@ -20,6 +20,7 @@ At present, UETool provides functionality as follows:
 - Show gridding for checking view alignment
 - Support Android P
 - Support show view's current Fragment
+- Show activity's Fragment tree
 
 ## EFFECT
 
@@ -83,11 +84,11 @@ At present, UETool provides functionality as follows:
 
 ```gradle
 dependencies {
-  debugImplementation 'me.ele:uetool:1.1.5'
-  releaseImplementation 'me.ele:uetool-no-op:1.1.5'
+  debugImplementation 'me.ele:uetool:1.1.9'
+  releaseImplementation 'me.ele:uetool-no-op:1.1.9'
 
   // if you want to show more attrs about Fresco's DraweeView
-  debugImplementation 'me.ele:uetool-fresco:1.1.5'
+  debugImplementation 'me.ele:uetool-fresco:1.1.9'
 }
 ```
 
