@@ -8,11 +8,15 @@ android {
     defaultConfig {
         minSdkVersion versions.minSdk
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
     implementation project(':uetool-base')
-    //  implementation "me.ele:uetool-base:${versions.release}"
+//      implementation "me.ele:uetool-base:${versions.release}"
     compileOnly "com.facebook.fresco:fresco:${versions.fresco}"
 }
 

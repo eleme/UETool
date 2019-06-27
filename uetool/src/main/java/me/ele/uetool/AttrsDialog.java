@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
@@ -13,46 +14,26 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import me.ele.uetool.base.Element;
+import me.ele.uetool.base.IAttrs;
+import me.ele.uetool.base.ItemArrayList;
+import me.ele.uetool.base.item.*;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.ele.uetool.base.Element;
-import me.ele.uetool.base.IAttrs;
-import me.ele.uetool.base.ItemArrayList;
-import me.ele.uetool.base.item.AddMinusEditItem;
-import me.ele.uetool.base.item.BitmapItem;
-import me.ele.uetool.base.item.BriefDescItem;
-import me.ele.uetool.base.item.EditTextItem;
-import me.ele.uetool.base.item.Item;
-import me.ele.uetool.base.item.SwitchItem;
-import me.ele.uetool.base.item.TextItem;
-import me.ele.uetool.base.item.TitleItem;
-
-import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_ADD_MINUS_EDIT;
-import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_BITMAP;
-import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_BRIEF_DESC;
-import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_EDIT_TEXT;
-import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_SWITCH;
-import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_TEXT;
-import static me.ele.uetool.AttrsDialog.Adapter.ViewType.TYPE_TITLE;
-import static me.ele.uetool.base.DimenUtil.dip2px;
-import static me.ele.uetool.base.DimenUtil.getScreenHeight;
-import static me.ele.uetool.base.DimenUtil.getScreenWidth;
+import static me.ele.uetool.AttrsDialog.Adapter.ViewType.*;
+import static me.ele.uetool.base.DimenUtil.*;
 
 public class AttrsDialog extends Dialog {
 
@@ -293,15 +274,22 @@ public class AttrsDialog extends Dialog {
             public void bindView(final TextItem textItem) {
                 super.bindView(textItem);
                 vName.setText(textItem.getName());
-                vDetail.setText(textItem.getDetail());
-                vDetail.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (textItem.isEnableCopy()) {
-                            Util.clipText(textItem.getDetail());
-                        }
+                final String detail = textItem.getDetail();
+                if (textItem.getOnClickListener() != null) {
+                    vDetail.setText(Html.fromHtml("<u>" + detail + "</u>"));
+                    vDetail.setOnClickListener(textItem.getOnClickListener());
+                } else {
+                    vDetail.setText(detail);
+                    if (textItem.isEnableCopy()) {
+                        vDetail.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Util.clipText(detail);
+                            }
+                        });
                     }
-                });
+                }
+
             }
         }
 
