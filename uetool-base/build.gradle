@@ -12,6 +12,10 @@ android {
     dependencies {
         api "com.android.support:appcompat-v7:${versions.supportLibrary}"
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 publish {

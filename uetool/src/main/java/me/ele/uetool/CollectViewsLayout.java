@@ -160,14 +160,12 @@ public class CollectViewsLayout extends View {
         if (UETool.getInstance().getFilterClasses().contains(view.getClass().getName())) return;
         if (view.getAlpha() == 0 || view.getVisibility() != View.VISIBLE) return;
         if (getResources().getString(R.string.uet_disable).equals(view.getTag())) return;
+        elements.add(new Element(view));
         if (view instanceof ViewGroup) {
-            elements.add(0, new Element(view));
             ViewGroup parent = (ViewGroup) view;
             for (int i = 0; i < parent.getChildCount(); i++) {
                 traverse(parent.getChildAt(i));
             }
-        } else {
-            elements.add(new Element(view));
         }
     }
 
