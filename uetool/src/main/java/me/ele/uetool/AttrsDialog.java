@@ -4,10 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,23 +15,37 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.*;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import me.ele.uetool.base.Element;
-import me.ele.uetool.base.IAttrs;
-import me.ele.uetool.base.ItemArrayList;
-import me.ele.uetool.base.item.*;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.ele.uetool.AttrsDialog.Adapter.ViewType.*;
-import static me.ele.uetool.base.DimenUtil.*;
+import me.ele.uetool.attrdialog.AttrsDialogItemViewBinder;
+import me.ele.uetool.attrdialog.AttrsDialogMultiTypePool;
+import me.ele.uetool.base.Element;
+import me.ele.uetool.base.IAttrs;
+import me.ele.uetool.base.ItemArrayList;
+import me.ele.uetool.base.item.AddMinusEditItem;
+import me.ele.uetool.base.item.BitmapItem;
+import me.ele.uetool.base.item.BriefDescItem;
+import me.ele.uetool.base.item.EditTextItem;
+import me.ele.uetool.base.item.Item;
+import me.ele.uetool.base.item.SwitchItem;
+import me.ele.uetool.base.item.TextItem;
+import me.ele.uetool.base.item.TitleItem;
+
+import static me.ele.uetool.base.DimenUtil.dip2px;
+import static me.ele.uetool.base.DimenUtil.getScreenHeight;
+import static me.ele.uetool.base.DimenUtil.getScreenWidth;
 
 public class AttrsDialog extends Dialog {
 
@@ -103,6 +115,10 @@ public class AttrsDialog extends Dialog {
             this.callback = callback;
         }
 
+        public AttrDialogCallback getAttrDialogCallback() {
+            return this.callback;
+        }
+
         public void notifyDataSetChanged(Element element) {
             items.clear();
             for (String attrsProvider : UETool.getInstance().getAttrsProvider()) {
@@ -129,63 +145,22 @@ public class AttrsDialog extends Dialog {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            switch (viewType) {
-                case TYPE_TITLE:
-                    return TitleViewHolder.newInstance(parent);
-                case TYPE_TEXT:
-                    return TextViewHolder.newInstance(parent);
-                case TYPE_EDIT_TEXT:
-                    return EditTextViewHolder.newInstance(parent);
-                case TYPE_SWITCH:
-                    return SwitchViewHolder.newInstance(parent, callback);
-                case TYPE_ADD_MINUS_EDIT:
-                    return AddMinusEditViewHolder.newInstance(parent);
-                case TYPE_BITMAP:
-                    return BitmapInfoViewHolder.newInstance(parent);
-                case TYPE_BRIEF_DESC:
-                    return BriefDescViewHolder.newInstance(parent, callback);
-            }
-            throw new RuntimeException(viewType + " is an unknown view type!");
+            AttrsDialogMultiTypePool pool = UETool.getInstance().getAttrsDialogMultiTypePool();
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            return pool.getItemViewBinder(viewType).onCreateViewHolder(inflater, parent, this);
         }
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            if (holder.getClass() == TitleViewHolder.class) {
-                ((TitleViewHolder) holder).bindView((TitleItem) getItem(position));
-            } else if (holder.getClass() == TextViewHolder.class) {
-                ((TextViewHolder) holder).bindView((TextItem) getItem(position));
-            } else if (holder.getClass() == EditTextViewHolder.class) {
-                ((EditTextViewHolder) holder).bindView((EditTextItem) getItem(position));
-            } else if (holder.getClass() == SwitchViewHolder.class) {
-                ((SwitchViewHolder) holder).bindView((SwitchItem) getItem(position));
-            } else if (holder.getClass() == AddMinusEditViewHolder.class) {
-                ((AddMinusEditViewHolder) holder).bindView((AddMinusEditItem) getItem(position));
-            } else if (holder.getClass() == BitmapInfoViewHolder.class) {
-                ((BitmapInfoViewHolder) holder).bindView((BitmapItem) getItem(position));
-            } else if (holder.getClass() == BriefDescViewHolder.class) {
-                ((BriefDescViewHolder) holder).bindView((BriefDescItem) getItem(position));
-            }
+            AttrsDialogMultiTypePool pool = UETool.getInstance().getAttrsDialogMultiTypePool();
+            ((AttrsDialogItemViewBinder) pool.getItemViewBinder(holder.getItemViewType())).onBindViewHolder(holder, getItem(position));
         }
 
         @Override
         public int getItemViewType(int position) {
             Item item = getItem(position);
-            if (item.getClass() == TitleItem.class) {
-                return TYPE_TITLE;
-            } else if (item.getClass() == TextItem.class) {
-                return TYPE_TEXT;
-            } else if (item.getClass() == EditTextItem.class) {
-                return TYPE_EDIT_TEXT;
-            } else if (item.getClass() == SwitchItem.class) {
-                return TYPE_SWITCH;
-            } else if (item.getClass() == AddMinusEditItem.class) {
-                return TYPE_ADD_MINUS_EDIT;
-            } else if (item.getClass() == BitmapItem.class) {
-                return TYPE_BITMAP;
-            } else if (item.getClass() == BriefDescItem.class) {
-                return TYPE_BRIEF_DESC;
-            }
-            throw new RuntimeException("Unknown item type.");
+            AttrsDialogMultiTypePool pool = UETool.getInstance().getAttrsDialogMultiTypePool();
+            return pool.getItemType(item);
         }
 
         @Override
@@ -200,26 +175,6 @@ public class AttrsDialog extends Dialog {
                 return null;
             }
             return (T) items.get(adapterPosition);
-        }
-
-        @IntDef({
-                TYPE_TITLE,
-                TYPE_TEXT,
-                TYPE_EDIT_TEXT,
-                TYPE_SWITCH,
-                TYPE_ADD_MINUS_EDIT,
-                TYPE_BITMAP,
-                TYPE_BRIEF_DESC,
-        })
-        @Retention(RetentionPolicy.SOURCE)
-        @interface ViewType {
-            int TYPE_TITLE = 1;
-            int TYPE_TEXT = 2;
-            int TYPE_EDIT_TEXT = 3;
-            int TYPE_SWITCH = 4;
-            int TYPE_ADD_MINUS_EDIT = 5;
-            int TYPE_BITMAP = 6;
-            int TYPE_BRIEF_DESC = 7;
         }
 
         public static abstract class BaseViewHolder<T extends Item> extends RecyclerView.ViewHolder {
@@ -579,4 +534,3 @@ public class AttrsDialog extends Dialog {
         }
     }
 }
-
