@@ -145,6 +145,10 @@ public class UETool {
         this.targetActivity = targetActivity;
     }
 
+    public AttrsDialogMultiTypePool getAttrsDialogMultiTypePool() {
+        return attrsDialogMultiTypePool;
+    }
+
     public Set<String> getAttrsProvider() {
         return attrsProviderSet;
     }
