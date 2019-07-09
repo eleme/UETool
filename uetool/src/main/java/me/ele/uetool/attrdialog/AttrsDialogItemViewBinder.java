@@ -3,6 +3,7 @@ package me.ele.uetool.attrdialog;
 import android.support.v7.widget.RecyclerView;
 
 import me.ele.uetool.AttrsDialog;
+import me.ele.uetool.base.ItemViewBinder;
 import me.ele.uetool.base.item.Item;
 
 /**

@@ -18,10 +18,12 @@ import me.ele.uetool.attrdialog.binder.SwitchItemBinder;
 import me.ele.uetool.attrdialog.binder.TextItemBinder;
 import me.ele.uetool.attrdialog.binder.TitleItemBinder;
 import me.ele.uetool.base.Application;
+import me.ele.uetool.base.ItemViewBinder;
 import me.ele.uetool.base.item.AddMinusEditItem;
 import me.ele.uetool.base.item.BitmapItem;
 import me.ele.uetool.base.item.BriefDescItem;
 import me.ele.uetool.base.item.EditTextItem;
+import me.ele.uetool.base.item.Item;
 import me.ele.uetool.base.item.SwitchItem;
 import me.ele.uetool.base.item.TextItem;
 import me.ele.uetool.base.item.TitleItem;
@@ -65,6 +67,10 @@ public class UETool {
 
     public static void putFilterClass(String className) {
         getInstance().putFilterClassName(className);
+    }
+
+    public static <T extends Item> void registerAttrDialogItemViewBinder(Class<T> clazz, ItemViewBinder<T, ?> binder) {
+        getInstance().attrsDialogMultiTypePool.register(clazz, binder);
     }
 
     public static void putAttrsProviderClass(Class clazz) {
@@ -134,9 +140,6 @@ public class UETool {
         return targetActivity;
     }
 
-    public AttrsDialogMultiTypePool getAttrsDialogMultiTypePool() {
-        return attrsDialogMultiTypePool;
-    }
 
     public void setTargetActivity(Activity targetActivity) {
         this.targetActivity = targetActivity;

@@ -3,6 +3,7 @@ package me.ele.uetool.attrdialog;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.ele.uetool.base.ItemViewBinder;
 import me.ele.uetool.base.item.Item;
 
 /**
@@ -14,8 +15,8 @@ public class AttrsDialogMultiTypePool {
     private List<Class> classes = new ArrayList<>();
     private List<ItemViewBinder> binders = new ArrayList<>();
 
-    public <T> void register(
-            Class<? extends Item> clazz,
+    public <T extends Item> void register(
+            Class<T> clazz,
             ItemViewBinder<T, ?> binder) {
         if (classes.contains(clazz)) {
             return;

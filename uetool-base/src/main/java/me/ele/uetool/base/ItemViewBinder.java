@@ -1,4 +1,4 @@
-package me.ele.uetool.attrdialog;
+package me.ele.uetool.base;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
