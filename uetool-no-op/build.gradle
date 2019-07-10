@@ -10,6 +10,10 @@ android {
     }
 }
 
+dependencies {
+    api project(path: ':uetool-base')
+}
+
 publish {
     userOrg = 'jackcho'
     groupId = 'me.ele'
