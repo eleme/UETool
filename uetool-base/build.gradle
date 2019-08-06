@@ -3,7 +3,6 @@ apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTool
 
     defaultConfig {
         minSdkVersion versions.minSdk
@@ -11,8 +10,8 @@ android {
 
     dependencies {
         api "com.android.support:appcompat-v7:${versions.supportLibrary}"
-        implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
-        implementation "com.android.support:support-v4:${versions.supportLibrary}"
+        api "com.android.support:recyclerview-v7:${versions.supportLibrary}"
+        api "com.android.support:support-v4:${versions.supportLibrary}"
     }
 
     lintOptions {
