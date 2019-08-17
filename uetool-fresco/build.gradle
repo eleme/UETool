@@ -3,17 +3,20 @@ apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTool
 
     defaultConfig {
         minSdkVersion versions.minSdk
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
-    compile project(':uetool-base')
-    //  compile "me.ele:uetool-base:${versions.release}"
-    provided "com.facebook.fresco:fresco:${versions.fresco}"
+    implementation project(':uetool-base')
+//      implementation "me.ele:uetool-base:${versions.release}"
+    compileOnly "com.facebook.fresco:fresco:${versions.fresco}"
 }
 
 publish {

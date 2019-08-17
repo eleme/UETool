@@ -4,21 +4,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+import me.ele.uetool.base.DimenUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import me.ele.uetool.base.DimenUtil;
-
 import static android.view.Gravity.BOTTOM;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static me.ele.uetool.TransparentActivity.Type.TYPE_EDIT_ATTR;
-import static me.ele.uetool.TransparentActivity.Type.TYPE_RELATIVE_POSITION;
-import static me.ele.uetool.TransparentActivity.Type.TYPE_SHOW_GRIDDING;
-import static me.ele.uetool.TransparentActivity.Type.TYPE_UNKNOWN;
+import static me.ele.uetool.TransparentActivity.Type.*;
 
 public class TransparentActivity extends AppCompatActivity {
 
@@ -30,6 +27,10 @@ public class TransparentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            finish();
+            return;
+        }
         Util.setStatusBarColor(getWindow(), Color.TRANSPARENT);
         Util.enableFullscreen(getWindow());
         setContentView(R.layout.uet_activity_transparent);
@@ -85,6 +86,15 @@ public class TransparentActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         finish();
+    }
+
+    public void dismissAttrsDialog() {
+        for (int i = 0; i < vContainer.getChildCount(); i++) {
+            View child = vContainer.getChildAt(i);
+            if (child instanceof EditAttrLayout) {
+                ((EditAttrLayout) child).dismissAttrsDialog();
+            }
+        }
     }
 
     @IntDef({

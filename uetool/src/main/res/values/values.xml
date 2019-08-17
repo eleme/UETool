@@ -18,4 +18,8 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <style name="uet_TreeNodeStyleCustom">
+        <item name="android:paddingLeft">20dp</item>
+    </style>
+
 </resources>

@@ -1,4 +1,4 @@
-UETool [![GitHub release](https://img.shields.io/github/release/eleme/UETool.svg?style=social)]() [![platform](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html) [![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/eleme/UETool/blob/master/LICENSE)
+UETool [![GitHub release](https://img.shields.io/github/release/eleme/UETool.svg?style=social)](https://github.com/eleme/UETool/releases) [![platform](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html) [![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/eleme/UETool/blob/master/LICENSE)
 ======
 
 ![](https://github.com/eleme/UETool/blob/master/art/uet_banner.jpeg)
@@ -16,6 +16,9 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 - 有的时候 UETool 为你选中的 view 并不是你想要的，你可以选择打开 ValidView，然后选中你需要的 View
 - 显示两个 view 的相对位置关系
 - 显示网格栅栏，方便查看控件是否对齐
+- 支持 Android P
+- 支持显示当前控件所在的 Fragment
+- 显示 Activity 的 Fragment 树
 
 ## 效果
 
@@ -78,11 +81,11 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 
 ```gradle
 dependencies {
-  debugCompile 'me.ele:uetool:1.0.14'
-  releaseCompile 'me.ele:uetool-no-op:1.0.14'
+  debugImplementation 'me.ele:uetool:1.2.3'
+  releaseImplementation 'me.ele:uetool-no-op:1.2.3'
 
   // if you want to show more attrs about Fresco's DraweeView
-  debugCompile 'me.ele:uetool-fresco:1.0.14'
+  debugImplementation 'me.ele:uetool-fresco:1.2.3'
 }
 ```
 

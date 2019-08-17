@@ -1,5 +1,8 @@
 package me.ele.uetool;
 
+import me.ele.uetool.base.ItemViewBinder;
+import me.ele.uetool.base.item.Item;
+
 public class UETool {
 
     public static void putFilterClass(Class clazz) {
@@ -24,5 +27,8 @@ public class UETool {
 
     public static int dismissUETMenu() {
         return -1;
+    }
+
+    public static <T extends Item> void registerAttrDialogItemViewBinder(Class<T> clazz, ItemViewBinder<T, ?> binder) {
     }
 }

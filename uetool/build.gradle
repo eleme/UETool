@@ -3,7 +3,6 @@ apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTool
 
     defaultConfig {
         minSdkVersion versions.minSdk
@@ -15,9 +14,10 @@ android {
 }
 
 dependencies {
-    compile project(':uetool-base')
-    //  compile "me.ele:uetool-base:${versions.release}"
-    compile "com.android.support:recyclerview-v7:${versions.supportLibrary}"
+    api project(':uetool-base')
+    //  api "me.ele:uetool-base:${versions.release}"
+    implementation 'com.jakewharton.scalpel:scalpel:1.1.2'
+    implementation 'com.github.bmelnychuk:atv:1.2.9'
 }
 
 publish {

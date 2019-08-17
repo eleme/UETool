@@ -88,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onClick"
-                android:text="next activity"
+                android:text="activity"
                 />
 
             <Space
@@ -101,7 +101,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onClick"
-                android:text="show dialog"
+                android:text="dialog"
+                />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                />
+
+            <Button
+                android:id="@+id/btn3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClick"
+                android:text="fragment activity"
                 />
 
         </LinearLayout>

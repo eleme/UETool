@@ -56,6 +56,11 @@ public class Element {
         return parentElement;
     }
 
+    //  view 的面积
+    public int getArea() {
+        return view.getWidth() * view.getHeight();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

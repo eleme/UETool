@@ -3,4 +3,5 @@
   <string name="uet_catch_view">catch</string>
   <string name="uet_relative_location">location</string>
   <string name="uet_grid">gridding</string>
+  <string name="uet_scalpel">scalpel</string>
 </resources>

@@ -1,23 +1,18 @@
 package me.ele.uetool;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import me.ele.uetool.base.Element;
+import me.ele.uetool.base.IAttrs;
+import me.ele.uetool.base.item.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import me.ele.uetool.base.Element;
-import me.ele.uetool.base.IAttrs;
-import me.ele.uetool.base.item.AddMinusEditItem;
-import me.ele.uetool.base.item.BitmapItem;
-import me.ele.uetool.base.item.EditTextItem;
-import me.ele.uetool.base.item.Item;
-import me.ele.uetool.base.item.SwitchItem;
-import me.ele.uetool.base.item.TextItem;
-import me.ele.uetool.base.item.TitleItem;
 
 import static me.ele.uetool.base.DimenUtil.px2dip;
 import static me.ele.uetool.base.DimenUtil.px2sp;
@@ -30,6 +25,16 @@ public class UETCore implements IAttrs {
 
         View view = element.getView();
 
+        items.add(new TextItem("Fragment", Util.getCurrentFragmentName(element.getView()), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity activity = Util.getCurrentActivity();
+                if (activity instanceof TransparentActivity) {
+                    ((TransparentActivity) activity).dismissAttrsDialog();
+                }
+                new FragmentListTreeDialog(v.getContext()).show();
+            }
+        }));
         items.add(new SwitchItem("Move", element, SwitchItem.Type.TYPE_MOVE));
         items.add(new SwitchItem("ValidViews", element, SwitchItem.Type.TYPE_SHOW_VALID_VIEWS));
 
