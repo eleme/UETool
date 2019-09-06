@@ -17,6 +17,7 @@ import me.ele.uetool.base.ReflectionP;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import me.ele.uetool.base.ReflectionP.Func;
 
 import static me.ele.uetool.base.DimenUtil.*;
 
@@ -97,9 +98,9 @@ public class CollectViewsLayout extends View {
                         }
                     }
                 } else {
-                    ReflectionP.breakAndroidP(new ReflectionP.Func0() {
+                    ReflectionP.breakAndroidP(new Func<Void>() {
                         @Override
-                        public void call() {
+                        public Void call() {
                             try {
                                 Field mRootsField = Class.forName("android.view.WindowManagerGlobal").getDeclaredField("mRoots");
                                 mRootsField.setAccessible(true);
@@ -123,6 +124,7 @@ public class CollectViewsLayout extends View {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+                            return null;
                         }
                     });
                 }

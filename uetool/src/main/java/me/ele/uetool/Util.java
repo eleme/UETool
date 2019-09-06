@@ -18,6 +18,7 @@ import android.text.SpannedString;
 import android.text.style.ImageSpan;
 import android.util.Pair;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
@@ -30,6 +31,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import me.ele.uetool.base.ReflectionP;
+import me.ele.uetool.base.ReflectionP.Func;
 
 import static android.view.View.NO_ID;
 
@@ -52,6 +55,23 @@ public class Util {
         if (Build.VERSION.SDK_INT >= 21) {
             window.setStatusBarColor(color);
         }
+    }
+
+    public static String getViewClickListener(final View view) {
+        return ReflectionP.breakAndroidP(new Func<String>() {
+            @Override public String call() {
+                try {
+                    final Field mListenerInfoField = View.class.getDeclaredField("mListenerInfo");
+                    mListenerInfoField.setAccessible(true);
+                    final Field mClickListenerField = Class.forName("android.view.View$ListenerInfo").getDeclaredField("mOnClickListener");
+                    mClickListenerField.setAccessible(true);
+                    OnClickListener listener = (OnClickListener) mClickListenerField.get(mListenerInfoField.get(view));
+                    return listener.getClass().getName();
+                } catch (Exception e) {
+                    return null;
+                }
+            }
+        });
     }
 
     public static String getResourceName(int id) {

@@ -2,7 +2,6 @@ package me.ele.uetool.base;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -43,17 +42,19 @@ public class ReflectionP {
         }
     }
 
-    public static void breakAndroidP(Func0 func0) {
+    public static <T> T breakAndroidP(Func<T> func) {
+        T result;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            clearClassLoaderInClass(func0.getClass());
-            func0.call();
-            restoreLoaderInClass(func0.getClass());
+            clearClassLoaderInClass(func.getClass());
+            result = func.call();
+            restoreLoaderInClass(func.getClass());
         } else {
-            func0.call();
+            result = func.call();
         }
+        return result;
     }
 
-    public interface Func0 {
-        void call();
+    public interface Func<T> {
+        T call();
     }
 }
