@@ -1,57 +1,72 @@
 package me.ele.uetool.base;
 
-import android.annotation.TargetApi;
 import android.os.Build;
+import android.util.Log;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * 来自 52 破解
- * https://www.52pojie.cn/thread-877958-1-1.html
+ * 来自 weishu FreeReflection
+ * https://github.com/tiann/FreeReflection
  */
 public class ReflectionP {
-    @TargetApi(Build.VERSION_CODES.P)
-    private static void clearClassLoaderInClass(Class cls) {
-        try {
-            Class unsafeClass = Class.forName("sun.misc.Unsafe");
-            Field unsafeInstanceField = unsafeClass.getDeclaredField("theUnsafe");
-            unsafeInstanceField.setAccessible(true);
-            Object unsafeInstance = unsafeInstanceField.get(null);
-            Method objectFieldOffset = unsafeClass.getMethod("objectFieldOffset", Field.class);
-            Field classLoaderField = Class.class.getDeclaredField("classLoader");
-            classLoaderField.setAccessible(true);
-            Method putObject = unsafeClass.getMethod("putObject", Object.class, long.class, Object.class);
-            long offset = (long) objectFieldOffset.invoke(unsafeInstance, classLoaderField);
-            putObject.invoke(unsafeInstance, cls, offset, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    @TargetApi(Build.VERSION_CODES.P)
-    private static void restoreLoaderInClass(Class cls) {
+    private static final String TAG = "Reflection";
+
+    private static Object sVmRuntime;
+    private static Method setHiddenApiExemptions;
+
+    static {
         try {
-            Field classLoaderField = Class.class.getDeclaredField("classLoader");
-            classLoaderField.setAccessible(true);
-            if (cls != null && !cls.isPrimitive() && classLoaderField.get(cls) == null) {
-                classLoaderField.set(cls, Thread.currentThread().getContextClassLoader());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            Method forName = Class.class.getDeclaredMethod("forName", String.class);
+            Method getDeclaredMethod = Class.class.getDeclaredMethod("getDeclaredMethod", String.class, Class[].class);
+
+            Class<?> vmRuntimeClass = (Class<?>) forName.invoke(null, "dalvik.system.VMRuntime");
+            Method getRuntime = (Method) getDeclaredMethod.invoke(vmRuntimeClass, "getRuntime", null);
+            setHiddenApiExemptions = (Method) getDeclaredMethod.invoke(vmRuntimeClass, "setHiddenApiExemptions", new Class[]{String[].class});
+            sVmRuntime = getRuntime.invoke(null);
+        } catch (Throwable e) {
+            Log.e(TAG, "reflect bootstrap failed:", e);
         }
     }
 
     public static <T> T breakAndroidP(Func<T> func) {
         T result;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            clearClassLoaderInClass(func.getClass());
+            exemptAll();
             result = func.call();
-            restoreLoaderInClass(func.getClass());
         } else {
             result = func.call();
         }
         return result;
+    }
+
+    /**
+     * make specific methods exempted from hidden API check.
+     *
+     * @param methods the method signature prefix, such as "Ldalvik/system", "Landroid" or even "L"
+     * @return true if success
+     */
+    private static boolean exempt(String... methods) {
+        if (sVmRuntime == null || setHiddenApiExemptions == null) {
+            return false;
+        }
+
+        try {
+            setHiddenApiExemptions.invoke(sVmRuntime, new Object[]{methods});
+            return true;
+        } catch (Throwable e) {
+            return false;
+        }
+    }
+
+    /**
+     * Make all hidden API exempted.
+     *
+     * @return true if success.
+     */
+    private static boolean exemptAll() {
+        return exempt(new String[]{"L"});
     }
 
     public interface Func<T> {
