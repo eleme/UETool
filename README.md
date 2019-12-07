@@ -21,6 +21,7 @@ At present, UETool provides functionality as follows:
 - Support Android P
 - Support show view's current Fragment
 - Show activity's Fragment tree
+- Show view's view holder name if exist
 
 ## EFFECT
 

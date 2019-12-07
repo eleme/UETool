@@ -119,6 +119,14 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btn4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text="list activity"
+            />
+
         <Space
             android:layout_width="wrap_content"
             android:layout_height="10dp"

@@ -14,12 +14,14 @@ import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.SpannedString;
 import android.text.style.ImageSpan;
 import android.util.Pair;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -301,6 +303,19 @@ public class Util {
             return fragment.getClass().getName();
         }
 
+        return null;
+    }
+
+    //  获取当前 view 的 view holder 类名
+    public static String getViewHolderName(View targetView) {
+        View currentView = targetView;
+        while (currentView != null) {
+            ViewParent parent = currentView.getParent();
+            if (parent instanceof RecyclerView) {
+                return ((RecyclerView) parent).getChildViewHolder(currentView).getClass().getName();
+            }
+            currentView = parent instanceof View ? (View) parent : null;
+        }
         return null;
     }
 

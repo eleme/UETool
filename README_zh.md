@@ -19,6 +19,7 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 - 支持 Android P
 - 支持显示当前控件所在的 Fragment
 - 显示 Activity 的 Fragment 树
+- 如果 view 在 RecyclerView 中，显示这个 view 所在的 ViewHolder 类名
 
 ## 效果
 

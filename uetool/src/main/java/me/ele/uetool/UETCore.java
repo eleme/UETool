@@ -35,6 +35,7 @@ public class UETCore implements IAttrs {
                 new FragmentListTreeDialog(v.getContext()).show();
             }
         }));
+        items.add(new TextItem("ViewHolder", Util.getViewHolderName(element.getView())));
         items.add(new SwitchItem("Move", element, SwitchItem.Type.TYPE_MOVE));
         items.add(new SwitchItem("ValidViews", element, SwitchItem.Type.TYPE_SHOW_VALID_VIEWS));
 
