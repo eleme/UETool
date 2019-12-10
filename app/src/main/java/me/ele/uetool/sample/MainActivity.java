@@ -17,6 +17,7 @@ import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import me.ele.uetool.UETool;
+import me.ele.uetool.sample.ui.recyclerviewsample.RecyclerViewActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btn3:
                 startActivity(new Intent(this, FragmentSampleActivity.class));
                 break;
+            case R.id.btn4:
+                startActivity(new Intent(this, RecyclerViewActivity.class));
         }
     }
 

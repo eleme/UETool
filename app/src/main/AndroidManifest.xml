@@ -14,6 +14,7 @@
             android:theme="@style/AppTheme">
         <activity android:name=".FragmentSampleActivity">
         </activity>
+        <activity android:name=".ui.recyclerviewsample.RecyclerViewActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
