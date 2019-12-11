@@ -11,19 +11,21 @@ public class TextItem extends TitleItem {
     private View.OnClickListener onClickListener;
 
     public TextItem(String name, String detail) {
-        super(name);
-        this.detail = detail;
+        this(name, detail, false, null);
     }
 
     public TextItem(String name, String detail, boolean enableCopy) {
-        super(name);
-        this.detail = detail;
-        this.enableCopy = enableCopy;
+        this(name, detail, enableCopy, null);
     }
 
     public TextItem(String name, String detail, View.OnClickListener onClickListener) {
+        this(name, detail, false, onClickListener);
+    }
+
+    public TextItem(String name, String detail, boolean enableCopy, View.OnClickListener onClickListener) {
         super(name);
         this.detail = detail;
+        this.enableCopy = enableCopy;
         this.onClickListener = onClickListener;
     }
 
