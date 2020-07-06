@@ -48,6 +48,7 @@ public class UETCore implements IAttrs {
         items.add(new TextItem("Class", view.getClass().getName()));
         items.add(new TextItem("Id", Util.getResId(view)));
         items.add(new TextItem("ResName", Util.getResourceName(view.getId())));
+        items.add(new TextItem("Tag", Util.getViewTag(view)));
         items.add(new TextItem("Clickable", Boolean.toString(view.isClickable()).toUpperCase()));
         items.add(new TextItem("OnClickListener", Util.getViewClickListener(view)));
         items.add(new TextItem("Focused", Boolean.toString(view.isFocused()).toUpperCase()));
