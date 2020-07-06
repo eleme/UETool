@@ -90,6 +90,11 @@ public class Util {
         return "";
     }
 
+    public static String getViewTag(final View view) {
+        final Object tag = view.getTag();
+        return tag == null ? "" : tag.toString();
+    }
+
     public static String getResId(View view) {
         try {
             int id = view.getId();
