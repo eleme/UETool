@@ -435,7 +435,8 @@ public class AttrsDialog extends Dialog {
                             if (item.getElement().getView() instanceof TextView) {
                                 TextView textView = ((TextView) (item.getElement().getView()));
                                 if (item.getType() == SwitchItem.Type.TYPE_IS_BOLD) {
-                                    textView.setTypeface(null, isChecked ? Typeface.BOLD : Typeface.NORMAL);
+                                    Typeface tf = Typeface.create(textView.getTypeface(), isChecked ? Typeface.BOLD : Typeface.NORMAL);
+                                    textView.setTypeface(tf);
                                 }
                             }
                         } catch (Exception e) {

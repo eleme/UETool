@@ -1,6 +1,7 @@
 package me.ele.uetool.sample;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         updateDraweeView();
         updateSpanTextView();
         updateCustomView();
+        updateFontView();
     }
 
     public void onClick(View view) {
@@ -87,5 +89,10 @@ public class MainActivity extends AppCompatActivity {
         Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_up_vote);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         customView.setCompoundDrawables(null, drawable, null, null);
+    }
+
+    private void updateFontView() {
+        final TextView fontView = findViewById(R.id.font_test);
+        fontView.setTypeface(Typeface.create("casual", Typeface.BOLD));
     }
 }
