@@ -14,8 +14,8 @@ android {
 }
 
 dependencies {
-    api project(':uetool-base')
-    //  api "me.ele:uetool-base:${versions.release}"
+//    api project(':uetool-base')
+      api "me.ele:uetool-base:${versions.release}"
     implementation 'com.jakewharton.scalpel:scalpel:1.1.2'
     implementation 'com.github.bmelnychuk:atv:1.2.9'
 }
