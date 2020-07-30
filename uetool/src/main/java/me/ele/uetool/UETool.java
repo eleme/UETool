@@ -9,6 +9,11 @@ import android.os.Build;
 import android.provider.Settings;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import me.ele.uetool.attrdialog.AttrsDialogMultiTypePool;
 import me.ele.uetool.attrdialog.binder.AddMinusEditTextItemBinder;
 import me.ele.uetool.attrdialog.binder.BitmapItemBinder;
@@ -28,15 +33,11 @@ import me.ele.uetool.base.item.SwitchItem;
 import me.ele.uetool.base.item.TextItem;
 import me.ele.uetool.base.item.TitleItem;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 public class UETool {
 
     private static volatile UETool instance;
     private Set<String> filterClassesSet = new HashSet<>();
-    private Set<String> attrsProviderSet = new LinkedHashSet<String>() {
+    private List<String> attrsProviderSet = new ArrayList<String>() {
         {
             add(UETCore.class.getName());
             add("me.ele.uetool.fresco.UETFresco");
@@ -149,7 +150,7 @@ public class UETool {
         return attrsDialogMultiTypePool;
     }
 
-    public Set<String> getAttrsProvider() {
+    public List<String> getAttrsProvider() {
         return attrsProviderSet;
     }
 

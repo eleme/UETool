@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'me.ele.lancet'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -48,6 +49,8 @@ dependencies {
 //  debugImplementation "me.ele:uetool:${versions.release}"
 //  debugImplementation "me.ele:uetool-fresco:${versions.release}"
 //  releaseImplementation "me.ele:uetool-no-op:${versions.release}"
+
+    compileOnly 'me.ele:lancet-base:1.0.6'
 
     configurations.all {
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
