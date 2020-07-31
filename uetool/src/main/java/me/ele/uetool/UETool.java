@@ -99,7 +99,7 @@ public class UETool {
     }
 
     private void putAttrsProviderClassName(String className) {
-        attrsProviderSet.add(className);
+        attrsProviderSet.add(0, className);
     }
 
     private boolean showMenu() {
