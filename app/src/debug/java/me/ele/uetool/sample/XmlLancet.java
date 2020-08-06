@@ -40,18 +40,24 @@ public class XmlLancet {
     public View inflate() {
         View view = (View) Origin.call();
         final ViewStubInfo viewStubInfo = ViewStubInfoMap.get(view.getId());
-        traverse(view, viewStubInfo.getViewStubInflatedXmlResourceName(), viewStubInfo.getViewStubXmlResourceName());
-        // set origin id
-        if (viewStubInfo.isOriginInflateIdValid()) {
-            view.setId(viewStubInfo.getOriginInflateId());
+        if (viewStubInfo != null) {
+            traverse(view, viewStubInfo.getViewStubInflatedXmlResourceName(),
+                    viewStubInfo.getViewStubXmlResourceName());
+            // set origin id
+            if (viewStubInfo.isOriginInflateIdValid()) {
+                view.setId(viewStubInfo.getOriginInflateId());
+            }
         }
         return view;
     }
 
     private static void traverse(View view, String xmlName, String viewStubXmlName) {
         if (view instanceof ViewStub) {
-            final String viewStubXmlResourceName = getResourceName(view, ((ViewStub) view).getLayoutResource());
-            ViewStubInfoMap.put((ViewStub) view, xmlName, viewStubXmlResourceName);
+            final int layoutResource = ((ViewStub) view).getLayoutResource();
+            if (layoutResource != 0) {
+                final String viewStubXmlResourceName = getResourceName(view, layoutResource);
+                ViewStubInfoMap.put((ViewStub) view, xmlName, viewStubXmlResourceName);
+            }
         } else {
             if (view.getTag(R.id.uetool_xml) == null) {
                 view.setTag(R.id.uetool_xml, xmlName);
