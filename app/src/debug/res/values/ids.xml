@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="uetool_xml" type="id"/>
+    <item name="uetool_xml_view_stub" type="id"/>
 </resources>

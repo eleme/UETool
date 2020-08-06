@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -157,6 +158,25 @@
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher" />
 
+        <Button
+            android:id="@+id/btn_show_stub"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:text="show view stub"
+            android:textAllCaps="false"
+            tools:ignore="HardcodedText" />
+
+        <ViewStub
+            android:id="@+id/view_stub"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="10dp"
+            android:inflatedId="@+id/view_stub_inflate"
+            android:layout="@layout/view_stub_layout" />
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/drawee_view"
             android:layout_width="120dp"
@@ -195,19 +215,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
             android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
             android:background="#f00"
             android:gravity="center"
             android:lineSpacingExtra="2dp"
             android:padding="12dp"
             android:text="Font Test"
             android:textColor="#fff"
-            android:textSize="15dp"
-            />
+            android:textSize="15dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
