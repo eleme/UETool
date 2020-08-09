@@ -10,12 +10,13 @@ import android.support.v7.widget.SwitchCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.View;
-import android.view.ViewStub;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+
 import me.ele.uetool.UETool;
 import me.ele.uetool.sample.ui.recyclerviewsample.RecyclerViewActivity;
 
@@ -60,13 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn4:
                 startActivity(new Intent(this, RecyclerViewActivity.class));
-                break;
-            case R.id.btn_show_stub:
-                ((ViewStub) findViewById(R.id.view_stub)).inflate();
-                break;
-            case R.id.btn_show_stub2:
-                ((ViewStub) findViewById(R.id.view_stub2)).inflate();
-                break;
         }
     }
 

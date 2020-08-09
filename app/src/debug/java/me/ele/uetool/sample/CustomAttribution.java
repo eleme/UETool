@@ -20,9 +20,6 @@ public class CustomAttribution implements IAttrs {
         if (element.getView().getTag(R.id.uetool_xml) != null) {
             items.add(new TextItem("XML", element.getView().getTag(R.id.uetool_xml).toString()));
         }
-        if (element.getView().getTag(R.id.uetool_xml_view_stub) != null) {
-            items.add(new TextItem("XML_VIEW_STUB", element.getView().getTag(R.id.uetool_xml_view_stub).toString()));
-        }
         return items;
     }
 }
