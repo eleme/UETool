@@ -38,6 +38,13 @@ public class TransparentActivity extends AppCompatActivity {
         vContainer = findViewById(R.id.container);
 
         final BoardTextView board = new BoardTextView(this);
+        board.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UETool.getInstance().getTargetActivity().finish();
+                finish();
+            }
+        });
 
         type = getIntent().getIntExtra(EXTRA_TYPE, TYPE_UNKNOWN);
 

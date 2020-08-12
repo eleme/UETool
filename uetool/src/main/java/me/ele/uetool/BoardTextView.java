@@ -2,6 +2,8 @@ package me.ele.uetool;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
@@ -31,6 +33,8 @@ public class BoardTextView extends AppCompatTextView {
         setTextColor(0xffffffff);
         setTextSize(9);
         setText(defaultInfo);
+        setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.uet_close), null);
+        setCompoundDrawablePadding(DimenUtil.dip2px(2));
     }
 
     public void updateInfo(String info) {
