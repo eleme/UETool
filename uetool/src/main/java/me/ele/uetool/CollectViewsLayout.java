@@ -187,6 +187,9 @@ public class CollectViewsLayout extends View {
     }
 
     private View getTargetDecorView(Activity targetActivity, View decorView) {
+        if (decorView.getWidth() == 0 || decorView.getHeight() == 0) {
+            return null;
+        }
         Context context = null;
         if (decorView instanceof ViewGroup && ((ViewGroup) decorView).getChildCount() > 0) {
             context = ((ViewGroup) decorView).getChildAt(0).getContext();
