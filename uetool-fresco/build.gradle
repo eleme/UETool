@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -17,13 +16,4 @@ dependencies {
     compileOnly project(':uetool-base')
 //      implementation "me.ele:uetool-base:${versions.release}"
     compileOnly "com.facebook.fresco:fresco:${versions.fresco}"
-}
-
-publish {
-    userOrg = 'jackcho'
-    groupId = 'me.ele'
-    artifactId = 'uetool-fresco'
-    publishVersion = versions.release
-    desc = 'show/edit any view\'s attributions on the screen.'
-    website = 'www.ele.me'
 }

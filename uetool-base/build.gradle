@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -17,13 +16,4 @@ android {
     lintOptions {
         abortOnError false
     }
-}
-
-publish {
-    userOrg = 'jackcho'
-    groupId = 'me.ele'
-    artifactId = 'uetool-base'
-    publishVersion = versions.release
-    desc = 'show/edit any view\'s attributions on the screen.'
-    website = 'www.ele.me'
 }

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -18,13 +17,4 @@ dependencies {
 //      api "me.ele:uetool-base:${versions.release}"
     implementation 'com.jakewharton.scalpel:scalpel:1.1.2'
     implementation 'com.github.bmelnychuk:atv:1.2.9'
-}
-
-publish {
-    userOrg = 'jackcho'
-    groupId = 'me.ele'
-    artifactId = 'uetool'
-    publishVersion = versions.release
-    desc = 'show/edit any view\'s attributions on the screen.'
-    website = 'www.ele.me'
 }
