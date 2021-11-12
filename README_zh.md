@@ -81,12 +81,20 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 ### 安装依赖
 
 ```gradle
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 dependencies {
-  debugImplementation 'me.ele:uetool:1.3.0'
-  releaseImplementation 'me.ele:uetool-no-op:1.3.0'
+  debugImplementation 'com.github.eleme:uetool:1.3.2'
+  debugImplementation 'com.github.eleme:uetool-base:1.3.2'
+  releaseImplementation 'com.github.eleme:uetool-no-op:1.3.2'
 
   // if you want to show more attrs about Fresco's DraweeView
-  debugImplementation 'me.ele:uetool-fresco:1.3.0'
+  debugImplementation 'com.github.eleme:uetool-fresco:1.3.2'
 }
 ```
 

@@ -84,12 +84,20 @@ At present, UETool provides functionality as follows:
 ### Installation
 
 ```gradle
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 dependencies {
-  debugImplementation 'me.ele:uetool:1.3.0'
-  releaseImplementation 'me.ele:uetool-no-op:1.3.0'
+  debugImplementation 'com.github.eleme:uetool:1.3.2'
+  debugImplementation 'com.github.eleme:uetool-base:1.3.2'
+  releaseImplementation 'com.github.eleme:uetool-no-op:1.3.2'
 
   // if you want to show more attrs about Fresco's DraweeView
-  debugImplementation 'me.ele:uetool-fresco:1.3.0'
+  debugImplementation 'com.github.eleme:uetool-fresco:1.3.2'
 }
 ```
 
