@@ -109,13 +109,18 @@ public class CollectViewsLayout extends View {
                                 for (int i = viewRootImpls.size() - 1; i >= 0; i--) {
                                     Class clazz = Class.forName("android.view.ViewRootImpl");
                                     Object object = viewRootImpls.get(i);
-                                    Field mWindowAttributesField = clazz.getDeclaredField("mWindowAttributes");
-                                    mWindowAttributesField.setAccessible(true);
+                                    WindowManager.LayoutParams layoutParams = null;
+                                    try {
+                                        Field mWindowAttributesField = clazz.getDeclaredField("mWindowAttributes");
+                                        mWindowAttributesField.setAccessible(true);
+                                        layoutParams = (WindowManager.LayoutParams) mWindowAttributesField.get(object);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                     Field mViewField = clazz.getDeclaredField("mView");
                                     mViewField.setAccessible(true);
                                     View decorView = (View) mViewField.get(object);
-                                    WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) mWindowAttributesField.get(object);
-                                    if (layoutParams.getTitle().toString().contains(targetActivity.getClass().getName())
+                                    if ((layoutParams != null && layoutParams.getTitle().toString().contains(targetActivity.getClass().getName()))
                                             || getTargetDecorView(targetActivity, decorView) != null) {
                                         createElements(decorView);
                                         break;
