@@ -92,12 +92,12 @@ allprojects {
 }
 
 dependencies {
-  debugImplementation 'com.github.eleme:uetool:1.3.2'
-  debugImplementation 'com.github.eleme:uetool-base:1.3.2'
-  releaseImplementation 'com.github.eleme:uetool-no-op:1.3.2'
-
+  debugImplementation 'com.github.eleme.UETool:uetool:1.3.2'
+  debugImplementation 'com.github.eleme.UETool:uetool-base:1.3.2'
+  releaseImplementation 'com.github.eleme.UETool:uetool-no-op:1.3.2'
+  
   // if you want to show more attrs about Fresco's DraweeView
-  debugImplementation 'com.github.eleme:uetool-fresco:1.3.2'
+  debugImplementation 'com.github.eleme.UETool:uetool-fresco:1.3.2'
 }
 ```
 
@@ -148,5 +148,4 @@ UETool.putAttrsProviderClass(String customizeClassName);
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
-
 
