@@ -1,1 +1,6 @@
-<manifest package="me.ele.uetool.base"/>
+<manifest package="me.ele.uetool.base">
+
+    <!--  压制freeReflection的minSDK为21  -->
+    <uses-sdk xmlns:tools="http://schemas.android.com/tools"
+        tools:overrideLibrary="me.weishu.freereflection" />
+</manifest>
