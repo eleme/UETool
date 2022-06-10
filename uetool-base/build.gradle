@@ -11,6 +11,7 @@ android {
         api "com.android.support:appcompat-v7:27.1.1"
         api "com.android.support:recyclerview-v7:27.1.1"
         api "com.android.support:support-v4:27.1.1"
+        implementation "com.github.tiann:FreeReflection:3.1.0"
     }
 
     lintOptions {
