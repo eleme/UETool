@@ -9,19 +9,20 @@ UETool [![GitHub release](https://img.shields.io/github/release/eleme/UETool.svg
 
 UETool is a debug tool for anyone who needs to show and edit the attributes of user interface views on mobile devices. It works on Activity/Fragment/Dialog/PopupWindow or any other view.
 
-At present, UETool provides the following functionalities:
+Presently, UETool provides the following functionalities:
 
 - Move any view on the screen (selecting view repeatedly will select its parent's view)
-- Show/edit normal view's attributes such as TextView's text、textSize、textColor etc.
-- If you are using Fresco's DraweeView, UETool shows more properties like ImageURI、PlaceHolderImage、CornerRadius etc.
-- Easily customize any view's attributes you want simply, such as business parameters
-- If the view selected by UETool isn’t what you want, you can check ValidViews to choose which target view you want
+- Show/edit normal view's attributes such as TextView's text, textSize, textColor etc.
 - Show two view's relative positions
 - Show grid for checking view alignment
 - Support Android P
 - Show view's current Fragment
 - Show activity's Fragment tree
 - Show view's view holder name if it exist
+- Easily customize any view's attributes you want simply, such as business parameters
+
+- If you are using Fresco's DraweeView, UETool shows more properties like ImageURI, PlaceHolderImage, CornerRadius etc.
+- If the view selected by UETool isn’t what you want, you can check ValidViews to choose which target view you want
 
 ## UETool's Effects:
 
