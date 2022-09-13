@@ -7,23 +7,24 @@ UETool [![GitHub release](https://img.shields.io/github/release/eleme/UETool.svg
 
 [中文版](https://github.com/eleme/UETool/blob/master/README_zh.md)
 
-UETool is a debug tool for anyone who needs show/edit one or more views' attributions. It works on Activity/Fragment/Dialog/PopupWindow or any other view.
+UETool is a debug tool for anyone who needs to show and edit the attributes of user interface views on mobile devices. It works on Activity/Fragment/Dialog/PopupWindow or any other view.
 
-At present, UETool provides functionality as follows:
+Presently, UETool provides the following functionalities:
 
 - Move any view on the screen (selecting view repeatedly will select its parent's view)
-- Show/edit normal view's attributions such as edit TextView's text、textSize、textColor etc.
-- If you are using Fresco's DraweeView, UETool provides show more attributions like ImageURI、PlaceHolderImage、CornerRadius etc.
-- You can customize any view's attributions you want with simple way such as some biz param
-- You can check ValidViews and choose which target view you want (if offered UETool isn’t what you want)
+- Show/edit normal view's attributes such as TextView's text, textSize, textColor etc.
 - Show two view's relative positions
-- Show gridding for checking view alignment
+- Show grid for checking view alignment
 - Support Android P
-- Support show view's current Fragment
+- Show view's current Fragment
 - Show activity's Fragment tree
-- Show view's view holder name if exist
+- Show view's view holder name if it exist
+- Easily customize any view's attributes you want simply, such as business parameters
 
-## EFFECT
+- If you are using Fresco's DraweeView, UETool shows more properties like ImageURI, PlaceHolderImage, CornerRadius etc.
+- If the view selected by UETool isn’t what you want, you can check ValidViews to choose which target view you want
+
+## UETool's Effects:
 
 <div>
 <img width="270" height="480" src="https://github.com/eleme/UETool/blob/master/art/move_view.gif"/>
@@ -103,7 +104,7 @@ dependencies {
 
 ### Usage
 
-#### show floating window
+#### Show floating window
 
 ```java
 UETool.showUETMenu();
@@ -111,13 +112,13 @@ UETool.showUETMenu();
 UETool.showUETMenu(int y);
 ```
 
-#### dismiss floating window
+#### Dismiss floating window
 
 ```java
 UETool.dismissUETMenu();
 ```
 
-#### filter out view which you don't want to select
+#### Filter out unwanted views from selection
 
 ```java
 UETool.putFilterClass(Class viewClazz);
@@ -125,11 +126,11 @@ UETool.putFilterClass(Class viewClazz);
 UETool.putFilterClass(String viewClassName);
 ```
 
-#### customize with your view
+#### Customize your view
 
 ```java
 
-// step 1, implements IAttrs
+// step 1, implement IAttrs
 
 public class UETFresco implements IAttrs {
   @Override public List<Item> getAttrs(Element element) {
