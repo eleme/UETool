@@ -11,6 +11,7 @@ import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.view.*;
+import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
@@ -35,7 +36,10 @@ public class UETMenu extends LinearLayout {
     private WindowManager.LayoutParams params = new WindowManager.LayoutParams();
     private int touchSlop;
     private int y;
-
+    /**
+     * 容器刚出来的时候的宽度，用于播放动画
+     */
+    private int vSubMenuContainerWidth = 0;
     public UETMenu(final Context context, int y) {
         super(context);
         inflate(context, R.layout.uet_menu_layout, this);
@@ -145,11 +149,24 @@ public class UETMenu extends LinearLayout {
                 return true;
             }
         });
+
+        // 获取容器宽度，同时初始化设置
+        vSubMenuContainer.getViewTreeObserver().addOnPreDrawListener(new OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                vSubMenuContainerWidth = vSubMenuContainer.getMeasuredWidth();
+                vSubMenuContainer.setTranslationX(-vSubMenuContainerWidth); // 隐藏
+                vSubMenuContainer.setVisibility(View.GONE); // 设置为不可见，移除父容器占位
+                vSubMenuContainer.getViewTreeObserver().removeOnPreDrawListener(this);
+                // 这次不需要绘制，避免闪烁
+                return false;
+            }
+        });
     }
 
     private void startAnim() {
         ensureAnim();
-        final boolean isOpen = vSubMenuContainer.getTranslationX() <= -vSubMenuContainer.getWidth();
+        final boolean isOpen = vSubMenuContainer.getTranslationX() <= -vSubMenuContainerWidth;
         animator.setInterpolator(isOpen ? defaultInterpolator : new ReverseInterpolator(defaultInterpolator));
         animator.removeAllListeners();
         animator.addListener(new AnimatorListenerAdapter() {
@@ -170,7 +187,7 @@ public class UETMenu extends LinearLayout {
 
     private void ensureAnim() {
         if (animator == null) {
-            animator = ValueAnimator.ofInt(-vSubMenuContainer.getWidth(), 0);
+            animator = ValueAnimator.ofInt(-vSubMenuContainerWidth, 0);
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
